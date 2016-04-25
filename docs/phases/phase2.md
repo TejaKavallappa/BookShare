@@ -1,4 +1,4 @@
-# Phase 2: Flux Architecture and Note CRUD (2 days)
+# Phase 2: Flux Architecture and Book CRUD (2 days)
 
 ## Rails
 ### Models
@@ -9,29 +9,29 @@
 
 ## Flux
 ### Views (React Components)
-* NotesIndex
-  - NotesIndexItem
-* NoteForm
+* BooksIndex
+  - BooksIndexItem
+* BookForm
 
 ### Stores
-* Note
+* Book
 
 ### Actions
-* ApiActions.receiveAllNotes -> triggered by ApiUtil
-* ApiActions.receiveSingleNote
-* ApiActions.deleteNote
-* NoteActions.fetchAllNotes -> triggers ApiUtil
-* NoteActions.fetchSingleNote 
-* NoteActions.createNote
-* NoteActions.editNote 
-* NoteActions.destroyNote
+* ServerActions.receiveAllBooks -> triggered by ApiUtil
+* ServerActions.receiveSingleBook
+* ServerActions.deleteBook
+* ClientActions.fetchAllBooks -> triggers ApiUtil
+* ClientActions.fetchSingleBook
+* ClientActions.createBook
+* ClientActions.editBook
+* ClientActions.destroyBook
 
 ### ApiUtil
-* ApiUtil.fetchAllNotes
-* ApiUtil.fetchSingleNote
-* ApiUtil.createNote
-* ApiUtil.editNote
-* ApiUtil.destroyNote
+* ApiUtil.fetchAllBooks
+* ApiUtil.fetchSingleBook
+* ApiUtil.createBook
+* ApiUtil.editBook
+* ApiUtil.destroyBook
 
 ## Gems/Libraries
 * Flux Dispatcher (npm)

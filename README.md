@@ -87,12 +87,14 @@ possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with ow
   - [ ] If request approved, owner can send book to requester(sets request_status to 3)
 - Use CSS to style new views [This will very likely take extra time]
 
-### Phase 6: Populate database (1 day)
+### Phase 6: Populate database and create navbar(1 day)
 
 **Objective:** Make API requests to https://openlibrary.org/ to obtain seed data for the web application
 
 - [ ] Obtain API key
 - [ ] Configure web API requests to obtain book data[covers, descriptions, etc]
+- [ ] Create navbar comprising Log in/Log out and a homepage button
+- [ ] Create footer
 
 ### Phase 7: Allow Complex Styling (1.5 days)
 
@@ -101,6 +103,7 @@ possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with ow
 - [ ] Integrate `react-quill` (based on Quill.js).
 - [ ] Use Rails helpers to sanitize HTML before rendering.
 - [ ] Style the new Quill elements.
+- [ ] Add favicon
 
 ### Phase 8: Styling Cleanup and Seeding (1 day)
 
@@ -109,18 +112,21 @@ possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with ow
 - [ ] Get feedback on my UI from others
 - [ ] Refactor HTML classes & CSS rules
 - [ ] Add modals, transitions, and other styling flourishes.
+- [ ] Ensure quick page-loads and seamless navigation
 
 ### Bonus Features (TBD)
 - [ ] Add tags to books, make books searchable by tags
+- [ ] List users books by borrowed, lent, and currently held books
 - [ ] Rate popularity of books based on requests and borrows
 - [ ] Custom 404 page
 - [ ] Add friends
+- [ ] Allow users to view multiple requests for the same book(if any)
 - [ ] Search through friends' shelves for books
 - [ ] Pagination / infinite scroll for Books Index
 - [ ] View friends/users within a geographic radius[maps]
 
 [phase-one]: ./docs/phases/phase1.md
 [phase-two]: ./docs/phases/phase2.md
-[phase-three]: ./docs/phases/phase3.md
+<!-- [phase-three]: ./docs/phases/phase3.md -->
 [phase-four]: ./docs/phases/phase4.md
 [phase-five]: ./docs/phases/phase5.md

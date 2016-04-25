@@ -1,40 +1,38 @@
-# Phase 5: Reminders and Garbage Collection
+# Phase 5: Borrowings
 
 ## Rails
 ### Models
-* Reminder
+* Borrowings
 
 ### Controllers
-* Api::RemindersController (create, destroy, index, show, update)
+* Api::BorrowingsController (create, update)
 
 ### Views
-* reminders/index.json.jbuilder
+* borrowings/index.json.jbuilder
 
 ## Flux
 ### Views (React Components)
-* RemindersIndex
-  - ReminderIndexItem
-* ReminderShow
-* ReminderForm
+* BorrowingsIndex
+  - BorrowingIndexItem
+* BorrowingShow
+* BorrowingForm
 
 ### Stores
-* Reminder
+* Borrowing
 
 ### Actions
-* ApiActions.receiveAllReminders -> triggered by ApiUtil
-* ApiActions.receiveSingleReminder
-* ApiActions.deleteReminder
-* ReminderActions.fetchAllReminders -> triggers ApiUtil
-* ReminderActions.fetchSingleReminder
-* ReminderActions.createReminder
-* ReminderActions.updateReminder
-* ReminderActions.destroyReminder
+* ServerActions.receiveAllBorrowings -> triggered by ApiUtil
+* ServerActions.receiveSingleBorrowing
+* ServerActions.deleteBorrowing
+* ClientActions.fetchAllBorrowings -> triggers ApiUtil
+* ClientActions.fetchSingleBorrowing
+* ClientActions.createBorrowing
+* ClientActions.updateBorrowing
 
 ### ApiUtil
-* ApiUtil.fetchAllReminders
-* ApiUtil.fetchSingleReminder
-* ApiUtil.createReminder
-* ApiUtil.updateReminder
-* ApiUtil.destroyReminder
+* ApiUtil.fetchAllBorrowings
+* ApiUtil.fetchSingleBorrowing
+* ApiUtil.createBorrowing
+* ApiUtil.updateBorrowing
 
 ## Gems/Libraries

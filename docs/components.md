@@ -2,12 +2,11 @@
 
 * `App`
   * `SearchIndex`
-  * `NotebooksIndex`
-    * `NotebookIndexItem`
-  * `NotebookForm`
-  * `NotesIndex`
-    * `NoteForm`
-    * `NoteIndexItem`
-  * `NoteDetail`
-    * `NoteTags`
-    * `NoteEditArea`
+  * `BooksIndex`
+    * `BookIndexItem`
+  * `BookForm`
+  * `BorrowIndex`
+    * `BorrowForm`
+    * `BorrowIndexItem`
+  * `BorrowDetail`
+    * `BorrowEdit`

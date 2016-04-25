@@ -20,34 +20,20 @@
 
 ## JSON API
 
-### Notes
+### Books
 
-- `GET /api/notes`
-  - Notes index/search
-  - accepts `tag_name` query param to list notes by tag
+- `GET /api/books`
+  - Books index/search
+  - accepts `title` or `author` query param to list books
   - accepts pagination params (if I get there)
-- `POST /api/notes`
-- `GET /api/notes/:id`
-- `PATCH /api/notes/:id`
-- `DELETE /api/notes/:id`
+- `POST /api/books`
+- `GET /api/books/:id`
+- `PATCH /api/books/:id`
+- `DELETE /api/books/:id`
 
-### Notebooks
+### Borrowings
 
-- `GET /api/notebooks`
-- `POST /api/notebooks`
-- `GET /api/notebooks/:id`
-- `PATCH /api/notebooks/:id`
-- `DELETE /api/notebooks/:id`
-- `GET /api/notebooks/:id/notes`
-  - index of all notes for a notebook
-  - accepts pagination params (if I get there)
-
-### Tags
-
-- A note's tags will be included in the note show template
-- `GET /api/tags`
-  - includes query param for typeahead suggestions
-- `POST /api/notes/:note_id/tags`: add tag to note by name
-  - if note doesn't already exist, it will be created
-- `DELETE /api/notes/:note_id/tags/:tag_name`: remove tag from note by
-  name
+- `GET /api/borrowings`
+- `POST /api/borrowings`
+- `GET /api/borrowings/:id`
+- `PATCH /api/borrowings/:id`

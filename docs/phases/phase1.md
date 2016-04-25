@@ -1,12 +1,12 @@
-# Phase 1: User Authentication, Note Model and JSON API
+# Phase 1: User Authentication, Book Model and JSON API
 
 ## Rails
 ### Models
 * User
-* Note
+* Book
 
 ### Controllers
-* UsersController (create, new)
+* UsersController (create, new, index)
 * SessionsController (create, new, destroy)
 * Api::NotesController (create, destroy, index, show, update)
 
