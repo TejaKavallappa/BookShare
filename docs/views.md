@@ -1,5 +1,8 @@
 # View Wireframes
 
+## Splash page
+![splash-page]
+
 ## New User
 ![new-user]
 
@@ -9,12 +12,16 @@
 ## BookIndex / BookIndexItem / BookForm
 ![books]
 
+## BookIndex / BookIndexItem / BookForm / friend
+![books-friend]
+
 ## BorrowsIndex / BorrowsIndexItem
 ![borrows]
 
-## BorrowForm
-![borrow-form]
+## BookEdit
+![book-edit]
 
+[splash-page]: ./wireframes/splash_page.png
 [new-user]: ./wireframes/new_user.png
 [new-session]: ./wireframes/new_session.png
 [books]: ./wireframes/user_home.png
