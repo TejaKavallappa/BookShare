@@ -1,4 +1,4 @@
-# FresherNote
+# BookShare
 
 [Heroku link][heroku] **NB:** This should be a link to your production site
 
@@ -16,7 +16,7 @@ BookSpace/BookShare is a web application inspired by Goodreads, and built using 
 
 ## Product Goals and Priorities
 
-FresherNote will allow users to do the following:
+BookShare will allow users to do the following:
 
 <!-- This is a Markdown checklist. Use it to keep track of your
 progress. Put an x between the brackets for a checkmark: [x] -->
@@ -58,9 +58,9 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 **Objective:** Notes can be created, read, edited and destroyed through
 the API.
 
-- [ ] create `Note` model
+- [ ] create `Book` model
 - [ ] seed the database with a small amount of test data
-- [ ] CRUD API for notes (`NotesController`)
+- [ ] CRUD API for notes (`BookssController`)
 - [ ] jBuilder views for notes
 - [ ] setup Webpack & Flux scaffold
 - [ ] setup `APIUtil` to interact with the API
@@ -74,9 +74,9 @@ user interface.
 - [ ] setup the flux loop with skeleton files
 - [ ] setup React Router
 - implement each note component, building out the flux loop as needed.
-  - [ ] `NotesIndex`
-  - [ ] `NoteIndexItem`
-  - [ ] `NoteForm`
+  - [ ] `BookssIndex`
+  - [ ] `BookIndexItem`
+  - [ ] `BookForm`
 - [ ] save Notes to the DB when the form loses focus or is left idle
   after editing.
 
@@ -92,27 +92,27 @@ user interface.
 
 **Objective:** Notes belong to Notebooks, and can be viewed by notebook.
 
-- [ ] create `Notebook` model
+- [ ] create `BookShelf` model
 - build out API, Flux loop, and components for:
-  - [ ] Notebook CRUD
-  - [ ] adding notes requires a notebook
-  - [ ] moving notes to a different notebook
-  - [ ] viewing notes by notebook
+  - [ ] BookShelf CRUD
+  - [ ] adding books requires a bookshelf
+  - [ ] moving books to a different bookshelf
+  - [ ] viewing books by bookshelf
 - Use CSS to style new views
 
-Phase 3 adds organization to the Notes. Notes belong to a Notebook,
+Phase 3 adds organization to the Books. Books belong to a BookShelf,
 which has its own `Index` view.
 
 ### Phase 6: Tags (1.5 days)
 
-**Objective:** Notes can be tagged with multiple tags, and tags are searchable.
+**Objective:** Books can be tagged with multiple tags, and tags are searchable.
 
 - [ ] create `Tag` model and join table
 - build out API, Flux loop, and components for:
-  - [ ] fetching tags for notebook
-  - [ ] adding tags to notebook
-  - [ ] creating tags while adding to notebooks
-  - [ ] searching notebooks by tag
+  - [ ] fetching tags for bookshelf
+  - [ ] adding tags to bookshelf
+  - [ ] creating tags while adding to bookshelves
+  - [ ] searching bookshelves by tag
 - [ ] Style new elements
 
 ### Phase 7: Allow Complex Styling in Notes (0.5 days)
