@@ -8,6 +8,7 @@ title       | string    | not null
 description | text      | not null
 author      | string    | not null
 owner_id    | integer   | not null, foreign key (references users), indexed
+image_url   | string    | not null
 
 ## borrowings
 column name | data type | details
