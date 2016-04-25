@@ -1,12 +1,13 @@
 # BookShare
 
-[Heroku link][heroku] **NB:** This should be a link to your production site
+[Heroku link][heroku] **NB:**
 
 [heroku]: http://www.herokuapp.com
 
 ## Minimum Viable Product
 
-BookSpace/BookShare is a web application inspired by Goodreads, and built using Ruby on Rails and React.js. BookSpace/BookShare has the following features:
+BookSpace/BookShare is a web application inspired by Goodreads, and built using Ruby on Rails and React.js.
+BookShare allows users to lend/borrow books to/from other users. BookSpace/BookShare has the following features:
 
 - [ ] Create new user account
 - [ ] Log in/ Log out, 1 - 2 guest/demo logins
