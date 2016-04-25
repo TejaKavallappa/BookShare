@@ -22,8 +22,8 @@
 ![book-edit]
 
 [splash-page]: ./wireframes/splash_page.png
-[new-user]: ./wireframes/new_user.png
-[new-session]: ./wireframes/new_session.png
+[new-user]: ./wireframes/new_user1.png
+[new-session]: ./wireframes/new_session1.png
 [books]: ./wireframes/user_home.png
 [books-friend]: ./wireframes/friends_books.png
 [borrows]: ./wireframes/borrow_requests.png
