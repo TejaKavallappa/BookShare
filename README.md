@@ -10,23 +10,9 @@ BookSpace/BookShare is a web application inspired by Goodreads, and built using 
 
 - [ ] Create new user account
 - [ ] Log in/ Log out, 1 - 2 guest/demo logins
-- [ ] Add books to shelf, edit book
+- [ ] Create read, edit, and delete books
 - [ ] View user's shelf and request to borrow user's book(s)
 - [ ] Approve or reject borrow requests
-
-## Product Goals and Priorities
-
-BookShare will allow users to do the following:
-
-<!-- This is a Markdown checklist. Use it to keep track of your
-progress. Put an x between the brackets for a checkmark: [x] -->
-
-- [ ] Create an account (MVP)
-- [ ] Log in / Log out, including as a Guest/Demo User (MVP)
-- [ ] Create, read, edit, and delete notes (MVP)
-- [ ] Organize notes within Notebooks (MVP)
-- [ ] Tag notes with multiple tags (expected feature, but not MVP)
-- [ ] Apply complex styling to notes while editing (expected feature, but not MVP)
 
 ## Design Docs
 * [View Wireframes][views]
@@ -43,81 +29,73 @@ progress. Put an x between the brackets for a checkmark: [x] -->
 
 ## Implementation Timeline
 
-### Phase 1: Backend setup and User Authentication (0.5 days)
+### Phase 1: Backend setup and User Authentication (0.5 day)
 
 **Objective:** Functioning rails project with Authentication
 
 - [ ] create new project
 - [ ] create `User` model
 - [ ] authentication
-- [ ] user signup/signin pages
-- [ ] blank landing page after signin
+- [ ] user signup/log in pages
+- [ ] blank landing page after log in
 
-### Phase 2: Notes Model, API, and basic APIUtil (1.5 days)
+### Phase 2: Books Model, API, and basic APIUtil (0.5 day)
 
-**Objective:** Notes can be created, read, edited and destroyed through
+**Objective:** Books can be created, read, edited and destroyed through
 the API.
 
 - [ ] create `Book` model
 - [ ] seed the database with a small amount of test data
-- [ ] CRUD API for notes (`BookssController`)
-- [ ] jBuilder views for notes
+- [ ] CRUD API for books (`BooksController`)
+- [ ] jBuilder views for books
 - [ ] setup Webpack & Flux scaffold
 - [ ] setup `APIUtil` to interact with the API
 - [ ] test out API interaction in the console.
 
-### Phase 3: Flux Architecture and Router (1.5 days)
+### Phase 3: Flux Architecture and Router (1 day)
 
-**Objective:** Notes can be created, read, edited and destroyed with the
+**Objective:** Books can be created, read, edited and destroyed with the
 user interface.
 
 - [ ] setup the flux loop with skeleton files
 - [ ] setup React Router
-- implement each note component, building out the flux loop as needed.
-  - [ ] `BookssIndex`
+- implement each book component, building out the flux loop as needed.
+  - [ ] `BooksIndex`
   - [ ] `BookIndexItem`
   - [ ] `BookForm`
-- [ ] save Notes to the DB when the form loses focus or is left idle
-  after editing.
 
-### Phase 4: Start Styling (0.5 days)
+### Phase 4: Start Styling (1 day)
 
-**Objective:** Existing pages (including singup/signin) will look good.
+**Objective:** Existing pages (including signup/log in) will look good.
 
 - [ ] create a basic style guide
 - [ ] position elements on the page
 - [ ] add basic colors & styles
 
-### Phase 5: Notebooks (1 day)
+### Phase 5: Borrowings (1 day)
 
-**Objective:** Notes belong to Notebooks, and can be viewed by notebook.
+**Objective:** Borrowings is the join table linking books, their owner_id,
+the borrower_id (maybe null), and the request status which has one of four
+possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with owner]
 
-- [ ] create `BookShelf` model
+- [ ] create `Borrowings` model
 - build out API, Flux loop, and components for:
-  - [ ] BookShelf CRUD
-  - [ ] adding books requires a bookshelf
-  - [ ] moving books to a different bookshelf
-  - [ ] viewing books by bookshelf
-- Use CSS to style new views
+  - [ ] Borrowings CRUD
+  - [ ] A current_user who is not the owner can request books
+  - [ ] The owner can approve or reject pending requests
+  - [ ] If request approved, owner can send book to requester(sets request_status to 3)
+- Use CSS to style new views [This will very likely take extra time]
 
-Phase 3 adds organization to the Books. Books belong to a BookShelf,
-which has its own `Index` view.
+### Phase 6: Populate database (1 day)
 
-### Phase 6: Tags (1.5 days)
+**Objective:** Make API requests to https://openlibrary.org/ to obtain seed data for the web application
 
-**Objective:** Books can be tagged with multiple tags, and tags are searchable.
+- [ ] Obtain API key
+- [ ] Configure web API requests to obtain book data[covers, descriptions, etc]
 
-- [ ] create `Tag` model and join table
-- build out API, Flux loop, and components for:
-  - [ ] fetching tags for bookshelf
-  - [ ] adding tags to bookshelf
-  - [ ] creating tags while adding to bookshelves
-  - [ ] searching bookshelves by tag
-- [ ] Style new elements
+### Phase 7: Allow Complex Styling (1.5 days)
 
-### Phase 7: Allow Complex Styling in Notes (0.5 days)
-
-**objective:** Enable complex styling of notes.
+**objective:** Enable complex styling of BookShare.
 
 - [ ] Integrate `react-quill` (based on Quill.js).
 - [ ] Use Rails helpers to sanitize HTML before rendering.
@@ -132,11 +110,13 @@ which has its own `Index` view.
 - [ ] Add modals, transitions, and other styling flourishes.
 
 ### Bonus Features (TBD)
-- [ ] Search through notes for blocks of text
-- [ ] Pagination / infinite scroll for Notes Index
-- [ ] Set reminders on notes
-- [ ] Changelogs for Notes
-- [ ] Multiple sessions
+- [ ] Add tags to books, make books searchable by tags
+- [ ] Rate popularity of books based on requests and borrows
+- [ ] Custom 404 page
+- [ ] Add friends
+- [ ] Search through friends' shelves for books
+- [ ] Pagination / infinite scroll for Books Index
+- [ ] View friends/users within a geographic radius[maps]
 
 [phase-one]: ./docs/phases/phase1.md
 [phase-two]: ./docs/phases/phase2.md
