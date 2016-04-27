@@ -49,10 +49,17 @@ var LoginForm = React.createClass({
     if (!this.state.errors){
       return;
     }
+    var err = this.state.errors;
+    console.log(" login form errors");
+    console.log(err);
+    console.log(" login form errors");
+
+
     return (
       <ul>
-        {this.state.errors.map(function(key, i) {
-          return (<li key={i}>this.state.errors[key]</li>);
+        {err.forEach(function(key, i) {
+
+          return (<li key={i}> {err[key]} </li>);
         })
       }
       </ul>
@@ -66,25 +73,28 @@ var LoginForm = React.createClass({
     return (
       <div id="form">
         <form onSubmit={this.handleSubmit}>
+
           <section>
             <label>Username
               <input type="text" onChange={this.usernameChange}></input>
-              </label>
-              <label>
-                Password
-                <input type="password" onChange={this.passwordChange}></input>
-                </label>
-                </section>
+            </label>
+            <label>
+              Password
+              <input type="password" onChange={this.passwordChange}></input>
+            </label>
+          </section>
 
-                <section>
-                  <label> Login
-                <input type="Radio" name="action" value="login" onChange={this.setForm}/>
-                </label>
-                <label> SignUp
-                <input type="Radio" name="action" value="signup" onChange={this.setForm}/>
-                </label>
-                </section>
-                <input type="submit" value="Submit"/>
+          <section>
+            <label> Login
+              <input type="Radio" name="action" value="login" onChange={this.setForm}/>
+            </label>
+            <label> SignUp
+              <input type="Radio" name="action" value="signup" onChange={this.setForm}/>
+            </label>
+          </section>
+
+          <input type="submit" value="Submit"/>
+
         </form>
       </div>
     );//return

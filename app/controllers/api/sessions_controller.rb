@@ -23,6 +23,5 @@ class Api::SessionsController < ApplicationController
     @user = current_user
     logout
     render :show
-    # render "/"
   end
 end

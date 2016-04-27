@@ -15,7 +15,7 @@ var UserApiUtil = {
       url: options.url,
       data: {user: options.user},
       success: options.success,
-      error: options.success
+      error: options.error
     });
   },
   logout: function(success, error){

@@ -16,7 +16,7 @@ var CurrentUserState = {
   updateUser: function(){
     this.setState({
       currentUser: UserStore.currentUser(),
-      errors: UserStore.errors()});
+      errors: UserStore.errors()}); 
   }
 };
 

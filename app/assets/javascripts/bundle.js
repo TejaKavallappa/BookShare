@@ -25504,6 +25504,7 @@
 	      UserStore.logout();
 	      break;
 	    case "ERROR":
+	      console.log("In the user store");
 	      UserStore.setErrors(payload.errors);
 	      break;
 	  }
@@ -32308,6 +32309,7 @@
 	    UserApiUtil.fetchCurrentUser(UserActions.receiveCurrentUser, UserActions.handleError);
 	  },
 	  login: function (user) {
+	    console.log("logging in");
 	    UserApiUtil.post({
 	      url: "/api/session",
 	      user: user,
@@ -32369,7 +32371,7 @@
 	      url: options.url,
 	      data: { user: options.user },
 	      success: options.success,
-	      error: options.success
+	      error: options.error
 	    });
 	  },
 	  logout: function (success, error) {
@@ -32448,14 +32450,22 @@
 	    if (!this.state.errors) {
 	      return;
 	    }
+	    var err = this.state.errors;
+	    console.log(" login form errors");
+	    console.log(err);
+	    console.log(" login form errors");
+	
 	    return React.createElement(
 	      'ul',
 	      null,
-	      this.state.errors.map(function (key, i) {
+	      err.forEach(function (key, i) {
+	
 	        return React.createElement(
 	          'li',
 	          { key: i },
-	          'this.state.errors[key]'
+	          ' ',
+	          err[key],
+	          ' '
 	        );
 	      })
 	    );
