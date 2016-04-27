@@ -46,18 +46,13 @@ var LoginForm = React.createClass({
 	},
 
   errors: function(){
-    if (!this.state.errors){
+    if (!this.state.userErrors){
       return;
     }
-    var err = this.state.errors;
-    console.log(" login form errors");
-    console.log(err);
-    console.log(" login form errors");
-
-
+    var err = this.state.userErrors;
     return (
       <ul>
-        {err.forEach(function(key, i) {
+        {Object.keys(err).map(function(key, i) {
 
           return (<li key={i}> {err[key]} </li>);
         })

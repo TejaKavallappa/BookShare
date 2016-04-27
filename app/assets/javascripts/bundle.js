@@ -25468,7 +25468,7 @@
 	  getInitialState: function () {
 	    return {
 	      currentUser: UserStore.currentUser(),
-	      errors: UserStore.errors() };
+	      userErrors: UserStore.errors() };
 	  },
 	  componentDidMount: function () {
 	    UserStore.addListener(this.updateUser);
@@ -25479,7 +25479,7 @@
 	  updateUser: function () {
 	    this.setState({
 	      currentUser: UserStore.currentUser(),
-	      errors: UserStore.errors() });
+	      userErrors: UserStore.errors() });
 	  }
 	};
 	
@@ -25504,7 +25504,6 @@
 	      UserStore.logout();
 	      break;
 	    case "ERROR":
-	      console.log("In the user store");
 	      UserStore.setErrors(payload.errors);
 	      break;
 	  }
@@ -32309,7 +32308,6 @@
 	    UserApiUtil.fetchCurrentUser(UserActions.receiveCurrentUser, UserActions.handleError);
 	  },
 	  login: function (user) {
-	    console.log("logging in");
 	    UserApiUtil.post({
 	      url: "/api/session",
 	      user: user,
@@ -32342,7 +32340,7 @@
 	  handleError: function (error) {
 	    AppDispatcher.dispatch({
 	      actionType: "ERROR",
-	      errors: error
+	      errors: error.responseJSON.errors
 	    });
 	  }
 	};
@@ -32447,18 +32445,14 @@
 	  },
 	
 	  errors: function () {
-	    if (!this.state.errors) {
+	    if (!this.state.userErrors) {
 	      return;
 	    }
-	    var err = this.state.errors;
-	    console.log(" login form errors");
-	    console.log(err);
-	    console.log(" login form errors");
-	
+	    var err = this.state.userErrors;
 	    return React.createElement(
 	      'ul',
 	      null,
-	      err.forEach(function (key, i) {
+	      Object.keys(err).map(function (key, i) {
 	
 	        return React.createElement(
 	          'li',

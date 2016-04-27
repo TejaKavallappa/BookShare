@@ -13,7 +13,6 @@ UserStore.__onDispatch = function(payload){
       UserStore.logout();
       break;
     case("ERROR"):
-      console.log("In the user store");
       UserStore.setErrors(payload.errors);
       break;
   }

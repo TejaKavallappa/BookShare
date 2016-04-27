@@ -6,7 +6,6 @@ var UserActions = {
     UserApiUtil.fetchCurrentUser(UserActions.receiveCurrentUser, UserActions.handleError);
   },
   login: function(user){
-    console.log("logging in");
     UserApiUtil.post({
       url: "/api/session",
       user: user,
@@ -39,7 +38,7 @@ var UserActions = {
   handleError: function(error){
     AppDispatcher.dispatch({
       actionType: "ERROR",
-      errors: error
+      errors: error.responseJSON.errors
     });
   }
 };
