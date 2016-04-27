@@ -53,7 +53,6 @@ var LoginForm = React.createClass({
     return (
       <ul>
         {Object.keys(err).map(function(key, i) {
-
           return (<li key={i}> {err[key]} </li>);
         })
       }
@@ -70,15 +69,16 @@ var LoginForm = React.createClass({
         <form onSubmit={this.handleSubmit}>
 
           <section>
-            <label>Username
-              <input type="text" onChange={this.usernameChange}></input>
+            <label>Username&nbsp;
+              <input type="text" onChange={this.usernameChange}></input><br/>
             </label>
+            <br/>
             <label>
-              Password
-              <input type="password" onChange={this.passwordChange}></input>
+              Password&nbsp;
+              <input type="password" onChange={this.passwordChange}></input><br/>
             </label>
           </section>
-
+          <br/>
           <section>
             <label> Login
               <input type="Radio" name="action" value="login" onChange={this.setForm}/>
@@ -87,7 +87,7 @@ var LoginForm = React.createClass({
               <input type="Radio" name="action" value="signup" onChange={this.setForm}/>
             </label>
           </section>
-
+            <br/>
           <input type="submit" value="Submit"/>
 
         </form>

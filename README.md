@@ -2,7 +2,7 @@
 
 [Heroku link][heroku] **NB:**
 
-[heroku]: http://www.herokuapp.com
+[heroku]: https://bookshares.herokuapp.com
 
 ## Minimum Viable Product
 

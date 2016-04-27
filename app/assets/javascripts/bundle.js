@@ -32453,7 +32453,6 @@
 	      'ul',
 	      null,
 	      Object.keys(err).map(function (key, i) {
-	
 	        return React.createElement(
 	          'li',
 	          { key: i },
@@ -32481,16 +32480,20 @@
 	          React.createElement(
 	            'label',
 	            null,
-	            'Username',
-	            React.createElement('input', { type: 'text', onChange: this.usernameChange })
+	            'Username ',
+	            React.createElement('input', { type: 'text', onChange: this.usernameChange }),
+	            React.createElement('br', null)
 	          ),
+	          React.createElement('br', null),
 	          React.createElement(
 	            'label',
 	            null,
-	            'Password',
-	            React.createElement('input', { type: 'password', onChange: this.passwordChange })
+	            'Password ',
+	            React.createElement('input', { type: 'password', onChange: this.passwordChange }),
+	            React.createElement('br', null)
 	          )
 	        ),
+	        React.createElement('br', null),
 	        React.createElement(
 	          'section',
 	          null,
@@ -32507,6 +32510,7 @@
 	            React.createElement('input', { type: 'Radio', name: 'action', value: 'signup', onChange: this.setForm })
 	          )
 	        ),
+	        React.createElement('br', null),
 	        React.createElement('input', { type: 'submit', value: 'Submit' })
 	      )
 	    ); //return

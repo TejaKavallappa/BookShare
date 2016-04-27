@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "./node_modules/.bin/webpack"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,10 @@
   "bugs": {
     "url": "https://github.com/TejaKavallappa/BookShare/issues"
   },
+  "engines": {
+  "node": "5.5.0",
+  "npm": "3.5.3"
+},
   "homepage": "https://github.com/TejaKavallappa/BookShare#readme",
   "dependencies": {
     "babel-core": "^6.7.7",
