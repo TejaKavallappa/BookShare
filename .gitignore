@@ -14,3 +14,9 @@
 
 #Ignore node modules
 /node_modules
+
+#Ignore backup files
+*~
+
+#Ignore bundle.js
+bundle.js
