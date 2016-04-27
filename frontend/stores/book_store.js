@@ -16,7 +16,7 @@ BookStore.__onDispatch = function(payload){
       this.removeBook(payload.book);
       break;
   }
-  this.__emitchange();
+  this.__emitChange();
 };
 
 var receiveAllBooks = function(books){
@@ -45,3 +45,5 @@ BookStore.all = function(){
 BookStore.find = function(id){
   return _books[id];
 };
+
+module.exports = BookStore;

@@ -26,7 +26,6 @@ class Api::BooksController < ApplicationController
       else
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
-    end
   end
 
   # PATCH/PUT /books/1
@@ -37,7 +36,6 @@ class Api::BooksController < ApplicationController
       else
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
-    end
   end
 
   # DELETE /books/1
@@ -45,7 +43,6 @@ class Api::BooksController < ApplicationController
   def destroy
     @book.destroy
       format.json { head :no_content }
-    end
   end
 
   private
