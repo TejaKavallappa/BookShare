@@ -32868,7 +32868,7 @@
 	    }
 	    return React.createElement(
 	      'div',
-	      { id: 'form' },
+	      { id: 'login-form' },
 	      React.createElement(
 	        'form',
 	        { onSubmit: this.handleSubmit },

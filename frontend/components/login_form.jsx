@@ -65,7 +65,7 @@ var LoginForm = React.createClass({
       return;
     }
     return (
-      <div id="form">
+      <div id="login-form">
         <form onSubmit={this.handleSubmit}>
 
           <section>
