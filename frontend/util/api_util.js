@@ -28,6 +28,16 @@ var ApiUtil = {
         ServerActions.removeBook(book);
       }
     });
+  },
+  addBook: function(bookData){
+    $.ajax({
+      url: "/api/books/",
+      type: 'POST',
+      data: {book: bookData},
+      success: function(newBook){
+        ServerActions.getSingleBook(newBook);
+      }
+    });
   }
 
 };

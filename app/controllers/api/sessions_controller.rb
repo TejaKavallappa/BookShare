@@ -6,7 +6,7 @@ class Api::SessionsController < ApplicationController
     if @user
       render :show
     else
-      render json: {user: {logged_in: false, username: null}}
+      render json: {user: {logged_in: false, username: nil}}
     end
   end
 
@@ -18,7 +18,6 @@ class Api::SessionsController < ApplicationController
 
     if @user
       login(@user)
-
       render "api/users/show"
     else
       @errors = ['Invalid Credentials']

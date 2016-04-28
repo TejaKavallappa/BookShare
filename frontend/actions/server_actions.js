@@ -16,9 +16,10 @@ var ServerActions = {
   },
   removeBook: function(book){
     AppDispatcher.dispatch({
-      actionType: "BOOKS_REMOVED",
+      actionType: "BOOK_REMOVED",
       book: book
     });
   }
+
 };
 module.exports = ServerActions;

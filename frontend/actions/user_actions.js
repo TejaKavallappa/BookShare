@@ -30,16 +30,16 @@ var UserActions = {
     AppDispatcher.dispatch({
       actionType: "LOGIN",
       user: user
-    });
-  }
+      });
+    }
   },
   removeCurrentUser: function(){
-
     AppDispatcher.dispatch({
       actionType: "LOGOUT"
     });
     hashHistory.push("/");
   },
+
   handleLogoutError: function(error){
     UserActions.handleError(error);
     hashHistory.push("/");

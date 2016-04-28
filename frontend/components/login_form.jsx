@@ -34,7 +34,6 @@ var LoginForm = React.createClass({
     this.state.password = event.target.value;
   },
   greeting: function(){
-    console.log(this.state);
 		if (!this.state.currentUser) {
 			return;
 		}

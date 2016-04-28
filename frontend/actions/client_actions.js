@@ -9,6 +9,9 @@ var ClientActions = {
   },
   removeBook: function(id){
     ApiUtil.removeBook(id);
+  },
+  addBook: function(book){
+    ApiUtil.addBook(book);
   }
 };
 

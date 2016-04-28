@@ -18,11 +18,17 @@ var CurrentUserState = require('./mixins/current_user_state');
 var App = React.createClass({
   mixins: [CurrentUserState],
   render: function(){
+    var self = this;
+    var display = function() {
+      if (self.state.currentUser){
+        return self.props.children;
+      }
+    };
     return (
       <div>
         <header><h1>BookShare</h1></header>
-        <LoginForm/>
-        {this.props.children}
+          <LoginForm/>
+          {display()}
       </div>
     );
   }

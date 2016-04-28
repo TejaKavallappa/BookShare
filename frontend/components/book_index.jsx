@@ -1,8 +1,10 @@
 var React = require('react');
-
+//actions
 var ClientActions = require('../actions/client_actions');
+//components
 var BookIndexItem = require('./book_index_item');
 var BookStore = require('../stores/book_store');
+var BookForm = require('./book_form');
 
 var Books = React.createClass({
   getInitialState: function(){
@@ -31,6 +33,7 @@ var Books = React.createClass({
         })
       }
       </ul>
+      <BookForm />
     </div>);
   }
 });

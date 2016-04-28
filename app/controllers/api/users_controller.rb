@@ -11,7 +11,14 @@ class Api::UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = current_user;
-    render :show
+    # render :show
+    token = session[:session_token]
+    # @user = User.find_by(session_token: token);
+    if @user
+      render :show
+    else
+      render json: {user: {logged_in: false, username: null}}
+    end
   end
 
   def create

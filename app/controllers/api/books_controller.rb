@@ -1,3 +1,4 @@
+require 'byebug'
 class Api::BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
@@ -22,9 +23,10 @@ class Api::BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
       if @book.save
-        format.json { render :show, status: :created, location: @book }
+        render :show, status: 200
       else
-        format.json { render json: @book.errors, status: :unprocessable_entity }
+        @errors = @book.errors.full_messages
+        render "api/shared/error", status: 422
       end
   end
 
@@ -42,7 +44,7 @@ class Api::BooksController < ApplicationController
   # DELETE /books/1.json
   def destroy
     @book.destroy
-      format.json { head :no_content }
+    render :show, status: 200
   end
 
   private

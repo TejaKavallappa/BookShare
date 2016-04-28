@@ -56,14 +56,20 @@
 	//Components
 	var BookIndex = __webpack_require__(225);
 	var BookDetail = __webpack_require__(252);
-	var LoginForm = __webpack_require__(253);
-	var CurrentUserState = __webpack_require__(256);
+	var LoginForm = __webpack_require__(257);
+	var CurrentUserState = __webpack_require__(253);
 	
 	var App = React.createClass({
 	  displayName: 'App',
 	
 	  mixins: [CurrentUserState],
 	  render: function () {
+	    var self = this;
+	    var display = function () {
+	      if (self.state.currentUser) {
+	        return self.props.children;
+	      }
+	    };
 	    return React.createElement(
 	      'div',
 	      null,
@@ -77,7 +83,7 @@
 	        )
 	      ),
 	      React.createElement(LoginForm, null),
-	      this.props.children
+	      display()
 	    );
 	  }
 	});
@@ -25470,10 +25476,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	
+	//actions
 	var ClientActions = __webpack_require__(226);
+	//components
 	var BookIndexItem = __webpack_require__(233);
 	var BookStore = __webpack_require__(234);
+	var BookForm = __webpack_require__(258);
 	
 	var Books = React.createClass({
 	  displayName: 'Books',
@@ -25505,7 +25513,8 @@
 	        this.state.books.map(function (book) {
 	          return React.createElement(BookIndexItem, { key: book.id, book: book });
 	        })
-	      )
+	      ),
+	      React.createElement(BookForm, null)
 	    );
 	  }
 	});
@@ -25527,6 +25536,9 @@
 	  },
 	  removeBook: function (id) {
 	    ApiUtil.removeBook(id);
+	  },
+	  addBook: function (book) {
+	    ApiUtil.addBook(book);
 	  }
 	};
 	
@@ -25564,6 +25576,16 @@
 	      type: 'DELETE',
 	      success: function (book) {
 	        ServerActions.removeBook(book);
+	      }
+	    });
+	  },
+	  addBook: function (bookData) {
+	    $.ajax({
+	      url: "/api/books/",
+	      type: 'POST',
+	      data: { book: bookData },
+	      success: function (newBook) {
+	        ServerActions.getSingleBook(newBook);
 	      }
 	    });
 	  }
@@ -25910,10 +25932,11 @@
 	  },
 	  removeBook: function (book) {
 	    AppDispatcher.dispatch({
-	      actionType: "BOOKS_REMOVED",
+	      actionType: "BOOK_REMOVED",
 	      book: book
 	    });
 	  }
+	
 	};
 	module.exports = ServerActions;
 
@@ -32475,41 +32498,92 @@
 
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(166).hashHistory;
-	
+	//actions
 	var ClientActions = __webpack_require__(226);
+	//component
 	var BookIndex = __webpack_require__(225);
+	//stores
 	var BookStore = __webpack_require__(234);
+	//mixin
+	var CurrentUserState = __webpack_require__(253);
 	
 	var BookDetail = React.createClass({
 	  displayName: 'BookDetail',
 	
+	  mixins: [CurrentUserState],
 	  getInitialState: function () {
 	    return { book: BookStore.find(this.props.params.bookId) };
 	  },
+	
 	  componentDidMount: function () {
 	    this.bookListener = BookStore.addListener(this._onChange);
+	    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
 	  },
+	
 	  componentWillUnmount: function () {
 	    this.bookListener.remove();
 	  },
+	
 	  componentWillReceiveProps: function (newProps) {
-	    ClientActions.getBook(parseInt(newProps.params.bookId));
+	    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
 	  },
+	
 	  _onChange: function () {
 	    this.setState(this.getStateFromStore);
 	  },
+	
 	  getStateFromStore: function () {
-	    this.setState({ book: BookStore.find(this.props.params.bookid) });
+	    this.setState({ book: BookStore.find(this.props.params.bookId) });
+	  },
+	
+	  editBook: function (event) {
+	    event.preventDefault();
+	    var url = "/api/books/" + this.props.params.bookId;
+	    hashHistory.push(url);
+	  },
+	
+	  deleteBook: function (event) {
+	    event.preventDefault();
+	    ClientActions.removeBook(this.props.params.bookId);
 	  },
 	  render: function () {
 	    var book = this.state.book;
+	    var self = this;
+	
+	    if (!book) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Loading...'
+	      );
+	    }
+	
+	    var display = function () {
+	      if (self.state.currentUser === self.state.book.owner_id) {
+	        return React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            'button',
+	            { onClick: self.editBook },
+	            'Edit'
+	          ),
+	          React.createElement(
+	            'button',
+	            { onClick: self.deleteBook },
+	            'Delete'
+	          )
+	        );
+	      }
+	    };
 	    //In the edit form add facility to let user upload an images
 	    return React.createElement(
 	      'div',
 	      { id: 'book' },
+	      React.createElement('img', { src: book.image_url, alt: book.title }),
 	      React.createElement(
 	        'h3',
-	        null,
+	        { style: { color: 'red' } },
 	        ' ',
 	        book.title,
 	        ' '
@@ -32523,22 +32597,200 @@
 	        'p',
 	        null,
 	        book.description ? book.description : ""
-	      )
+	      ),
+	      display()
 	    );
 	  } //render
 	});
 	
-	// <img src={book.image_url} alt={book.title} style={{width: '250px'}}/>
 	module.exports = BookDetail;
 
 /***/ },
 /* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var UserStore = __webpack_require__(254);
+	var UserActions = __webpack_require__(255);
+	
+	var CurrentUserState = {
+	  getInitialState: function () {
+	    return {
+	      currentUser: UserStore.currentUser(),
+	      userErrors: UserStore.errors() };
+	  },
+	  componentDidMount: function () {
+	    UserStore.addListener(this.updateUser);
+	    if (!this.state.currentUser) {
+	      UserActions.fetchCurrentUser();
+	    }
+	  },
+	  updateUser: function () {
+	    this.setState({
+	      currentUser: UserStore.currentUser(),
+	      userErrors: UserStore.errors() });
+	  }
+	};
+	
+	module.exports = CurrentUserState;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(228);
+	var Store = __webpack_require__(235).Store;
+	
+	var UserStore = new Store(AppDispatcher);
+	var _currentUser, _errors;
+	
+	UserStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case "LOGIN":
+	      UserStore.login(payload.user);
+	      break;
+	    case "LOGOUT":
+	      UserStore.logout();
+	      break;
+	    case "ERROR":
+	      UserStore.setErrors(payload.errors);
+	      break;
+	  }
+	  this.__emitChange();
+	};
+	
+	UserStore.login = function (user) {
+	  _currentUser = user;
+	  _errors = null;
+	};
+	
+	UserStore.currentUser = function () {
+	  if (_currentUser) {
+	    return $.extend({}, _currentUser);
+	  }
+	};
+	
+	UserStore.logout = function () {
+	  _currentUser = null;
+	  _errors = null;
+	};
+	
+	UserStore.setErrors = function (errors) {
+	  _errors = errors;
+	};
+	
+	UserStore.errors = function () {
+	  if (_errors) {
+	    return [].slice.call(_errors);
+	  }
+	};
+	module.exports = UserStore;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(228);
+	var UserApiUtil = __webpack_require__(256);
+	var hashHistory = __webpack_require__(166).hashHistory;
+	
+	var UserActions = {
+	  fetchCurrentUser: function () {
+	    UserApiUtil.fetchCurrentUser(UserActions.receiveCurrentUser, UserActions.handleError);
+	  },
+	  login: function (user) {
+	    UserApiUtil.post({
+	      url: "/api/session",
+	      user: user,
+	      success: UserActions.receiveCurrentUser,
+	      error: UserActions.handleError
+	    });
+	  },
+	  signup: function (user) {
+	    UserApiUtil.post({
+	      url: "/api/users",
+	      user: user,
+	      success: UserActions.receiveCurrentUser,
+	      error: UserActions.handleError
+	    });
+	  },
+	  logout: function () {
+	    UserApiUtil.logout(UserActions.removeCurrentUser, UserActions.handleLogoutError);
+	  },
+	  receiveCurrentUser: function (user) {
+	    if (user.username) {
+	      AppDispatcher.dispatch({
+	        actionType: "LOGIN",
+	        user: user
+	      });
+	    }
+	  },
+	  removeCurrentUser: function () {
+	    AppDispatcher.dispatch({
+	      actionType: "LOGOUT"
+	    });
+	    hashHistory.push("/");
+	  },
+	
+	  handleLogoutError: function (error) {
+	    UserActions.handleError(error);
+	    hashHistory.push("/");
+	  },
+	  handleError: function (error) {
+	    AppDispatcher.dispatch({
+	      actionType: "ERROR",
+	      errors: error.responseJSON.errors
+	    });
+	  }
+	};
+	
+	module.exports = UserActions;
+	window.UserActions = UserActions;
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(228);
+	
+	var UserApiUtil = {
+	  fetchCurrentUser: function (success, error) {
+	    $.ajax({
+	      url: '/api/session',
+	      success: success,
+	      type: 'GET',
+	      error: error
+	    });
+	  },
+	  post: function (options) {
+	    $.ajax({
+	      type: 'POST',
+	      url: options.url,
+	      data: { user: options.user },
+	      success: options.success,
+	      error: options.error
+	    });
+	  },
+	  logout: function (success, error) {
+	    $.ajax({
+	      url: '/api/session',
+	      success: success,
+	      type: 'DELETE',
+	      error: error
+	    });
+	  }
+	};
+	
+	module.exports = UserApiUtil;
+	window.UserApiUtil = UserApiUtil;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var React = __webpack_require__(1);
 	
-	var UserActions = __webpack_require__(254);
-	var CurrentUserState = __webpack_require__(256);
+	var UserActions = __webpack_require__(255);
+	var CurrentUserState = __webpack_require__(253);
 	
 	var LoginForm = React.createClass({
 	  displayName: 'LoginForm',
@@ -32573,7 +32825,6 @@
 	    this.state.password = event.target.value;
 	  },
 	  greeting: function () {
-	    console.log(this.state);
 	    if (!this.state.currentUser) {
 	      return;
 	    }
@@ -32676,182 +32927,97 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 254 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(228);
-	var UserApiUtil = __webpack_require__(255);
-	var hashHistory = __webpack_require__(166).hashHistory;
+	var React = __webpack_require__(1);
+	//actions
+	var ClientActions = __webpack_require__(226);
+	//mixin
+	var CurrentUserState = __webpack_require__(253);
 	
-	var UserActions = {
-	  fetchCurrentUser: function () {
-	    UserApiUtil.fetchCurrentUser(UserActions.receiveCurrentUser, UserActions.handleError);
-	  },
-	  login: function (user) {
-	    UserApiUtil.post({
-	      url: "/api/session",
-	      user: user,
-	      success: UserActions.receiveCurrentUser,
-	      error: UserActions.handleError
-	    });
-	  },
-	  signup: function (user) {
-	    UserApiUtil.post({
-	      url: "/api/users",
-	      user: user,
-	      success: UserActions.receiveCurrentUser,
-	      error: UserActions.handleError
-	    });
-	  },
-	  logout: function () {
-	    UserApiUtil.logout(UserActions.removeCurrentUser, UserActions.handleLogoutError);
-	  },
-	  receiveCurrentUser: function (user) {
-	    if (user.username) {
-	      AppDispatcher.dispatch({
-	        actionType: "LOGIN",
-	        user: user
-	      });
-	    }
-	  },
-	  removeCurrentUser: function () {
+	var BookForm = React.createClass({
+	  displayName: 'BookForm',
 	
-	    AppDispatcher.dispatch({
-	      actionType: "LOGOUT"
-	    });
-	    hashHistory.push("/");
-	  },
-	  handleLogoutError: function (error) {
-	    UserActions.handleError(error);
-	    hashHistory.push("/");
-	  },
-	  handleError: function (error) {
-	    AppDispatcher.dispatch({
-	      actionType: "ERROR",
-	      errors: error.responseJSON.errors
-	    });
-	  }
-	};
+	  mixins: [CurrentUserState],
 	
-	module.exports = UserActions;
-	window.UserActions = UserActions;
-
-/***/ },
-/* 255 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(228);
-	
-	var UserApiUtil = {
-	  fetchCurrentUser: function (success, error) {
-	    $.ajax({
-	      url: '/api/session',
-	      success: success,
-	      type: 'GET',
-	      error: error
-	    });
-	  },
-	  post: function (options) {
-	    $.ajax({
-	      type: 'POST',
-	      url: options.url,
-	      data: { user: options.user },
-	      success: options.success,
-	      error: options.error
-	    });
-	  },
-	  logout: function (success, error) {
-	    $.ajax({
-	      url: '/api/session',
-	      success: success,
-	      type: 'DELETE',
-	      error: error
-	    });
-	  }
-	};
-	
-	module.exports = UserApiUtil;
-	window.UserApiUtil = UserApiUtil;
-
-/***/ },
-/* 256 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var UserStore = __webpack_require__(257);
-	var UserActions = __webpack_require__(254);
-	
-	var CurrentUserState = {
 	  getInitialState: function () {
 	    return {
-	      currentUser: UserStore.currentUser(),
-	      userErrors: UserStore.errors() };
+	      author: "",
+	      title: "",
+	      description: "",
+	      image_url: ""
+	    };
 	  },
-	  componentDidMount: function () {
-	    UserStore.addListener(this.updateUser);
-	    if (!this.state.currentUser) {
-	      UserActions.fetchCurrentUser();
-	    }
+	
+	  authorChange: function (event) {
+	    this.setState({ author: event.target.value });
 	  },
-	  updateUser: function () {
+	
+	  titleChange: function (event) {
+	    this.setState({ title: event.target.value });
+	  },
+	
+	  descriptionChange: function (event) {
+	    this.setState({ description: event.target.value });
+	  },
+	
+	  handleSubmit: function (event) {
+	    event.preventDefault();
+	    var postData = {
+	      title: this.state.title,
+	      author: this.state.author,
+	      description: this.state.description,
+	      owner_id: this.state.currentUser.id
+	    };
+	    ClientActions.addBook(postData);
 	    this.setState({
-	      currentUser: UserStore.currentUser(),
-	      userErrors: UserStore.errors() });
+	      author: "",
+	      title: "",
+	      description: "",
+	      image_url: ""
+	    });
+	  },
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { id: 'new-book' },
+	      React.createElement(
+	        'h3',
+	        null,
+	        'New Book'
+	      ),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'label',
+	          null,
+	          'Title',
+	          React.createElement('input', { type: 'text', value: this.state.title, onChange: this.titleChange })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Author',
+	          React.createElement('input', { type: 'text', value: this.state.author, onChange: this.authorChange })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Description',
+	          React.createElement('textarea', { value: this.state.description, onChange: this.descriptionChange })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement('input', { type: 'submit', value: 'Add New Book!' })
+	      )
+	    );
 	  }
-	};
 	
-	module.exports = CurrentUserState;
-
-/***/ },
-/* 257 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(228);
-	var Store = __webpack_require__(235).Store;
-	
-	var UserStore = new Store(AppDispatcher);
-	var _currentUser, _errors;
-	
-	UserStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case "LOGIN":
-	      UserStore.login(payload.user);
-	      break;
-	    case "LOGOUT":
-	      UserStore.logout();
-	      break;
-	    case "ERROR":
-	      UserStore.setErrors(payload.errors);
-	      break;
-	  }
-	  this.__emitChange();
-	};
-	
-	UserStore.login = function (user) {
-	  _currentUser = user;
-	  _errors = null;
-	};
-	
-	UserStore.currentUser = function () {
-	  if (_currentUser) {
-	    return $.extend({}, _currentUser);
-	  }
-	};
-	
-	UserStore.logout = function () {
-	  _currentUser = null;
-	  _errors = null;
-	};
-	
-	UserStore.setErrors = function (errors) {
-	  _errors = errors;
-	};
-	
-	UserStore.errors = function () {
-	  if (_errors) {
-	    return [].slice.call(_errors);
-	  }
-	};
-	module.exports = UserStore;
+	});
+	module.exports = BookForm;
 
 /***/ }
 /******/ ]);
