@@ -88,6 +88,7 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
+	    React.createElement(IndexRoute, { component: BookIndex }),
 	    React.createElement(Route, { path: '/api/books', component: BookIndex }),
 	    React.createElement(Route, { path: '/api/books/:bookId', component: BookDetail })
 	  )
@@ -25922,6 +25923,7 @@
 
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(166).hashHistory;
+	var Link = __webpack_require__(166).Link;
 	
 	var ClientActions = __webpack_require__(226);
 	var BookIndex = __webpack_require__(225);
@@ -25946,8 +25948,6 @@
 	    return React.createElement(
 	      'li',
 	      null,
-	      '// ',
-	      React.createElement('img', { src: book.image_url, alt: book.title, style: 'width:150px' }),
 	      React.createElement(
 	        Link,
 	        { to: "/api/books/" + book.id.toString() },
@@ -25969,6 +25969,7 @@
 	  }
 	});
 	
+	// <img src={book.image_url} alt={book.title} style="width:150px"/>
 	module.exports = Book;
 
 /***/ },
@@ -25981,26 +25982,26 @@
 	var BookStore = new Store(AppDispatcher);
 	var _books = {};
 	
-	BookStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case "BOOKS_RECEIVED":
-	      this.receiveAllBooks(payload.books);
-	      break;
-	    case "BOOK_RECEIVED":
-	      this.receiveSingleBook(payload.book);
-	      break;
-	    case "BOOK_REMOVED":
-	      this.removeBook(payload.book);
-	      break;
-	  }
-	  this.__emitChange();
-	};
-	
 	var receiveAllBooks = function (books) {
 	  _books = {};
 	  books.forEach(function (book) {
 	    _books[book.id] = book;
 	  });
+	};
+	
+	BookStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case "BOOKS_RECEIVED":
+	      receiveAllBooks(payload.books);
+	      break;
+	    case "BOOK_RECEIVED":
+	      receiveSingleBook(payload.book);
+	      break;
+	    case "BOOK_REMOVED":
+	      removeBook(payload.book);
+	      break;
+	  }
+	  this.__emitChange();
 	};
 	
 	var receiveSingleBook = function (book) {
@@ -32522,12 +32523,12 @@
 	        'p',
 	        null,
 	        book.description ? book.description : ""
-	      ),
-	      React.createElement('img', { src: book.image_url, alt: book.title, style: 'width:250px' })
+	      )
 	    );
 	  } //render
 	});
 	
+	// <img src={book.image_url} alt={book.title} style={{width: '250px'}}/>
 	module.exports = BookDetail;
 
 /***/ },
@@ -32572,6 +32573,7 @@
 	    this.state.password = event.target.value;
 	  },
 	  greeting: function () {
+	    console.log(this.state);
 	    if (!this.state.currentUser) {
 	      return;
 	    }
@@ -32679,6 +32681,7 @@
 
 	var AppDispatcher = __webpack_require__(228);
 	var UserApiUtil = __webpack_require__(255);
+	var hashHistory = __webpack_require__(166).hashHistory;
 	
 	var UserActions = {
 	  fetchCurrentUser: function () {
@@ -32701,18 +32704,26 @@
 	    });
 	  },
 	  logout: function () {
-	    UserApiUtil.logout(UserActions.removeCurrentUser, UserActions.handleError);
+	    UserApiUtil.logout(UserActions.removeCurrentUser, UserActions.handleLogoutError);
 	  },
 	  receiveCurrentUser: function (user) {
-	    AppDispatcher.dispatch({
-	      actionType: "LOGIN",
-	      user: user
-	    });
+	    if (user.username) {
+	      AppDispatcher.dispatch({
+	        actionType: "LOGIN",
+	        user: user
+	      });
+	    }
 	  },
 	  removeCurrentUser: function () {
+	
 	    AppDispatcher.dispatch({
 	      actionType: "LOGOUT"
 	    });
+	    hashHistory.push("/");
+	  },
+	  handleLogoutError: function (error) {
+	    UserActions.handleError(error);
+	    hashHistory.push("/");
 	  },
 	  handleError: function (error) {
 	    AppDispatcher.dispatch({

@@ -31,6 +31,7 @@ var App = React.createClass({
 var Router = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
+      <IndexRoute component={BookIndex}/>
       <Route path="/api/books" component={BookIndex}/>
       <Route path="/api/books/:bookId" component={BookDetail}/>
     </Route>

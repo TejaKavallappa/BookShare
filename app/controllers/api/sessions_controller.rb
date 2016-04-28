@@ -1,7 +1,13 @@
 class Api::SessionsController < ApplicationController
 
   def show
-    render :show
+    token = session[:session_token]
+    @user = User.find_by(session_token: token);
+    if @user
+      render :show
+    else
+      render json: {user: {logged_in: false, username: null}}
+    end
   end
 
   def create
@@ -12,6 +18,7 @@ class Api::SessionsController < ApplicationController
 
     if @user
       login(@user)
+
       render "api/users/show"
     else
       @errors = ['Invalid Credentials']
@@ -21,7 +28,13 @@ class Api::SessionsController < ApplicationController
 
   def destroy
     @user = current_user
-    logout
-    render :show
+    if @user
+      logout
+      render :delete
+    else
+      @errors = ["Cannot logout!"]
+      render "api/shared/error", status: 401#lookup error status
+    end
   end
+
 end

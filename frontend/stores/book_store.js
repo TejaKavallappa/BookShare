@@ -4,27 +4,28 @@ var Store = require('flux/utils').Store;
 var BookStore = new Store(AppDispatcher);
 var _books = {};
 
-BookStore.__onDispatch = function(payload){
-  switch(payload.actionType){
-    case "BOOKS_RECEIVED":
-      this.receiveAllBooks(payload.books);
-      break;
-    case "BOOK_RECEIVED":
-      this.receiveSingleBook(payload.book);
-      break;
-    case "BOOK_REMOVED":
-      this.removeBook(payload.book);
-      break;
-  }
-  this.__emitChange();
-};
-
 var receiveAllBooks = function(books){
   _books = {};
   books.forEach(function(book) {
     _books[book.id] = book;
   });
 };
+
+BookStore.__onDispatch = function(payload){
+  switch(payload.actionType){
+    case "BOOKS_RECEIVED":
+      receiveAllBooks(payload.books);
+      break;
+    case "BOOK_RECEIVED":
+      receiveSingleBook(payload.book);
+      break;
+    case "BOOK_REMOVED":
+      removeBook(payload.book);
+      break;
+  }
+  this.__emitChange();
+};
+
 
 var receiveSingleBook = function(book){
   _books[book.id] = book;

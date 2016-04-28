@@ -34,10 +34,10 @@ var BookDetail = React.createClass({
 
             <p>{book.description ? book.description : ""}</p>
 
-            <img src={book.image_url} alt={book.title} style="width:250px"/>
           </div>
       );
   }//render
 });
 
+// <img src={book.image_url} alt={book.title} style={{width: '250px'}}/>
 module.exports = BookDetail;

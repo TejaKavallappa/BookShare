@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatcher/dispatcher');
 var UserApiUtil = require('../util/user_api_util');
+var hashHistory = require('react-router').hashHistory;
 
 var UserActions = {
   fetchCurrentUser: function(){
@@ -22,18 +23,27 @@ var UserActions = {
     });
   },
   logout: function(){
-    UserApiUtil.logout(UserActions.removeCurrentUser, UserActions.handleError);
+    UserApiUtil.logout(UserActions.removeCurrentUser, UserActions.handleLogoutError);
   },
   receiveCurrentUser: function(user){
+    if (user.username){
     AppDispatcher.dispatch({
       actionType: "LOGIN",
       user: user
     });
+  }
   },
   removeCurrentUser: function(){
+
     AppDispatcher.dispatch({
       actionType: "LOGOUT"
     });
+    hashHistory.push("/");
+  },
+  handleLogoutError: function(error){
+    UserActions.handleError(error);
+    hashHistory.push("/");
+
   },
   handleError: function(error){
     AppDispatcher.dispatch({
