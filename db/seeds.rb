@@ -12,19 +12,19 @@ Book.create!(
       author: "George Orwell",
       description: "Dystopian fiction",
       owner_id: 1,
-      image_url: "https://flavorwire.files.wordpress.com/2011/06/screen-shot-2011-06-25-at-8-15-31-am.jpg"
+      image_url: "http://farm1.static.flickr.com/126/4545312810_6841a6a870_m.jpg"
     )
 Book.create!(
       title: "Wild",
       author: "Cheryl Strayed",
       description: "Pacific crest trail",
       owner_id: 1,
-      image_url: "https://flavorwire.files.wordpress.com/2011/06/screen-shot-2011-06-25-at-8-15-31-am.jpg"
+      image_url: "http://www.literarytraveler.net/wp-content/uploads/2012/07/Wild.jpg"
     )
 Book.create(
       title: "The Brothers Karamazov",
       author: "George Orwell",
       description: "Dystopian fiction",
       owner_id: 1,
-      image_url: "https://flavorwire.files.wordpress.com/2011/06/screen-shot-2011-06-25-at-8-15-31-am.jpg"
+      image_url: "https://magrudy-assets.storage.googleapis.com/__sized__/9781406790092-thumbnail-300x400.jpg"
 )

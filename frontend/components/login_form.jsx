@@ -1,8 +1,15 @@
+//react
 var React = require('react');
-
+var ReactRouter = require('react-router');
+var hashHistory = ReactRouter.hashHistory;
+//actions
 var UserActions = require('../actions/user_actions');
+//mixin
 var CurrentUserState = require('../mixins/current_user_state');
+//stores
+var UserStore = require('../stores/user_store');
 
+var BookIndex = require('./book_index');
 var LoginForm = React.createClass({
 
   mixins: [CurrentUserState],
@@ -13,6 +20,15 @@ var LoginForm = React.createClass({
       username: this.state.username,
       password: this.state.password
     });
+  },
+  componentDidMount: function(){
+    this.authListener = UserStore.addListener(this._onChange);
+  },
+
+  _onChange: function(){
+    if (this.state.currentUser){
+      hashHistory.push("books");
+    }
   },
 
   logout: function(event){
@@ -26,17 +42,6 @@ var LoginForm = React.createClass({
   passwordChange: function(event){
     this.state.password = event.target.value;
   },
-  greeting: function(){
-		if (!this.state.currentUser) {
-			return;
-		}
-		return (
-			<div>
-				<h2>Hi, {this.state.currentUser.username}!</h2>
-				<input type="submit" value="logout" onClick={this.logout}/>
-			</div>
-		);
-	},
 
   errors: function(){
     if (!this.state.userErrors){
@@ -74,9 +79,9 @@ var LoginForm = React.createClass({
     // this.props.location.pathname
     return (
       <div id="login-form">
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} >
 
-        <section>
+        <section >
 
           <label>Username&nbsp;
           <input type="text" onChange={this.usernameChange}></input><br/>
@@ -96,12 +101,36 @@ var LoginForm = React.createClass({
     );//return
   },//form
   render: function(){
+    if (!this.isMounted){
+      return (<div>Loading login form...</div>);
+    }
+    var self = this;
+    var showBooks = function() {
+      if (self.state.currentUser){
+        return <BookIndex/>;
+      }
+    };
+
     return (<div id='login-form'>
-      {this.greeting()}
-      {this.form()}
-      {this.errors()}
-    </div>);
+    {this.form()}
+    {this.errors()}
+    {showBooks()}
+  </div>);
+
   }
 });
 
 module.exports = LoginForm;
+
+// greeting: function(){
+// 	if (!this.state.currentUser) {
+// 		return;
+// 	}
+// 	return (
+// 		<div>
+// 			<h2>Hi, {this.state.currentUser.username}!</h2>
+// 			<input type="submit" value="logout" onClick={this.logout}/>
+// 		</div>
+// 	);
+// },
+// {this.greeting()}

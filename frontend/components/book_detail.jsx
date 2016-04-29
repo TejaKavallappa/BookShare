@@ -65,9 +65,8 @@ var BookDetail = React.createClass({
     };
     //In the edit form add facility to let user upload an images
     return (
-         <div id="book">
-           <img src={book.image_url} alt={book.title} />
-            <h3 style={{color: 'red'}}> {book.title} </h3>
+         <div className="book">
+            <h3> {book.title} </h3>
             <h4>{book.author}</h4>
             <p>{book.description ? book.description : ""}</p>
             {display()}

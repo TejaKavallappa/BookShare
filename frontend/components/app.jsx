@@ -22,34 +22,3 @@ var App = React.createClass({
   }//render
 });
 module.exports = App;
-
-// <header className="header">
-//   <a href="/">
-//     <div className="left-nav"> <h1>BookShare</h1> </div>
-//   </a>
-//   <nav className="nav-bar">
-//     {display()}
-//   </nav>
-// </header>
-
-// logout: function(event){
-//   event.preventDefault();
-//   UserActions.logout();
-// },
-//
-// render: function(){
-//   var self = this;
-//   var display = function() {
-//     if (self.state.currentUser){
-//       return (<ul>
-//         <li onClick={self.logout}><button >Sign Out</button></li>
-//       </ul>);
-//     }
-//     else{
-//       return (<ul>
-//         <li><a href="#/login">Log In</a></li>
-//         <li><a href="#/signup">Sign Up</a></li>
-//         <li><a href="#">Demo User</a></li>
-//       </ul>);
-//     }
-//   };

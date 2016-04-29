@@ -21,12 +21,17 @@ var Book = React.createClass({
     var book = this.props.book;
     //In the edit form add facility to let user upload an images
     return (
+      <div className='book-detail-item'>
       <li>
-          <Link to={ "/books/" + book.id.toString() }> {book.title} </Link>
-          <button onClick={this.editBook}>Edit</button>
-          <button onClick={this.deleteBook}>Delete</button>
+          <Link to={ "/books/" + book.id.toString() }>
+           <img src={book.image_url} alt={book.title} />
+           </Link>
+           <h3>{book.title}</h3>
 
+          <button onClick={this.editBook} className="bk-button">Edit</button>
+          <button onClick={this.deleteBook} className="bk-button">Delete</button>
     </li>
+    </div>
   ); //return
   }
 });

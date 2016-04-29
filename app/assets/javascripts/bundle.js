@@ -69,7 +69,6 @@
 	    { path: '/', component: App },
 	    React.createElement(Route, { path: 'login', component: LoginForm }),
 	    React.createElement(Route, { path: 'signup', component: LoginForm }),
-	    React.createElement(IndexRoute, { component: BookIndex }),
 	    React.createElement(
 	      Route,
 	      { path: 'books', component: BookIndex },
@@ -25454,18 +25453,24 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	//react router
+	var ReactRouter = __webpack_require__(166);
+	var hashHistory = ReactRouter.hashHistory;
 	//actions
 	var ClientActions = __webpack_require__(226);
 	//components
 	var BookIndexItem = __webpack_require__(233);
 	var BookStore = __webpack_require__(234);
 	var BookForm = __webpack_require__(252);
+	var CurrentUserState = __webpack_require__(253);
 	
 	var Books = React.createClass({
 	  displayName: 'Books',
 	
+	  mixins: [CurrentUserState],
+	
 	  getInitialState: function () {
-	    return { books: [] };
+	    return { books: [], showForm: false };
 	  },
 	
 	  componentDidMount: function () {
@@ -25480,6 +25485,20 @@
 	  getBooks: function () {
 	    this.setState({ books: BookStore.all() });
 	  },
+	  addBook: function () {
+	    this.setState({ showForm: true });
+	  },
+	  displayForm: function () {
+	    if (this.state.showForm) {
+	      return React.createElement(BookForm, null);
+	    } else {
+	      return React.createElement(
+	        'button',
+	        { className: 'bk-button', onClick: this.addBook },
+	        'Add a new book to my collection!'
+	      );
+	    }
+	  },
 	
 	  render: function () {
 	    if (!this.state.books) {
@@ -25489,9 +25508,12 @@
 	        'Loading'
 	      );
 	    }
+	    // if(this.state.currentUser){
 	    return React.createElement(
 	      'div',
 	      { className: 'book-index' },
+	      this.displayForm(),
+	      this.props.children,
 	      React.createElement(
 	        'ul',
 	        null,
@@ -25502,9 +25524,7 @@
 	            React.createElement(BookIndexItem, { book: book })
 	          );
 	        })
-	      ),
-	      this.props.children,
-	      React.createElement(BookForm, null)
+	      )
 	    );
 	  }
 	});
@@ -25959,24 +25979,31 @@
 	    var book = this.props.book;
 	    //In the edit form add facility to let user upload an images
 	    return React.createElement(
-	      'li',
-	      null,
+	      'div',
+	      { className: 'book-detail-item' },
 	      React.createElement(
-	        Link,
-	        { to: "/books/" + book.id.toString() },
-	        ' ',
-	        book.title,
-	        ' '
-	      ),
-	      React.createElement(
-	        'button',
-	        { onClick: this.editBook },
-	        'Edit'
-	      ),
-	      React.createElement(
-	        'button',
-	        { onClick: this.deleteBook },
-	        'Delete'
+	        'li',
+	        null,
+	        React.createElement(
+	          Link,
+	          { to: "/books/" + book.id.toString() },
+	          React.createElement('img', { src: book.image_url, alt: book.title })
+	        ),
+	        React.createElement(
+	          'h3',
+	          null,
+	          book.title
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.editBook, className: 'bk-button' },
+	          'Edit'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.deleteBook, className: 'bk-button' },
+	          'Delete'
+	        )
 	      )
 	    ); //return
 	  }
@@ -32526,7 +32553,8 @@
 	      author: this.state.author,
 	      title: this.state.title,
 	      description: this.state.description,
-	      owner_id: ownerId
+	      owner_id: ownerId,
+	      image_url: "http://i.imgur.com/sJ3CT4V.gif"
 	    };
 	    ClientActions.addBook(postData);
 	    this.setState({
@@ -32540,7 +32568,7 @@
 	  render: function () {
 	    return React.createElement(
 	      'div',
-	      { id: 'new-book' },
+	      { className: 'new-book' },
 	      React.createElement(
 	        'h3',
 	        null,
@@ -32851,11 +32879,10 @@
 	    //In the edit form add facility to let user upload an images
 	    return React.createElement(
 	      'div',
-	      { id: 'book' },
-	      React.createElement('img', { src: book.image_url, alt: book.title }),
+	      { className: 'book' },
 	      React.createElement(
 	        'h3',
-	        { style: { color: 'red' } },
+	        null,
 	        ' ',
 	        book.title,
 	        ' '
@@ -32881,11 +32908,18 @@
 /* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
+	//react
 	var React = __webpack_require__(1);
-	
+	var ReactRouter = __webpack_require__(166);
+	var hashHistory = ReactRouter.hashHistory;
+	//actions
 	var UserActions = __webpack_require__(255);
+	//mixin
 	var CurrentUserState = __webpack_require__(253);
+	//stores
+	var UserStore = __webpack_require__(254);
 	
+	var BookIndex = __webpack_require__(225);
 	var LoginForm = React.createClass({
 	  displayName: 'LoginForm',
 	
@@ -32899,6 +32933,15 @@
 	      password: this.state.password
 	    });
 	  },
+	  componentDidMount: function () {
+	    this.authListener = UserStore.addListener(this._onChange);
+	  },
+	
+	  _onChange: function () {
+	    if (this.state.currentUser) {
+	      hashHistory.push("books");
+	    }
+	  },
 	
 	  logout: function (event) {
 	    event.preventDefault();
@@ -32910,23 +32953,6 @@
 	  },
 	  passwordChange: function (event) {
 	    this.state.password = event.target.value;
-	  },
-	  greeting: function () {
-	    if (!this.state.currentUser) {
-	      return;
-	    }
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h2',
-	        null,
-	        'Hi, ',
-	        this.state.currentUser.username,
-	        '!'
-	      ),
-	      React.createElement('input', { type: 'submit', value: 'logout', onClick: this.logout })
-	    );
 	  },
 	
 	  errors: function () {
@@ -33003,17 +33029,44 @@
 	    ); //return
 	  }, //form
 	  render: function () {
+	    if (!this.isMounted) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Loading login form...'
+	      );
+	    }
+	    var self = this;
+	    var showBooks = function () {
+	      if (self.state.currentUser) {
+	        return React.createElement(BookIndex, null);
+	      }
+	    };
+	
 	    return React.createElement(
 	      'div',
 	      { id: 'login-form' },
-	      this.greeting(),
 	      this.form(),
-	      this.errors()
+	      this.errors(),
+	      showBooks()
 	    );
 	  }
 	});
 	
 	module.exports = LoginForm;
+	
+	// greeting: function(){
+	// 	if (!this.state.currentUser) {
+	// 		return;
+	// 	}
+	// 	return (
+	// 		<div>
+	// 			<h2>Hi, {this.state.currentUser.username}!</h2>
+	// 			<input type="submit" value="logout" onClick={this.logout}/>
+	// 		</div>
+	// 	);
+	// },
+	// {this.greeting()}
 
 /***/ },
 /* 259 */
@@ -33045,37 +33098,6 @@
 	  } //render
 	});
 	module.exports = App;
-	
-	// <header className="header">
-	//   <a href="/">
-	//     <div className="left-nav"> <h1>BookShare</h1> </div>
-	//   </a>
-	//   <nav className="nav-bar">
-	//     {display()}
-	//   </nav>
-	// </header>
-
-	// logout: function(event){
-	//   event.preventDefault();
-	//   UserActions.logout();
-	// },
-	//
-	// render: function(){
-	//   var self = this;
-	//   var display = function() {
-	//     if (self.state.currentUser){
-	//       return (<ul>
-	//         <li onClick={self.logout}><button >Sign Out</button></li>
-	//       </ul>);
-	//     }
-	//     else{
-	//       return (<ul>
-	//         <li><a href="#/login">Log In</a></li>
-	//         <li><a href="#/signup">Sign Up</a></li>
-	//         <li><a href="#">Demo User</a></li>
-	//       </ul>);
-	//     }
-	//   };
 
 /***/ },
 /* 260 */
@@ -33112,11 +33134,7 @@
 	          React.createElement(
 	            'li',
 	            { onClick: self.logout },
-	            React.createElement(
-	              'button',
-	              null,
-	              'Sign Out'
-	            )
+	            'Sign Out'
 	          )
 	        );
 	      } else {

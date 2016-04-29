@@ -36,7 +36,8 @@ var BookForm = React.createClass({
       author: this.state.author,
       title: this.state.title,
       description: this.state.description,
-      owner_id: ownerId
+      owner_id: ownerId,
+      image_url: "http://i.imgur.com/sJ3CT4V.gif"
     };
     ClientActions.addBook(postData);
     this.setState({
@@ -48,7 +49,7 @@ var BookForm = React.createClass({
   },
 
   render: function(){
-    return (<div id="new-book">
+    return (<div className="new-book">
       <h3>New Book</h3>
       <form onSubmit={this.handleSubmit}>
 

@@ -21,8 +21,6 @@ var Routerr = (
       <Route path="login" component={LoginForm}/>
       <Route path="signup" component={LoginForm}/>
 
-      <IndexRoute component={BookIndex}/>
-
       <Route path="books" component={BookIndex}>
         <Route path=":bookId" component={BookDetail}/>
       </Route>
