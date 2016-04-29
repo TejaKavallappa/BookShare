@@ -25511,6 +25511,30 @@
 	        'Loading'
 	      );
 	    }
+	
+	    var self = this;
+	    // console.log(self.currentUser);
+	    var filterBooks = function () {
+	      var userBooks = [];
+	      self.state.books.forEach(function (book) {
+	        if (book.owner_id === self.currentUser.id) {
+	          userBooks.push(book);
+	        }
+	      });
+	      return userBooks;
+	    };
+	    // console.log(filterBooks());
+	    // var userBooks = function(){
+	    //   console.log("Returning books");
+	    //   self.state.books.map(function(book){
+	    //     // if (book.owner_id === self.currentUser.id){
+	    //       return (
+	    //         <div key={book.id}>
+	    //           <BookIndexItem book={book}/>
+	    //         </div>);
+	    //       // }//if
+	    //   });
+	    // };
 	    // if(this.state.currentUser){
 	    return React.createElement(
 	      'div',
@@ -25520,7 +25544,7 @@
 	      React.createElement(
 	        'ul',
 	        null,
-	        this.state.books.map(function (book) {
+	        self.state.books.map(function (book) {
 	          return React.createElement(
 	            'div',
 	            { key: book.id },
@@ -25993,7 +26017,6 @@
 	  },
 	  render: function () {
 	    var book = this.props.book;
-	    //In the edit form add facility to let user upload an images
 	    return React.createElement(
 	      'div',
 	      { className: 'book-detail-item' },
@@ -32573,8 +32596,7 @@
 	      author: this.state.author,
 	      title: this.state.title,
 	      description: this.state.description,
-	      owner_id: ownerId,
-	      image_url: "http://i.imgur.com/sJ3CT4V.gif"
+	      owner_id: ownerId
 	    };
 	    ClientActions.addBook(postData);
 	    this.setState({
@@ -32588,7 +32610,7 @@
 	  render: function () {
 	    return React.createElement(
 	      'div',
-	      { className: 'new-book' },
+	      { className: 'book-form' },
 	      React.createElement(
 	        'h3',
 	        null,
@@ -32654,12 +32676,14 @@
 	    }
 	  },
 	  componentWillUnmount: function () {
+	    console.log("current user state unmounting");
 	    this.userListener.remove();
 	  },
 	  updateUser: function () {
 	    this.setState({
 	      currentUser: UserStore.currentUser(),
-	      userErrors: UserStore.errors() });
+	      userErrors: UserStore.errors()
+	    });
 	  }
 	};
 	
@@ -32715,6 +32739,7 @@
 	    return [].slice.call(_errors);
 	  }
 	};
+	window.us = UserStore;
 	module.exports = UserStore;
 
 /***/ },
@@ -33002,7 +33027,7 @@
 	  render: function () {
 	    return React.createElement(
 	      'div',
-	      { className: 'edit-book' },
+	      { className: 'book-form' },
 	      React.createElement(
 	        'h3',
 	        null,
@@ -33264,6 +33289,12 @@
 	        return React.createElement(
 	          'ul',
 	          null,
+	          React.createElement(
+	            'li',
+	            null,
+	            'Hi, ',
+	            self.state.currentUser.username
+	          ),
 	          React.createElement(
 	            'li',
 	            { onClick: self.logout },

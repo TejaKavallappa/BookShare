@@ -14,12 +14,14 @@ var CurrentUserState = {
     }
   },
   componentWillUnmount: function(){
+    console.log("current user state unmounting");
     this.userListener.remove();
   },
   updateUser: function(){
     this.setState({
       currentUser: UserStore.currentUser(),
-      userErrors: UserStore.errors()});
+      userErrors: UserStore.errors()
+    });
   }
 };
 

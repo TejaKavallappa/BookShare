@@ -100,7 +100,6 @@ possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with ow
 
 **objective:** Enable complex styling of BookShare.
 
-- [ ] Integrate `react-quill` (based on Quill.js).
 - [ ] Use Rails helpers to sanitize HTML before rendering.
 - [ ] Style the new Quill elements.
 - [ ] Add favicon

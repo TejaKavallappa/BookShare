@@ -17,6 +17,15 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
+  has_many :books,
+    primary_key: :id,
+    foreign_key: :owner_id,
+    class_name: :Book
+
+  has_many :borrowed_books,
+    through: :borrowings,
+    source: :books
+
   attr_reader :password
 
   def self.generate_session_token

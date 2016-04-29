@@ -19,7 +19,6 @@ var Book = React.createClass({
   },
   render: function(){
     var book = this.props.book;
-    //In the edit form add facility to let user upload an images
     return (
       <div className='book-detail-item'>
       <li>

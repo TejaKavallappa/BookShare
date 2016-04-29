@@ -44,4 +44,5 @@ UserStore.errors = function(){
     return [].slice.call(_errors);
   }
 };
+window.us = UserStore;
 module.exports = UserStore;

@@ -23,6 +23,7 @@ var NavBar = React.createClass({
       if (self.state.currentUser){
         return (
           <ul>
+          <li>Hi, {self.state.currentUser.username}</li>  
           <li onClick={self.logout}>Sign Out</li>
           </ul>);
       }

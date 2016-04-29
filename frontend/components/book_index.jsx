@@ -33,7 +33,7 @@ var Books = React.createClass({
     this.setState({showForm: true});
   },
   displayForm: function(){
-    
+
     if(this.state.showForm){
       return <BookForm/>;
     }
@@ -48,19 +48,43 @@ var Books = React.createClass({
     if (!this.state.books){
       return (<div>Loading</div>);
     }
+
+    var self = this;
+    // console.log(self.currentUser);
+    var filterBooks = function(){
+      var userBooks = [];
+      self.state.books.forEach(function(book){
+        if (book.owner_id === self.currentUser.id){
+          userBooks.push(book);
+        }
+      });
+      return userBooks;
+    };
+    // console.log(filterBooks());
+    // var userBooks = function(){
+    //   console.log("Returning books");
+    //   self.state.books.map(function(book){
+    //     // if (book.owner_id === self.currentUser.id){
+    //       return (
+    //         <div key={book.id}>
+    //           <BookIndexItem book={book}/>
+    //         </div>);
+    //       // }//if
+    //   });
+    // };
     // if(this.state.currentUser){
       return (<div className="book-index">
       {this.displayForm()}
       {this.props.children}
         <ul>
           {
-            this.state.books.map(function(book){
-            return (
-              <div key={book.id}>
-                <BookIndexItem book={book}/>
-              </div>);
-          })
-        }
+            self.state.books.map(function(book){
+                return (
+                  <div key={book.id}>
+                    <BookIndexItem book={book}/>
+                  </div>);
+            })
+          }
         </ul>
       </div>);
   }

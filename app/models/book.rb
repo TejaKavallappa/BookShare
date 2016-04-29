@@ -5,4 +5,5 @@ class Book < ActiveRecord::Base
     class_name: "User",
     foreign_key: :owner_id,
     primary_key: :id
+
 end

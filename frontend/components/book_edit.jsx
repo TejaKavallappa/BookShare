@@ -65,7 +65,7 @@ var BookForm = React.createClass({
   },
 
   render: function(){
-    return (<div className="edit-book">
+    return (<div className="book-form">
       <h3>Edit Book</h3>
       <form onSubmit={this.handleSubmit}>
 
