@@ -11,6 +11,7 @@ var hashHistory = ReactRouter.hashHistory;
 //Components
 var BookIndex = require('./components/book_index');
 var BookDetail = require('./components/book_detail');
+var BookEdit = require('./components/book_edit');
 var LoginForm = require('./components/login_form');
 var CurrentUserState = require('./mixins/current_user_state');
 var App = require('./components/app');
@@ -23,7 +24,9 @@ var Routerr = (
 
       <Route path="books" component={BookIndex}>
         <Route path=":bookId" component={BookDetail}/>
+        <Route path=":bookId/edit" component={BookEdit}/>
       </Route>
+
 
     </Route>
   </Router>

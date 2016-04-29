@@ -63,7 +63,7 @@ li{
   border: 50%;
   font-weight: bold;
 }
-.add-book:hover{
+.bk-button:hover{
   background-color: grey;
 }
 .book{

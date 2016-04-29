@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427164927) do
+ActiveRecord::Schema.define(version: 20160429164908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "books", force: :cascade do |t|
-    t.string   "title",                                                                                                           null: false
-    t.string   "author",                                                                                                          null: false
+    t.string   "title",                                                  null: false
+    t.string   "author",                                                 null: false
     t.text     "description"
-    t.string   "image_url",   default: "https://flavorwire.files.wordpress.com/2011/06/screen-shot-2011-06-25-at-8-15-31-am.jpg", null: false
-    t.integer  "owner_id",                                                                                                        null: false
-    t.datetime "created_at",                                                                                                      null: false
-    t.datetime "updated_at",                                                                                                      null: false
+    t.string   "image_url",   default: "http://i.imgur.com/sJ3CT4V.gif", null: false
+    t.integer  "owner_id",                                               null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
   end
 
   add_index "books", ["owner_id"], name: "index_books_on_owner_id", using: :btree

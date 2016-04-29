@@ -12,6 +12,9 @@ var ClientActions = {
   },
   addBook: function(book){
     ApiUtil.addBook(book);
+  },
+  updateBook: function(book){
+    ApiUtil.updateBook(book);
   }
 };
 

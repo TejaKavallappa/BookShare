@@ -8,10 +8,13 @@ var CurrentUserState = {
       userErrors: UserStore.errors()};
   },
   componentDidMount: function(){
-    UserStore.addListener(this.updateUser);
+    this.userListener = UserStore.addListener(this.updateUser);
     if (!this.state.currentUser){
       UserActions.fetchCurrentUser();
     }
+  },
+  componentWillUnmount: function(){
+    this.userListener.remove();
   },
   updateUser: function(){
     this.setState({

@@ -57,9 +57,10 @@
 	//Components
 	var BookIndex = __webpack_require__(225);
 	var BookDetail = __webpack_require__(257);
-	var LoginForm = __webpack_require__(258);
+	var BookEdit = __webpack_require__(258);
+	var LoginForm = __webpack_require__(259);
 	var CurrentUserState = __webpack_require__(253);
-	var App = __webpack_require__(259);
+	var App = __webpack_require__(260);
 	
 	var Routerr = React.createElement(
 	  Router,
@@ -72,7 +73,8 @@
 	    React.createElement(
 	      Route,
 	      { path: 'books', component: BookIndex },
-	      React.createElement(Route, { path: ':bookId', component: BookDetail })
+	      React.createElement(Route, { path: ':bookId', component: BookDetail }),
+	      React.createElement(Route, { path: ':bookId/edit', component: BookEdit })
 	    )
 	  )
 	);
@@ -25489,6 +25491,7 @@
 	    this.setState({ showForm: true });
 	  },
 	  displayForm: function () {
+	
 	    if (this.state.showForm) {
 	      return React.createElement(BookForm, null);
 	    } else {
@@ -25549,6 +25552,9 @@
 	  },
 	  addBook: function (book) {
 	    ApiUtil.addBook(book);
+	  },
+	  updateBook: function (book) {
+	    ApiUtil.updateBook(book);
 	  }
 	};
 	
@@ -25596,6 +25602,16 @@
 	      data: { book: bookData },
 	      success: function (newBook) {
 	        ServerActions.getSingleBook(newBook);
+	      }
+	    });
+	  },
+	  updateBook: function (bookData) {
+	    $.ajax({
+	      url: "api/books/" + bookData.id,
+	      type: 'PATCH',
+	      data: { book: bookData },
+	      success: function (updatedBook) {
+	        ServerActions.getSingleBook(updatedBook);
 	      }
 	    });
 	  }
@@ -25968,7 +25984,7 @@
 	
 	  editBook: function (event) {
 	    event.preventDefault();
-	    var url = "/api/books/" + this.props.book.id;
+	    var url = "/books/" + this.props.book.id + "/edit";
 	    hashHistory.push(url);
 	  },
 	  deleteBook: function (event) {
@@ -25996,12 +26012,17 @@
 	        ),
 	        React.createElement(
 	          'button',
-	          { onClick: this.editBook, className: 'bk-button' },
+	          {
+	            onClick: this.editBook,
+	            className: 'bk-button',
+	            bookId: book.id },
 	          'Edit'
 	        ),
 	        React.createElement(
 	          'button',
-	          { onClick: this.deleteBook, className: 'bk-button' },
+	          {
+	            onClick: this.deleteBook,
+	            className: 'bk-button' },
 	          'Delete'
 	        )
 	      )
@@ -26009,7 +26030,6 @@
 	  }
 	});
 	
-	// <img src={book.image_url} alt={book.title} style="width:150px"/>
 	module.exports = Book;
 
 /***/ },
@@ -32628,10 +32648,13 @@
 	      userErrors: UserStore.errors() };
 	  },
 	  componentDidMount: function () {
-	    UserStore.addListener(this.updateUser);
+	    this.userListener = UserStore.addListener(this.updateUser);
 	    if (!this.state.currentUser) {
 	      UserActions.fetchCurrentUser();
 	    }
+	  },
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
 	  },
 	  updateUser: function () {
 	    this.setState({
@@ -32908,6 +32931,127 @@
 /* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(166).hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(226);
+	//mixin
+	var CurrentUserState = __webpack_require__(253);
+	//stores
+	var BookStore = __webpack_require__(234);
+	var BookForm = React.createClass({
+	  displayName: 'BookForm',
+	
+	  mixins: [CurrentUserState],
+	
+	  getInitialState: function () {
+	    var bookToEdit = BookStore.find(this.props.params.bookId);
+	    if (bookToEdit) {
+	      return { author: bookToEdit.author,
+	        id: bookToEdit.id,
+	        title: bookToEdit.title,
+	        description: bookToEdit.description,
+	        image_url: bookToEdit.image_url };
+	    }
+	  },
+	
+	  componentDidMount: function () {
+	    this.bookListener = BookStore.addListener(this.handleChange);
+	    ClientActions.getSingleBook(this.props.params.bookId);
+	  },
+	  componentWillUnmount: function () {
+	    this.bookListener.remove();
+	  },
+	  handleChange: function () {
+	    var bookToEdit = BookStore.find(this.props.params.bookId);
+	    if (bookToEdit) {
+	      this.setState({ author: bookToEdit.author,
+	        title: bookToEdit.title,
+	        description: bookToEdit.description,
+	        image_url: bookToEdit.image_url });
+	    }
+	  },
+	
+	  authorChange: function (event) {
+	    this.setState({ author: event.target.value });
+	  },
+	
+	  titleChange: function (event) {
+	    this.setState({ title: event.target.value });
+	  },
+	
+	  descriptionChange: function (event) {
+	    this.setState({ description: event.target.value });
+	  },
+	
+	  handleSubmit: function (event) {
+	    event.preventDefault();
+	    //Remove this logic
+	    var ownerId = this.state.currentUser ? this.state.currentUser.id : 1;
+	    var postData = {
+	      id: this.state.id,
+	      author: this.state.author,
+	      title: this.state.title,
+	      description: this.state.description,
+	      owner_id: ownerId
+	    };
+	    ClientActions.updateBook(postData);
+	    hashHistory.push("/books");
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'edit-book' },
+	      React.createElement(
+	        'h3',
+	        null,
+	        'Edit Book'
+	      ),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'label',
+	          null,
+	          'Title',
+	          React.createElement('input', {
+	            type: 'text',
+	            value: this.state.title,
+	            onChange: this.titleChange })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Author',
+	          React.createElement('input', {
+	            type: 'text',
+	            value: this.state.author,
+	            onChange: this.authorChange })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Description',
+	          React.createElement('textarea', {
+	            value: this.state.description,
+	            onChange: this.descriptionChange })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement('input', { type: 'submit', value: 'Update Book!' })
+	      )
+	    );
+	  }
+	
+	});
+	module.exports = BookForm;
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
 	//react
 	var React = __webpack_require__(1);
 	var ReactRouter = __webpack_require__(166);
@@ -32933,16 +33077,11 @@
 	      password: this.state.password
 	    });
 	  },
-	  componentDidMount: function () {
-	    this.authListener = UserStore.addListener(this._onChange);
-	  },
-	
-	  _onChange: function () {
+	  componentDidUpdate: function () {
 	    if (this.state.currentUser) {
 	      hashHistory.push("books");
 	    }
 	  },
-	
 	  logout: function (event) {
 	    event.preventDefault();
 	    UserActions.logout();
@@ -33029,13 +33168,7 @@
 	    ); //return
 	  }, //form
 	  render: function () {
-	    if (!this.isMounted) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'Loading login form...'
-	      );
-	    }
+	
 	    var self = this;
 	    var showBooks = function () {
 	      if (self.state.currentUser) {
@@ -33069,7 +33202,7 @@
 	// {this.greeting()}
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React
@@ -33077,9 +33210,9 @@
 	var ReactRouter = __webpack_require__(166);
 	var hashHistory = ReactRouter.hashHistory;
 	//Components
-	var LoginForm = __webpack_require__(258);
+	var LoginForm = __webpack_require__(259);
 	var CurrentUserState = __webpack_require__(253);
-	var NavBar = __webpack_require__(260);
+	var NavBar = __webpack_require__(261);
 	//actions
 	var UserActions = __webpack_require__(255);
 	
@@ -33100,7 +33233,7 @@
 	module.exports = App;
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React
@@ -33108,7 +33241,7 @@
 	var ReactRouter = __webpack_require__(166);
 	var hashHistory = ReactRouter.hashHistory;
 	//Components
-	var LoginForm = __webpack_require__(258);
+	var LoginForm = __webpack_require__(259);
 	var CurrentUserState = __webpack_require__(253);
 	//actions
 	var UserActions = __webpack_require__(255);

@@ -38,6 +38,16 @@ var ApiUtil = {
         ServerActions.getSingleBook(newBook);
       }
     });
+  },
+  updateBook: function(bookData){
+    $.ajax({
+      url: "api/books/"+bookData.id,
+      type: 'PATCH',
+      data: {book: bookData},
+      success: function(updatedBook){
+        ServerActions.getSingleBook(updatedBook);
+      }
+    });
   }
 
 };

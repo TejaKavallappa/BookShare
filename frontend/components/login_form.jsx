@@ -21,16 +21,11 @@ var LoginForm = React.createClass({
       password: this.state.password
     });
   },
-  componentDidMount: function(){
-    this.authListener = UserStore.addListener(this._onChange);
-  },
-
-  _onChange: function(){
+  componentDidUpdate: function(){
     if (this.state.currentUser){
       hashHistory.push("books");
     }
   },
-
   logout: function(event){
     event.preventDefault();
     UserActions.logout();
@@ -101,9 +96,7 @@ var LoginForm = React.createClass({
     );//return
   },//form
   render: function(){
-    if (!this.isMounted){
-      return (<div>Loading login form...</div>);
-    }
+
     var self = this;
     var showBooks = function() {
       if (self.state.currentUser){
