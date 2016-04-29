@@ -22,9 +22,10 @@ var Book = React.createClass({
     //In the edit form add facility to let user upload an images
     return (
       <li>
-          <Link to={ "/api/books/" + book.id.toString() }> {book.title} </Link>
+          <Link to={ "/books/" + book.id.toString() }> {book.title} </Link>
           <button onClick={this.editBook}>Edit</button>
           <button onClick={this.deleteBook}>Delete</button>
+
     </li>
   ); //return
   }

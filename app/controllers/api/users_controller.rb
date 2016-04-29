@@ -25,8 +25,7 @@ class Api::UsersController < ApplicationController
     @user = User.new(user_params)
       if @user.save
         login(@user)
-        render "api/books"
-        # render "api/users/show"
+        render "api/users/show"
       else
         @errors = @user.errors.full_messages
         render "api/shared/error", status: 422

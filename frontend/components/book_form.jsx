@@ -30,11 +30,13 @@ var BookForm = React.createClass({
 
   handleSubmit: function(event){
     event.preventDefault();
+    //Remove this logic
+    var ownerId = this.state.currentUser? this.state.currentUser.id : 1;
     var postData = {
-      title: this.state.title,
       author: this.state.author,
+      title: this.state.title,
       description: this.state.description,
-      owner_id: this.state.currentUser.id
+      owner_id: ownerId
     };
     ClientActions.addBook(postData);
     this.setState({
@@ -44,21 +46,30 @@ var BookForm = React.createClass({
       image_url: ""
     });
   },
+
   render: function(){
     return (<div id="new-book">
       <h3>New Book</h3>
       <form onSubmit={this.handleSubmit}>
 
         <label>Title
-        <input type="text" value={this.state.title} onChange={this.titleChange}/>
+        <input
+          type="text"
+          value={this.state.title}
+          onChange={this.titleChange}/>
         </label>
         <br></br>
         <label>Author
-        <input type="text" value={this.state.author} onChange={this.authorChange}/>
+        <input
+          type="text"
+          value={this.state.author}
+          onChange={this.authorChange}/>
         </label>
         <br></br>
         <label>Description
-        <textarea value={this.state.description} onChange={this.descriptionChange}/>
+        <textarea
+          value={this.state.description}
+          onChange={this.descriptionChange}/>
         </label>
         <br></br>
         <input type="submit" value="Add New Book!"/>

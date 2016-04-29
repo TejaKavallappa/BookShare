@@ -25,14 +25,21 @@ var Books = React.createClass({
   },
 
   render: function(){
+    if (!this.state.books){
+      return (<div>Loading</div>);
+    }
     return (<div className="book-index">
       <ul>
         {
           this.state.books.map(function(book){
-          return (<BookIndexItem key={book.id} book={book}/>);
+          return (
+            <div key={book.id}>
+              <BookIndexItem book={book}/>
+            </div>);
         })
       }
       </ul>
+      {this.props.children}
       <BookForm />
     </div>);
   }

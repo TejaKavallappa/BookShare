@@ -47,6 +47,7 @@
 	//React
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(32);
+	
 	//Router
 	var ReactRouter = __webpack_require__(166);
 	var Router = ReactRouter.Router;
@@ -55,54 +56,31 @@
 	var hashHistory = ReactRouter.hashHistory;
 	//Components
 	var BookIndex = __webpack_require__(225);
-	var BookDetail = __webpack_require__(252);
-	var LoginForm = __webpack_require__(257);
+	var BookDetail = __webpack_require__(257);
+	var LoginForm = __webpack_require__(258);
 	var CurrentUserState = __webpack_require__(253);
+	var App = __webpack_require__(259);
 	
-	var App = React.createClass({
-	  displayName: 'App',
-	
-	  mixins: [CurrentUserState],
-	  render: function () {
-	    var self = this;
-	    var display = function () {
-	      if (self.state.currentUser) {
-	        return self.props.children;
-	      }
-	    };
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'header',
-	        null,
-	        React.createElement(
-	          'h1',
-	          null,
-	          'BookShare'
-	        )
-	      ),
-	      React.createElement(LoginForm, null),
-	      display()
-	    );
-	  }
-	});
-	
-	var Router = React.createElement(
+	var Routerr = React.createElement(
 	  Router,
 	  { history: hashHistory },
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
+	    React.createElement(Route, { path: 'login', component: LoginForm }),
+	    React.createElement(Route, { path: 'signup', component: LoginForm }),
 	    React.createElement(IndexRoute, { component: BookIndex }),
-	    React.createElement(Route, { path: '/api/books', component: BookIndex }),
-	    React.createElement(Route, { path: '/api/books/:bookId', component: BookDetail })
+	    React.createElement(
+	      Route,
+	      { path: 'books', component: BookIndex },
+	      React.createElement(Route, { path: ':bookId', component: BookDetail })
+	    )
 	  )
 	);
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	  var root = document.getElementById('root');
-	  ReactDOM.render(Router, root);
+	  ReactDOM.render(Routerr, root);
 	});
 
 /***/ },
@@ -25481,7 +25459,7 @@
 	//components
 	var BookIndexItem = __webpack_require__(233);
 	var BookStore = __webpack_require__(234);
-	var BookForm = __webpack_require__(258);
+	var BookForm = __webpack_require__(252);
 	
 	var Books = React.createClass({
 	  displayName: 'Books',
@@ -25504,6 +25482,13 @@
 	  },
 	
 	  render: function () {
+	    if (!this.state.books) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Loading'
+	      );
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'book-index' },
@@ -25511,9 +25496,14 @@
 	        'ul',
 	        null,
 	        this.state.books.map(function (book) {
-	          return React.createElement(BookIndexItem, { key: book.id, book: book });
+	          return React.createElement(
+	            'div',
+	            { key: book.id },
+	            React.createElement(BookIndexItem, { book: book })
+	          );
 	        })
 	      ),
+	      this.props.children,
 	      React.createElement(BookForm, null)
 	    );
 	  }
@@ -25973,7 +25963,7 @@
 	      null,
 	      React.createElement(
 	        Link,
-	        { to: "/api/books/" + book.id.toString() },
+	        { to: "/books/" + book.id.toString() },
 	        ' ',
 	        book.title,
 	        ' '
@@ -32497,113 +32487,104 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var hashHistory = __webpack_require__(166).hashHistory;
 	//actions
 	var ClientActions = __webpack_require__(226);
-	//component
-	var BookIndex = __webpack_require__(225);
-	//stores
-	var BookStore = __webpack_require__(234);
 	//mixin
 	var CurrentUserState = __webpack_require__(253);
 	
-	var BookDetail = React.createClass({
-	  displayName: 'BookDetail',
+	var BookForm = React.createClass({
+	  displayName: 'BookForm',
 	
 	  mixins: [CurrentUserState],
+	
 	  getInitialState: function () {
-	    return { book: BookStore.find(this.props.params.bookId) };
-	  },
-	
-	  componentDidMount: function () {
-	    this.bookListener = BookStore.addListener(this._onChange);
-	    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.bookListener.remove();
-	  },
-	
-	  componentWillReceiveProps: function (newProps) {
-	    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
-	  },
-	
-	  _onChange: function () {
-	    this.setState(this.getStateFromStore);
-	  },
-	
-	  getStateFromStore: function () {
-	    this.setState({ book: BookStore.find(this.props.params.bookId) });
-	  },
-	
-	  editBook: function (event) {
-	    event.preventDefault();
-	    var url = "/api/books/" + this.props.params.bookId;
-	    hashHistory.push(url);
-	  },
-	
-	  deleteBook: function (event) {
-	    event.preventDefault();
-	    ClientActions.removeBook(this.props.params.bookId);
-	  },
-	  render: function () {
-	    var book = this.state.book;
-	    var self = this;
-	
-	    if (!book) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'Loading...'
-	      );
-	    }
-	
-	    var display = function () {
-	      if (self.state.currentUser === self.state.book.owner_id) {
-	        return React.createElement(
-	          'div',
-	          null,
-	          React.createElement(
-	            'button',
-	            { onClick: self.editBook },
-	            'Edit'
-	          ),
-	          React.createElement(
-	            'button',
-	            { onClick: self.deleteBook },
-	            'Delete'
-	          )
-	        );
-	      }
+	    return {
+	      author: "",
+	      title: "",
+	      description: "",
+	      image_url: ""
 	    };
-	    //In the edit form add facility to let user upload an images
+	  },
+	
+	  authorChange: function (event) {
+	    this.setState({ author: event.target.value });
+	  },
+	
+	  titleChange: function (event) {
+	    this.setState({ title: event.target.value });
+	  },
+	
+	  descriptionChange: function (event) {
+	    this.setState({ description: event.target.value });
+	  },
+	
+	  handleSubmit: function (event) {
+	    event.preventDefault();
+	    //Remove this logic
+	    var ownerId = this.state.currentUser ? this.state.currentUser.id : 1;
+	    var postData = {
+	      author: this.state.author,
+	      title: this.state.title,
+	      description: this.state.description,
+	      owner_id: ownerId
+	    };
+	    ClientActions.addBook(postData);
+	    this.setState({
+	      author: "",
+	      title: "",
+	      description: "",
+	      image_url: ""
+	    });
+	  },
+	
+	  render: function () {
 	    return React.createElement(
 	      'div',
-	      { id: 'book' },
-	      React.createElement('img', { src: book.image_url, alt: book.title }),
+	      { id: 'new-book' },
 	      React.createElement(
 	        'h3',
-	        { style: { color: 'red' } },
-	        ' ',
-	        book.title,
-	        ' '
+	        null,
+	        'New Book'
 	      ),
 	      React.createElement(
-	        'h4',
-	        null,
-	        book.author
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        book.description ? book.description : ""
-	      ),
-	      display()
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'label',
+	          null,
+	          'Title',
+	          React.createElement('input', {
+	            type: 'text',
+	            value: this.state.title,
+	            onChange: this.titleChange })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Author',
+	          React.createElement('input', {
+	            type: 'text',
+	            value: this.state.author,
+	            onChange: this.authorChange })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Description',
+	          React.createElement('textarea', {
+	            value: this.state.description,
+	            onChange: this.descriptionChange })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement('input', { type: 'submit', value: 'Add New Book!' })
+	      )
 	    );
-	  } //render
-	});
+	  }
 	
-	module.exports = BookDetail;
+	});
+	module.exports = BookForm;
 
 /***/ },
 /* 253 */
@@ -32788,6 +32769,119 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(166).hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(226);
+	//component
+	var BookIndex = __webpack_require__(225);
+	//stores
+	var BookStore = __webpack_require__(234);
+	//mixin
+	var CurrentUserState = __webpack_require__(253);
+	
+	var BookDetail = React.createClass({
+	  displayName: 'BookDetail',
+	
+	  mixins: [CurrentUserState],
+	  getInitialState: function () {
+	    return { book: BookStore.find(this.props.params.bookId) };
+	  },
+	
+	  componentDidMount: function () {
+	    this.bookListener = BookStore.addListener(this._onChange);
+	    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.bookListener.remove();
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore);
+	  },
+	
+	  getStateFromStore: function () {
+	    this.setState({ book: BookStore.find(this.props.params.bookId) });
+	  },
+	
+	  editBook: function (event) {
+	    event.preventDefault();
+	    var url = "/api/books/" + this.props.params.bookId;
+	    hashHistory.push(url);
+	  },
+	
+	  deleteBook: function (event) {
+	    event.preventDefault();
+	    ClientActions.removeBook(this.props.params.bookId);
+	  },
+	  render: function () {
+	    var book = this.state.book;
+	    var self = this;
+	
+	    if (!book) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Loading...'
+	      );
+	    }
+	
+	    var display = function () {
+	      if (self.state.currentUser === self.state.book.owner_id) {
+	        return React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            'button',
+	            { onClick: self.editBook },
+	            'Edit'
+	          ),
+	          React.createElement(
+	            'button',
+	            { onClick: self.deleteBook },
+	            'Delete'
+	          )
+	        );
+	      }
+	    };
+	    //In the edit form add facility to let user upload an images
+	    return React.createElement(
+	      'div',
+	      { id: 'book' },
+	      React.createElement('img', { src: book.image_url, alt: book.title }),
+	      React.createElement(
+	        'h3',
+	        { style: { color: 'red' } },
+	        ' ',
+	        book.title,
+	        ' '
+	      ),
+	      React.createElement(
+	        'h4',
+	        null,
+	        book.author
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        book.description ? book.description : ""
+	      ),
+	      display()
+	    );
+	  } //render
+	});
+	
+	module.exports = BookDetail;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
 	
 	var UserActions = __webpack_require__(255);
 	var CurrentUserState = __webpack_require__(253);
@@ -32798,13 +32892,9 @@
 	
 	  mixins: [CurrentUserState],
 	
-	  getInitialState: function () {
-	    return { form: "login" };
-	  },
-	
 	  handleSubmit: function (event) {
 	    event.preventDefault();
-	    UserActions[this.state.form]({
+	    UserActions[this.props.routes[1].path]({
 	      username: this.state.username,
 	      password: this.state.password
 	    });
@@ -32815,9 +32905,6 @@
 	    UserActions.logout();
 	  },
 	
-	  setForm: function (event) {
-	    this.setState({ form: event.currentTarget.value });
-	  },
 	  usernameChange: function (event) {
 	    this.state.username = event.target.value;
 	  },
@@ -32863,9 +32950,28 @@
 	  },
 	
 	  form: function () {
+	    //If already logged in do not do anything
 	    if (this.state.currentUser) {
 	      return;
 	    }
+	    var self = this;
+	    var insertButton = function () {
+	      var loginAction = self.props.routes[1].path;
+	      if (loginAction === "login") {
+	        return React.createElement(
+	          'button',
+	          { value: loginAction, type: 'submit' },
+	          'Log In'
+	        );
+	      } else {
+	        return React.createElement(
+	          'button',
+	          { value: loginAction, type: 'submit' },
+	          'Sign Up'
+	        );
+	      }
+	    };
+	    // this.props.location.pathname
 	    return React.createElement(
 	      'div',
 	      { id: 'login-form' },
@@ -32892,24 +32998,7 @@
 	          )
 	        ),
 	        React.createElement('br', null),
-	        React.createElement(
-	          'section',
-	          null,
-	          React.createElement(
-	            'label',
-	            null,
-	            ' Login',
-	            React.createElement('input', { type: 'Radio', name: 'action', value: 'login', onChange: this.setForm })
-	          ),
-	          React.createElement(
-	            'label',
-	            null,
-	            ' SignUp',
-	            React.createElement('input', { type: 'Radio', name: 'action', value: 'signup', onChange: this.setForm })
-	          )
-	        ),
-	        React.createElement('br', null),
-	        React.createElement('input', { type: 'submit', value: 'Submit' })
+	        insertButton()
 	      )
 	    ); //return
 	  }, //form
@@ -32927,97 +33016,174 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
+	//React
 	var React = __webpack_require__(1);
-	//actions
-	var ClientActions = __webpack_require__(226);
-	//mixin
+	var ReactRouter = __webpack_require__(166);
+	var hashHistory = ReactRouter.hashHistory;
+	//Components
+	var LoginForm = __webpack_require__(258);
 	var CurrentUserState = __webpack_require__(253);
+	var NavBar = __webpack_require__(260);
+	//actions
+	var UserActions = __webpack_require__(255);
 	
-	var BookForm = React.createClass({
-	  displayName: 'BookForm',
+	var App = React.createClass({
+	  displayName: 'App',
 	
 	  mixins: [CurrentUserState],
 	
-	  getInitialState: function () {
-	    return {
-	      author: "",
-	      title: "",
-	      description: "",
-	      image_url: ""
-	    };
-	  },
-	
-	  authorChange: function (event) {
-	    this.setState({ author: event.target.value });
-	  },
-	
-	  titleChange: function (event) {
-	    this.setState({ title: event.target.value });
-	  },
-	
-	  descriptionChange: function (event) {
-	    this.setState({ description: event.target.value });
-	  },
-	
-	  handleSubmit: function (event) {
-	    event.preventDefault();
-	    var postData = {
-	      title: this.state.title,
-	      author: this.state.author,
-	      description: this.state.description,
-	      owner_id: this.state.currentUser.id
-	    };
-	    ClientActions.addBook(postData);
-	    this.setState({
-	      author: "",
-	      title: "",
-	      description: "",
-	      image_url: ""
-	    });
-	  },
 	  render: function () {
 	    return React.createElement(
 	      'div',
-	      { id: 'new-book' },
+	      null,
+	      React.createElement(NavBar, null),
+	      this.props.children
+	    ); //return
+	  } //render
+	});
+	module.exports = App;
+	
+	// <header className="header">
+	//   <a href="/">
+	//     <div className="left-nav"> <h1>BookShare</h1> </div>
+	//   </a>
+	//   <nav className="nav-bar">
+	//     {display()}
+	//   </nav>
+	// </header>
+
+	// logout: function(event){
+	//   event.preventDefault();
+	//   UserActions.logout();
+	// },
+	//
+	// render: function(){
+	//   var self = this;
+	//   var display = function() {
+	//     if (self.state.currentUser){
+	//       return (<ul>
+	//         <li onClick={self.logout}><button >Sign Out</button></li>
+	//       </ul>);
+	//     }
+	//     else{
+	//       return (<ul>
+	//         <li><a href="#/login">Log In</a></li>
+	//         <li><a href="#/signup">Sign Up</a></li>
+	//         <li><a href="#">Demo User</a></li>
+	//       </ul>);
+	//     }
+	//   };
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//React
+	var React = __webpack_require__(1);
+	var ReactRouter = __webpack_require__(166);
+	var hashHistory = ReactRouter.hashHistory;
+	//Components
+	var LoginForm = __webpack_require__(258);
+	var CurrentUserState = __webpack_require__(253);
+	//actions
+	var UserActions = __webpack_require__(255);
+	
+	var NavBar = React.createClass({
+	  displayName: 'NavBar',
+	
+	  mixins: [CurrentUserState],
+	
+	  logout: function (event) {
+	    event.preventDefault();
+	    UserActions.logout();
+	  },
+	
+	  render: function () {
+	    var self = this;
+	    var display = function () {
+	      //If user logged in then display sign out button
+	      if (self.state.currentUser) {
+	        return React.createElement(
+	          'ul',
+	          null,
+	          React.createElement(
+	            'li',
+	            { onClick: self.logout },
+	            React.createElement(
+	              'button',
+	              null,
+	              'Sign Out'
+	            )
+	          )
+	        );
+	      } else {
+	        return React.createElement(
+	          'ul',
+	          null,
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: '#/login' },
+	              'Log In'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: '#/signup' },
+	              'Sign Up'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: '#' },
+	              'Demo User'
+	            )
+	          )
+	        );
+	      }
+	    };
+	    return React.createElement(
+	      'div',
+	      null,
 	      React.createElement(
-	        'h3',
-	        null,
-	        'New Book'
-	      ),
-	      React.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
+	        'header',
+	        { className: 'header' },
 	        React.createElement(
-	          'label',
-	          null,
-	          'Title',
-	          React.createElement('input', { type: 'text', value: this.state.title, onChange: this.titleChange })
+	          'a',
+	          { href: '/' },
+	          React.createElement(
+	            'div',
+	            { className: 'left-nav' },
+	            ' ',
+	            React.createElement(
+	              'h1',
+	              null,
+	              'BookShare'
+	            ),
+	            ' '
+	          )
 	        ),
-	        React.createElement('br', null),
 	        React.createElement(
-	          'label',
-	          null,
-	          'Author',
-	          React.createElement('input', { type: 'text', value: this.state.author, onChange: this.authorChange })
-	        ),
-	        React.createElement('br', null),
-	        React.createElement(
-	          'label',
-	          null,
-	          'Description',
-	          React.createElement('textarea', { value: this.state.description, onChange: this.descriptionChange })
-	        ),
-	        React.createElement('br', null),
-	        React.createElement('input', { type: 'submit', value: 'Add New Book!' })
+	          'nav',
+	          { className: 'nav-bar' },
+	          display()
+	        )
 	      )
 	    );
 	  }
-	
 	});
-	module.exports = BookForm;
+	module.exports = NavBar;
 
 /***/ }
 /******/ ]);

@@ -7,13 +7,9 @@ var LoginForm = React.createClass({
 
   mixins: [CurrentUserState],
 
-  getInitialState: function(){
-    return {form: "login"};
-  },
-
   handleSubmit: function(event){
     event.preventDefault();
-    UserActions[this.state.form]({
+    UserActions[this.props.routes[1].path]({
       username: this.state.username,
       password: this.state.password
     });
@@ -24,9 +20,6 @@ var LoginForm = React.createClass({
     UserActions.logout();
   },
 
-  setForm: function(event){
-    this.setState({form: event.currentTarget.value});
-  },
   usernameChange: function(event){
     this.state.username = event.target.value;
   },
@@ -61,36 +54,44 @@ var LoginForm = React.createClass({
   },
 
   form: function(){
+    //If already logged in do not do anything
     if (this.state.currentUser){
       return;
     }
+    var self = this;
+    var insertButton = function(){
+      var loginAction = self.props.routes[1].path;
+      if (loginAction === "login"){
+        return (<button value={loginAction} type="submit">
+          Log In
+        </button>);
+      } else {
+        return (<button value={loginAction} type="submit">
+          Sign Up
+        </button>);
+      }
+    };
+    // this.props.location.pathname
     return (
       <div id="login-form">
-        <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit}>
 
-          <section>
-            <label>Username&nbsp;
-              <input type="text" onChange={this.usernameChange}></input><br/>
-            </label>
-            <br/>
-            <label>
-              Password&nbsp;
-              <input type="password" onChange={this.passwordChange}></input><br/>
-            </label>
-          </section>
+        <section>
+
+          <label>Username&nbsp;
+          <input type="text" onChange={this.usernameChange}></input><br/>
+          </label>
           <br/>
-          <section>
-            <label> Login
-              <input type="Radio" name="action" value="login" onChange={this.setForm}/>
-            </label>
-            <label> SignUp
-              <input type="Radio" name="action" value="signup" onChange={this.setForm}/>
-            </label>
-          </section>
-            <br/>
-          <input type="submit" value="Submit"/>
+          <label>
+            Password&nbsp;
+          <input type="password" onChange={this.passwordChange}></input><br/>
+          </label>
 
-        </form>
+        </section>
+
+        <br/>
+          {insertButton()}
+      </form>
       </div>
     );//return
   },//form
