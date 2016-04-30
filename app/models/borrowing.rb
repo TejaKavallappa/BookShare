@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: borrowings
+#
+#  id          :integer          not null, primary key
+#  book_id     :integer          not null
+#  owner_id    :integer          not null
+#  borrower_id :integer
+#  request_id  :integer          default("4"), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Borrowing < ActiveRecord::Base
   validates :book_id, :owner_id, :request_id, presence: true
   validates :book_id, uniqueness: true

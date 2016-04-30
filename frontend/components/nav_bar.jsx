@@ -2,6 +2,7 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var hashHistory = ReactRouter.hashHistory;
+var Link = require('react-router').Link;
 //Components
 var LoginForm = require('./login_form');
 var CurrentUserState = require('../mixins/current_user_state');
@@ -23,7 +24,7 @@ var NavBar = React.createClass({
       if (self.state.currentUser){
         return (
           <ul>
-          <li>Hi, {self.state.currentUser.username}</li>  
+          <li>Hi, {self.state.currentUser.username}</li>
           <li onClick={self.logout}>Sign Out</li>
           </ul>);
       }
@@ -38,9 +39,9 @@ var NavBar = React.createClass({
     return (
       <div>
         <header className="header">
-          <a href="/">
+            <Link to={ "/" }>
             <div className="left-nav"> <h1>BookShare</h1> </div>
-          </a>
+            </Link>
           <nav className="nav-bar">
             {display()}
           </nav>

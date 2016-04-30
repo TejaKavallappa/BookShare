@@ -114,16 +114,3 @@ var LoginForm = React.createClass({
 });
 
 module.exports = LoginForm;
-
-// greeting: function(){
-// 	if (!this.state.currentUser) {
-// 		return;
-// 	}
-// 	return (
-// 		<div>
-// 			<h2>Hi, {this.state.currentUser.username}!</h2>
-// 			<input type="submit" value="logout" onClick={this.logout}/>
-// 		</div>
-// 	);
-// },
-// {this.greeting()}

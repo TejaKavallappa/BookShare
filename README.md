@@ -1,6 +1,6 @@
 # BookShare
 
-[Heroku link][heroku] **NB:**
+[BookShare][heroku] **NB:**
 
 [heroku]: https://bookshares.herokuapp.com
 

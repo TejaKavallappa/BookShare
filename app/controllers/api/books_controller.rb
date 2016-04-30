@@ -12,6 +12,11 @@ class Api::BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
+    if @book
+      render :show
+    else
+      render "api/shared/error", status: 500
+    end
   end
 
   # GET /books/1/edit

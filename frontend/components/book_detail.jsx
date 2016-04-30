@@ -10,7 +10,7 @@ var BookStore = require('../stores/book_store');
 var CurrentUserState = require('../mixins/current_user_state');
 
 var BookDetail = React.createClass({
-  mixins: [CurrentUserState],
+  // mixins: [CurrentUserState],
   getInitialState: function(){
     return {book: BookStore.find(this.props.params.bookId)};
   },
@@ -55,14 +55,15 @@ var BookDetail = React.createClass({
     }
 
     var display = function() {
-      if (self.state.currentUser === self.state.book.owner_id){
+      // if (self.state.currentUser === self.state.book.owner_id){
         return (<div>
           <button onClick={self.editBook}>Edit</button>
         <button onClick={self.deleteBook}>Delete</button>
         </div>
       );
-      }
+      // }
     };
+
     //In the edit form add facility to let user upload an images
     return (
          <div className="book">
