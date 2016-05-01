@@ -1,0 +1,77 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+  background-color: gainsboro;
+}
+.header a{
+  display: block;
+  padding: 10px 20px;
+}
+.header ul {
+  display: flex;
+  justify-content: space-around;
+}
+.header-logo {
+  font-weight: 900;
+}
+.header-logo:hover{
+  background: thistle;
+}
+.header-list{
+  display: flex;
+  justify-content: space-around;
+}
+.header-list > li:hover{
+  background: thistle;
+}
+li{
+  padding:10px;
+  list-style: none;
+}
+#login-form{
+  display: flex;
+  justify-content: center;
+  height: 500px;
+  background: gainsboro;
+  background-color: #E0B4B4;
+  align-items: center;
+}
+.bk-button{
+  padding: 2px;
+  // margin: 5px;
+  border: 50%;
+  font-weight: bold;
+}
+.bk-button:hover{
+  background-color: grey;
+}
+// .book{
+//   display: block;
+//   padding: 15px;
+// }
+.books-index{
+  display: flex;
+  flex-flow: wrap row;
+  margin-top: 30px;
+}
+img{
+  display: block;
+  width: 50%;
+  height: auto;
+}
+// .className{
+//   display: flex;
+//   align-content: flex-start;
+//   justify-content: space-between;
+// }
+.book-detail-item{
+  display: flex;
+  align-items: baseline;
+  border: thin solid lightgreen;
+  // padding: 10px;
+  list-style: none;
+  margin: 5px;
+  border-radius: 5px;
+  background: white;
+  width: 150px;
+}

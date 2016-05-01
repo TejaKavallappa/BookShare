@@ -23,13 +23,13 @@ var NavBar = React.createClass({
       //If user logged in then display sign out button
       if (self.state.currentUser){
         return (
-          <ul>
+          <ul className="header-list">
           <li>Hi, {self.state.currentUser.username}</li>
           <li onClick={self.logout}>Sign Out</li>
           </ul>);
       }
       else{
-        return (<ul>
+        return (<ul className="header-list">
           <li><a href="#/login">Log In</a></li>
           <li><a href="#/signup">Sign Up</a></li>
           <li><a href="#">Demo User</a></li>
@@ -39,10 +39,12 @@ var NavBar = React.createClass({
     return (
       <div>
         <header className="header">
+          <div className="header-logo">
             <Link to={ "/" }>
-            <div className="left-nav"> <h1>BookShare</h1> </div>
+             <h1>BookShare</h1>
             </Link>
-          <nav className="nav-bar">
+            </div>
+          <nav className="header-nav">
             {display()}
           </nav>
         </header>

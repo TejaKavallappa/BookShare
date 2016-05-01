@@ -2,6 +2,7 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var hashHistory = ReactRouter.hashHistory;
+
 //actions
 var UserActions = require('../actions/user_actions');
 //mixin

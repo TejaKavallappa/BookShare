@@ -3,8 +3,13 @@ var UserApiUtil = require('../util/user_api_util');
 var hashHistory = require('react-router').hashHistory;
 
 var UserActions = {
+  fetchAllUsers: function(){
+    UserApiUtil.fetchAllUsers(
+      UserActions.receiveAllUsers, UserActions.handleError);
+  },
   fetchCurrentUser: function(){
-    UserApiUtil.fetchCurrentUser(UserActions.receiveCurrentUser, UserActions.handleError);
+    UserApiUtil.fetchCurrentUser(
+      UserActions.receiveCurrentUser, UserActions.handleError);
   },
   login: function(user){
     UserApiUtil.post({
@@ -23,7 +28,8 @@ var UserActions = {
     });
   },
   logout: function(){
-    UserApiUtil.logout(UserActions.removeCurrentUser, UserActions.handleLogoutError);
+    UserApiUtil.logout(
+      UserActions.removeCurrentUser, UserActions.handleLogoutError);
   },
   receiveCurrentUser: function(user){
     if (user.username){
@@ -32,6 +38,12 @@ var UserActions = {
       user: user
       });
     }
+  },
+  receiveAllUsers: function(users){
+    AppDispatcher.dispatch({
+      actionType: "USERS",
+      users: users
+    });
   },
   removeCurrentUser: function(){
     AppDispatcher.dispatch({

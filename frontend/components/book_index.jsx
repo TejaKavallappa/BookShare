@@ -11,6 +11,7 @@ var UserStore = require('../stores/user_store');
 var BookIndexItem = require('./book_index_item');
 var BookStore = require('../stores/book_store');
 var BookForm = require('./book_form');
+var UsersIndex = require('./user_index');
 
 var Books = React.createClass({
 
@@ -52,6 +53,7 @@ var Books = React.createClass({
 
     if (!this.state.books || !UserStore.currentUser()){
       return (<div>Loading</div>);
+      //Insert loading icon here
     }
 
     var self = this;
@@ -59,7 +61,8 @@ var Books = React.createClass({
       return (<div className="book-index">
       {this.displayForm()}
       {this.props.children}
-        <ul>
+
+        <ul className="books-index">
           {
             self.state.books.map(function(book){
                 return (
@@ -69,6 +72,9 @@ var Books = React.createClass({
             })
           }
         </ul>
+
+        <div><UsersIndex/></div>
+
       </div>);
   }
 });
