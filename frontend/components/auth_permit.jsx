@@ -5,6 +5,7 @@ var UserStore = require('../stores/user_store');
 //components
 var Splash = require('./splash');
 var BookIndex = require('./book_index');
+var Home = require('./home');
 
 
 var AuthPermit = React.createClass({
@@ -23,7 +24,7 @@ var AuthPermit = React.createClass({
   },
   render: function(){
     if(UserStore.currentUser()){
-      return (<div><BookIndex/></div>);
+      return (<div><Home/></div>);
     }
     else{
     return(<div><Splash/></div>);}

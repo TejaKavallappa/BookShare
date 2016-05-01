@@ -25540,11 +25540,6 @@
 	            React.createElement(BookIndexItem, { book: book })
 	          );
 	        })
-	      ),
-	      React.createElement(
-	        'div',
-	        null,
-	        React.createElement(UsersIndex, null)
 	      )
 	    );
 	  }
@@ -33454,6 +33449,7 @@
 	//components
 	var Splash = __webpack_require__(263);
 	var BookIndex = __webpack_require__(225);
+	var Home = __webpack_require__(286);
 	
 	var AuthPermit = React.createClass({
 	  displayName: 'AuthPermit',
@@ -33476,7 +33472,7 @@
 	      return React.createElement(
 	        'div',
 	        null,
-	        React.createElement(BookIndex, null)
+	        React.createElement(Home, null)
 	      );
 	    } else {
 	      return React.createElement(
@@ -35528,6 +35524,52 @@
 	});
 	
 	module.exports = Users;
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	//react router
+	var ReactRouter = __webpack_require__(166);
+	var hashHistory = ReactRouter.hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(226);
+	var UserActions = __webpack_require__(255);
+	//stores
+	var UserStore = __webpack_require__(254);
+	//components
+	var BookIndexItem = __webpack_require__(233);
+	var BookIndex = __webpack_require__(225);
+	var BookStore = __webpack_require__(234);
+	var BookForm = __webpack_require__(252);
+	var UsersIndex = __webpack_require__(285);
+	
+	var Home = React.createClass({
+	  displayName: 'Home',
+	
+	  render: function () {
+	    var self = this;
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'home-page' },
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(BookIndex, null)
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(UsersIndex, null)
+	      ),
+	      this.props.children
+	    );
+	  }
+	});
+	
+	module.exports = Home;
 
 /***/ }
 /******/ ]);

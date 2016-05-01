@@ -72,9 +72,6 @@ var Books = React.createClass({
             })
           }
         </ul>
-
-        <div><UsersIndex/></div>
-
       </div>);
   }
 });
