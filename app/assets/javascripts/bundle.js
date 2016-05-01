@@ -25480,32 +25480,25 @@
 	  },
 	
 	  componentWillMount: function () {
-	    this.userListener = UserStore.addListener(this.getUser);
-	    UserActions.fetchCurrentUser();
-	  },
-	
-	  componentDidMount: function () {
-	    this.bookListener = BookStore.addListener(this.getBooks);
-	    ClientActions.fetchAllBooks();
+	    this.userBooksListener = BookStore.addListener(this.getUserBooks);
+	    ClientActions.fetchUserBooks();
 	  },
 	
 	  componentWillUnmount: function () {
-	    this.bookListener.remove();
-	    this.userListener.remove();
+	    this.userBooksListener.remove();
 	  },
 	
 	  getUser: function () {
 	    this.setState({ currentUser: UserStore.currentUser() });
 	  },
 	
-	  getBooks: function () {
+	  getUserBooks: function () {
 	    this.setState({ books: BookStore.all() });
 	  },
 	  addBook: function () {
 	    this.setState({ showForm: true });
 	  },
 	  displayForm: function () {
-	
 	    if (this.state.showForm) {
 	      return React.createElement(BookForm, null);
 	    } else {
@@ -25519,7 +25512,7 @@
 	
 	  render: function () {
 	
-	    if (!this.state.books) {
+	    if (!this.state.books || !UserStore.currentUser()) {
 	      return React.createElement(
 	        'div',
 	        null,
@@ -25558,6 +25551,13 @@
 	var ApiUtil = __webpack_require__(227);
 	
 	var ClientActions = {
+	  fetchUserBooks: function (id) {
+	    //If no params given, then fetch current user's books
+	    if (!id) {
+	      id = 0;
+	    }
+	    ApiUtil.fetchUserBooks(id);
+	  },
 	  fetchAllBooks: function () {
 	    ApiUtil.fetchAllBooks();
 	  },
@@ -25585,6 +25585,17 @@
 	var ServerActions = __webpack_require__(232);
 	
 	var ApiUtil = {
+	  fetchUserBooks: function (id) {
+	    $.ajax({
+	      url: '/api/books/',
+	      type: 'GET',
+	      data: { userId: parseInt(id) },
+	      success: function (userBooks) {
+	        ServerActions.fetchAllBooks(userBooks);
+	      }
+	    });
+	  },
+	
 	  fetchAllBooks: function () {
 	    $.ajax({
 	      url: '/api/books',
@@ -33097,7 +33108,8 @@
 	  },
 	  componentDidUpdate: function () {
 	    if (this.state.currentUser) {
-	      hashHistory.push("books");
+	      // hashHistory.push("books");
+	      hashHistory.push("/");
 	    }
 	  },
 	  logout: function (event) {
@@ -33363,6 +33375,19 @@
 	var AuthPermit = React.createClass({
 	  displayName: 'AuthPermit',
 	
+	  getInitialState: function () {
+	    return { currentUser: {} };
+	  },
+	  componentDidMount: function () {
+	    this.userListener = UserStore.addListener(this.getLoggedInUser);
+	    UserActions.fetchCurrentUser();
+	  },
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
+	  },
+	  getLoggedInUser: function () {
+	    this.setState({ currentUser: UserStore.currentUser() });
+	  },
 	  render: function () {
 	    if (UserStore.currentUser()) {
 	      return React.createElement(

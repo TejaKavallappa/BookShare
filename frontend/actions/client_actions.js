@@ -1,6 +1,13 @@
 var ApiUtil = require('../util/api_util');
 
 var ClientActions = {
+  fetchUserBooks: function(id){
+    //If no params given, then fetch current user's books
+    if (!id){
+      id = 0;
+    }
+    ApiUtil.fetchUserBooks(id);
+  },
   fetchAllBooks: function(){
     ApiUtil.fetchAllBooks();
   },

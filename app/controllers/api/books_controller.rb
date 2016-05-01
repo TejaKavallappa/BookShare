@@ -6,7 +6,13 @@ class Api::BooksController < ApplicationController
   # GET /books.json
   def index
     #display all books that a user owns
-    @books = Book.all
+    userId = Integer(params[:userId])
+    if userId == 0
+      userId = current_user.id
+    end
+    @books = Book.find_user_books(userId)
+    render json: @books
+    # @books = Book.all
   end
 
   # GET /books/1

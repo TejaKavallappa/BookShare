@@ -1,6 +1,6 @@
 # BookShare
 
-[BookShare][heroku] **NB:**
+[BookShare][heroku]
 
 [heroku]: https://bookshares.herokuapp.com
 
@@ -9,9 +9,9 @@
 BookSpace/BookShare is a web application inspired by Goodreads, and built using Ruby on Rails and React.js.
 BookShare allows users to lend/borrow books to/from other users. BookSpace/BookShare has the following features:
 
-- [ ] Create new user account
+- [x] Create new user account
 - [ ] Log in/ Log out, 1 - 2 guest/demo logins
-- [ ] Create read, edit, and delete books
+- [x] Create read, edit, and delete books
 - [ ] View user's shelf and request to borrow user's book(s)
 - [ ] Approve or reject borrow requests
 
@@ -34,36 +34,36 @@ BookShare allows users to lend/borrow books to/from other users. BookSpace/BookS
 
 **Objective:** Functioning rails project with Authentication
 
-- [ ] create new project
-- [ ] create `User` model
-- [ ] authentication
-- [ ] user signup/log in pages
-- [ ] blank landing page after log in
+- [x] create new project
+- [x] create `User` model
+- [x] authentication
+- [x] user signup/log in pages
+- [x] blank landing page after log in
 
 ### Phase 2: Books Model, API, and basic APIUtil (0.5 day)
 
 **Objective:** Books can be created, read, edited and destroyed through
 the API.
 
-- [ ] create `Book` model
-- [ ] seed the database with a small amount of test data
-- [ ] CRUD API for books (`BooksController`)
-- [ ] jBuilder views for books
-- [ ] setup Webpack & Flux scaffold
-- [ ] setup `APIUtil` to interact with the API
-- [ ] test out API interaction in the console.
+- [x] create `Book` model
+- [x] seed the database with a small amount of test data
+- [x] CRUD API for books (`BooksController`)
+- [x] jBuilder views for books
+- [x] setup Webpack & Flux scaffold
+- [x] setup `APIUtil` to interact with the API
+- [x] test out API interaction in the console.
 
 ### Phase 3: Flux Architecture and Router (1 day)
 
 **Objective:** Books can be created, read, edited and destroyed with the
 user interface.
 
-- [ ] setup the flux loop with skeleton files
-- [ ] setup React Router
+- [x] setup the flux loop with skeleton files
+- [x] setup React Router
 - implement each book component, building out the flux loop as needed.
-  - [ ] `BooksIndex`
-  - [ ] `BookIndexItem`
-  - [ ] `BookForm`
+  - [x] `BooksIndex`
+  - [x] `BookIndexItem`
+  - [x] `BookForm`
 
 ### Phase 4: Start Styling (1 day)
 
@@ -79,7 +79,7 @@ user interface.
 the borrower_id (maybe null), and the request status which has one of four
 possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with owner]
 
-- [ ] create `Borrowings` model
+- [x] create `Borrowings` model
 - build out API, Flux loop, and components for:
   - [ ] Borrowings CRUD
   - [ ] A current_user who is not the owner can request books

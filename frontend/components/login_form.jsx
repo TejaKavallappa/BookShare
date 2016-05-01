@@ -23,7 +23,8 @@ var LoginForm = React.createClass({
   },
   componentDidUpdate: function(){
     if (this.state.currentUser){
-      hashHistory.push("books");
+      // hashHistory.push("books");
+      hashHistory.push("/");
     }
   },
   logout: function(event){

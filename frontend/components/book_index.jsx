@@ -19,32 +19,25 @@ var Books = React.createClass({
   },
 
   componentWillMount: function(){
-    this.userListener = UserStore.addListener(this.getUser);
-    UserActions.fetchCurrentUser();
-  },
-
-  componentDidMount: function(){
-    this.bookListener = BookStore.addListener(this.getBooks);
-    ClientActions.fetchAllBooks();
+    this.userBooksListener = BookStore.addListener(this.getUserBooks);
+    ClientActions.fetchUserBooks();
   },
 
   componentWillUnmount: function(){
-    this.bookListener.remove();
-    this.userListener.remove();
+    this.userBooksListener.remove();
   },
 
   getUser: function(){
     this.setState({currentUser: UserStore.currentUser()});
   },
 
-  getBooks: function(){
+  getUserBooks: function(){
     this.setState({books: BookStore.all()});
   },
   addBook: function(){
     this.setState({showForm: true});
   },
   displayForm: function(){
-
     if(this.state.showForm){
       return <BookForm/>;
     }
@@ -57,7 +50,7 @@ var Books = React.createClass({
 
   render: function(){
 
-    if (!this.state.books){
+    if (!this.state.books || !UserStore.currentUser()){
       return (<div>Loading</div>);
     }
 

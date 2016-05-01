@@ -11,6 +11,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+require 'json'
 
 class Book < ActiveRecord::Base
   validates :title, :author, :image_url, :owner_id, presence: true
@@ -19,5 +20,20 @@ class Book < ActiveRecord::Base
     class_name: "User",
     foreign_key: :owner_id,
     primary_key: :id
+
+  def self.find_user_books(user_id)
+    @books = ActiveRecord::Base.connection.execute(<<-SQL)
+      SELECT
+       *
+      FROM
+        books
+      WHERE
+        books.owner_id = #{user_id}
+    SQL
+
+    @book_array = []
+    @books.each { |book| @book_array << (book)}
+    @book_array
+  end
 
 end

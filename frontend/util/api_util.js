@@ -2,6 +2,17 @@ var AppDispatcher = require('../dispatcher/dispatcher');
 var ServerActions = require('../actions/server_actions');
 
 var ApiUtil = {
+  fetchUserBooks: function(id){
+    $.ajax({
+      url: '/api/books/',
+      type: 'GET',
+      data: {userId: parseInt(id)},
+      success: function(userBooks){
+        ServerActions.fetchAllBooks(userBooks);
+      }
+    });
+  },
+
   fetchAllBooks: function(){
     $.ajax({
       url: '/api/books',

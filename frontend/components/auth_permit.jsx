@@ -8,6 +8,19 @@ var BookIndex = require('./book_index');
 
 
 var AuthPermit = React.createClass({
+  getInitialState: function(){
+    return ({currentUser: {}});
+  },
+  componentDidMount: function(){
+    this.userListener = UserStore.addListener(this.getLoggedInUser);
+    UserActions.fetchCurrentUser();
+  },
+  componentWillUnmount: function(){
+    this.userListener.remove();
+  },
+  getLoggedInUser: function(){
+    this.setState({currentUser: UserStore.currentUser()});
+  },
   render: function(){
     if(UserStore.currentUser()){
       return (<div><BookIndex/></div>);
