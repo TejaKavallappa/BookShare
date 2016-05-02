@@ -9,11 +9,12 @@ var UserActions = require('../actions/user_actions');
 var UserStore = require('../stores/user_store');
 //components
 var BookIndexItem = require('./book_index_item');
+var UserBookIndexItem = require('./user_book_index_item');
 var BookStore = require('../stores/book_store');
 var BookForm = require('./book_form');
 var UsersIndex = require('./user_index');
 
-var Books = React.createClass({
+var UserBooks = React.createClass({
 
   getInitialState: function(){
     var userId = 0;
@@ -23,31 +24,31 @@ var Books = React.createClass({
     return {books: [], showForm: false, currentUser: {}, userId: userId};
   },
 
-  //
-  // componentWillReceiveProps: function(newProps){
-  //   if (newProps.params !== this.props.params){
-  //     this.state.userId = newProps.params.userId;
-  //     this.fromPropsListener = BookStore.addListener(this.getUserBooks);
-  //     ClientActions.fetchUserBooks(this.state.userId);
-  //   }
-  // },
+
+  componentWillReceiveProps: function(newProps){
+    if (newProps.params !== this.props.params){
+      this.state.userId = newProps.params.userId;
+      this.fromPropsListener = BookStore.addListener(this.getUserBooks);
+      ClientActions.fetchUserBooks(this.state.userId);
+    }
+  },
   componentWillMount: function(){
     this.userBooksListener = BookStore.addListener(this.getUserBooks);
     ClientActions.fetchUserBooks(this.state.userId);
   },
 
   componentWillUnmount: function(){
-    // if(this.userBooksListener){
+    if(this.userBooksListener){
       this.userBooksListener.remove();
-    // }
-    // if (this.fromPropsListener){
-    //   this.fromPropsListener.remove();
-    // }
+    }
+    if (this.fromPropsListener){
+      this.fromPropsListener.remove();
+    }
   },
 
-  // _onChange: function(newProps){
-  //   this.setState({userId: newProps.params.userId});
-  // },
+  _onChange: function(newProps){
+    this.setState({userId: newProps.params.userId});
+  },
 
   getUser: function(){
     this.setState({currentUser: UserStore.currentUser()});
@@ -56,24 +57,24 @@ var Books = React.createClass({
   getUserBooks: function(){
     this.setState({books: BookStore.all()});
   },
-  addBook: function(){
-    this.setState({showForm: true});
-  },
-  displayForm: function(){
-    if(this.state.showForm){
-      return <BookForm/>;
-    }
-    else{
-      return (<button  className="bk-button" onClick={this.addBook}>
-        Add a new book to my collection!
-      </button>);
-    }
-  },
+  // addBook: function(){
+  //   this.setState({showForm: true});
+  // },
+  // displayForm: function(){
+  //   if(this.state.showForm){
+  //     return <BookForm/>;
+  //   }
+  //   else{
+  //     return (<button  className="bk-button" onClick={this.addBook}>
+  //       Add a new book to my collection!
+  //     </button>);
+  //   }
+  // },
 
   render: function(){
-    // if(this.state.userId !== 0 && !UserStore.findUser(this.state.userId)){
-    //   return (<div>couldn't find userId</div>);
-    // }
+    if(this.state.userId !== 0 && !UserStore.findUser(this.state.userId)){
+      return <div>couldn't find userId</div>;
+    }
 
     if (!this.state.books || !UserStore.currentUser()){
       return (<div>there are no books in my state</div>);
@@ -94,17 +95,18 @@ var Books = React.createClass({
         }//else
     };
 
-    // {owner()}
 
+    // {this.displayForm()}
       return (<div className="book-index">
-      {this.displayForm()}
+
       {this.props.children}
+      {owner()}
         <ul className="books-index">
           {
             self.state.books.map(function(book){
                 return (
                   <div key={book.id}>
-                    <BookIndexItem book={book}/>
+                    <UserBookIndexItem userId={self.props.params.userId} book={book}/>
                   </div>);
             })
           }
@@ -114,4 +116,4 @@ var Books = React.createClass({
   }
 });
 
-module.exports = Books;
+module.exports = UserBooks;

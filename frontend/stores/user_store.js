@@ -63,5 +63,11 @@ UserStore.allUsers = function(){
   return users;
 };
 
+UserStore.findUser = function(id){
+  if (_allUsers){
+    return _allUsers[id];
+  }
+};
+
 window.us = UserStore;
 module.exports = UserStore;

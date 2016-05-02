@@ -68,10 +68,10 @@ var BookDetail = React.createClass({
             <h3> {book.title} </h3>
             <h4>{book.author}</h4>
             <p>{book.description ? book.description : ""}</p>
-            {display()}
           </div>
       );
   }//render
 });
+// {display()}
 
 module.exports = BookDetail;

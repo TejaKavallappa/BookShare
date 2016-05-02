@@ -11,7 +11,9 @@ var hashHistory = ReactRouter.hashHistory;
 //Components
 var AuthPermit = require('./components/auth_permit');
 var BookIndex = require('./components/book_index');
+var UserBooks = require('./components/user_book_index');
 var BookDetail = require('./components/book_detail');
+var UserBookDetail = require('./components/user_book_detail');
 var BookEdit = require('./components/book_edit');
 var LoginForm = require('./components/login_form');
 var CurrentUserState = require('./mixins/current_user_state');
@@ -22,13 +24,18 @@ var Routerr = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={AuthPermit}/>
-      <Route path="login" component={LoginForm}/>
-      <Route path="signup" component={LoginForm}/>
-      <Route path="books" component={BookIndex}>
-      <Route path=":bookId" component={BookDetail}/>
-      <Route path=":bookId/edit" component={BookEdit}/>
+        <Route path="login" component={LoginForm}/>
+        <Route path="signup" component={LoginForm}/>
 
-      </Route>
+        <Route path="users/:userId" component={UserBooks}>
+          <Route path=":bookId" component={UserBookDetail}/>
+        </Route>
+
+        <Route path="books" component={BookIndex}>
+          <Route path=":bookId" component={BookDetail}/>
+          <Route path=":bookId/edit" component={BookEdit}/>
+        </Route>
+
     </Route>
   </Router>
 );

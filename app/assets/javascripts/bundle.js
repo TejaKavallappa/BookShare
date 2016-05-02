@@ -57,7 +57,9 @@
 	//Components
 	var AuthPermit = __webpack_require__(262);
 	var BookIndex = __webpack_require__(225);
+	var UserBooks = __webpack_require__(287);
 	var BookDetail = __webpack_require__(257);
+	var UserBookDetail = __webpack_require__(289);
 	var BookEdit = __webpack_require__(258);
 	var LoginForm = __webpack_require__(259);
 	var CurrentUserState = __webpack_require__(253);
@@ -73,6 +75,11 @@
 	    React.createElement(IndexRoute, { component: AuthPermit }),
 	    React.createElement(Route, { path: 'login', component: LoginForm }),
 	    React.createElement(Route, { path: 'signup', component: LoginForm }),
+	    React.createElement(
+	      Route,
+	      { path: 'users/:userId', component: UserBooks },
+	      React.createElement(Route, { path: ':bookId', component: UserBookDetail })
+	    ),
 	    React.createElement(
 	      Route,
 	      { path: 'books', component: BookIndex },
@@ -25478,17 +25485,38 @@
 	
 	
 	  getInitialState: function () {
-	    return { books: [], showForm: false, currentUser: {} };
+	    var userId = 0;
+	    if (this.props.params) {
+	      userId = this.props.params.userId;
+	    }
+	    return { books: [], showForm: false, currentUser: {}, userId: userId };
 	  },
 	
+	  //
+	  // componentWillReceiveProps: function(newProps){
+	  //   if (newProps.params !== this.props.params){
+	  //     this.state.userId = newProps.params.userId;
+	  //     this.fromPropsListener = BookStore.addListener(this.getUserBooks);
+	  //     ClientActions.fetchUserBooks(this.state.userId);
+	  //   }
+	  // },
 	  componentWillMount: function () {
 	    this.userBooksListener = BookStore.addListener(this.getUserBooks);
-	    ClientActions.fetchUserBooks();
+	    ClientActions.fetchUserBooks(this.state.userId);
 	  },
 	
 	  componentWillUnmount: function () {
+	    // if(this.userBooksListener){
 	    this.userBooksListener.remove();
+	    // }
+	    // if (this.fromPropsListener){
+	    //   this.fromPropsListener.remove();
+	    // }
 	  },
+	
+	  // _onChange: function(newProps){
+	  //   this.setState({userId: newProps.params.userId});
+	  // },
 	
 	  getUser: function () {
 	    this.setState({ currentUser: UserStore.currentUser() });
@@ -25513,17 +25541,39 @@
 	  },
 	
 	  render: function () {
+	    // if(this.state.userId !== 0 && !UserStore.findUser(this.state.userId)){
+	    //   return (<div>couldn't find userId</div>);
+	    // }
 	
 	    if (!this.state.books || !UserStore.currentUser()) {
 	      return React.createElement(
 	        'div',
 	        null,
-	        'Loading'
+	        'there are no books in my state'
 	      );
 	      //Insert loading icon here
 	    }
 	
 	    var self = this;
+	    var owner = function () {
+	      if (self.state.userId === 0) {
+	        var name = UserStore.currentUser().username;
+	        name = name.charAt(0).toUpperCase() + name.slice(1);
+	        return React.createElement(
+	          'h2',
+	          null,
+	          name + "'s books'"
+	        );
+	      } else {
+	        return React.createElement(
+	          'h2',
+	          null,
+	          UserStore.findUser(self.state.userId).username + "'s books"
+	        );
+	      } //else
+	    };
+	
+	    // {owner()}
 	
 	    return React.createElement(
 	      'div',
@@ -25540,6 +25590,11 @@
 	            React.createElement(BookIndexItem, { book: book })
 	          );
 	        })
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(UsersIndex, null)
 	      )
 	    );
 	  }
@@ -32764,6 +32819,12 @@
 	  return users;
 	};
 	
+	UserStore.findUser = function (id) {
+	  if (_allUsers) {
+	    return _allUsers[id];
+	  }
+	};
+	
 	window.us = UserStore;
 	module.exports = UserStore;
 
@@ -32949,7 +33010,6 @@
 	    }
 	
 	    var display = function () {
-	      // if (self.state.currentUser === self.state.book.owner_id){
 	      return React.createElement(
 	        'div',
 	        null,
@@ -32964,7 +33024,6 @@
 	          'Delete'
 	        )
 	      );
-	      // }
 	    };
 	
 	    //In the edit form add facility to let user upload an images
@@ -33148,7 +33207,6 @@
 	  },
 	  componentDidUpdate: function () {
 	    if (this.state.currentUser) {
-	      // hashHistory.push("books");
 	      hashHistory.push("/");
 	    }
 	  },
@@ -35464,19 +35522,16 @@
 	//react router
 	var ReactRouter = __webpack_require__(166);
 	var hashHistory = ReactRouter.hashHistory;
+	var Link = ReactRouter.Link;
 	//actions
 	var ClientActions = __webpack_require__(226);
 	var UserActions = __webpack_require__(255);
 	//stores
 	var UserStore = __webpack_require__(254);
 	//components
-	var BookIndexItem = __webpack_require__(233);
-	var BookIndex = __webpack_require__(225);
-	var BookStore = __webpack_require__(234);
-	var BookForm = __webpack_require__(252);
 	
-	var Users = React.createClass({
-	  displayName: 'Users',
+	var UsersIndex = React.createClass({
+	  displayName: 'UsersIndex',
 	
 	  getInitialState: function () {
 	    return { users: [] };
@@ -35501,29 +35556,54 @@
 	      );
 	    }
 	    var self = this;
+	    var displayUsers = function (user) {
+	      // self.state.users.map(function(user){
+	      if (user.id === UserStore.currentUser().id) {
+	        return React.createElement(
+	          'li',
+	          { key: user.id },
+	          React.createElement(
+	            Link,
+	            { to: "/" },
+	            React.createElement(
+	              'h4',
+	              null,
+	              user.username.charAt(0).toUpperCase() + user.username.slice(1)
+	            )
+	          )
+	        );
+	      } else {
+	
+	        return React.createElement(
+	          'li',
+	          { key: user.id },
+	          React.createElement(
+	            Link,
+	            { to: "users/" + user.id },
+	            React.createElement(
+	              'h4',
+	              null,
+	              user.username.charAt(0).toUpperCase() + user.username.slice(1)
+	            )
+	          )
+	        );
+	      }
+	      // });
+	    }; //displayUsers
 	    return React.createElement(
 	      'div',
 	      { className: 'users-page' },
 	      React.createElement(
 	        'ul',
-	        { className: 'books-index' },
+	        { className: 'users-index' },
 	        self.state.users.map(function (user) {
-	          return React.createElement(
-	            'li',
-	            { key: user.id },
-	            React.createElement(
-	              'h4',
-	              null,
-	              user.username
-	            )
-	          );
+	          return displayUsers(user);
 	        })
 	      )
 	    );
 	  }
-	});
-	
-	module.exports = Users;
+	}); //UsersIndex
+	module.exports = UsersIndex;
 
 /***/ },
 /* 286 */
@@ -35559,17 +35639,324 @@
 	        null,
 	        React.createElement(BookIndex, null)
 	      ),
-	      React.createElement(
-	        'div',
-	        null,
-	        React.createElement(UsersIndex, null)
-	      ),
 	      this.props.children
 	    );
 	  }
 	});
 	
 	module.exports = Home;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	//react router
+	var ReactRouter = __webpack_require__(166);
+	var hashHistory = ReactRouter.hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(226);
+	var UserActions = __webpack_require__(255);
+	//stores
+	var UserStore = __webpack_require__(254);
+	//components
+	var BookIndexItem = __webpack_require__(233);
+	var UserBookIndexItem = __webpack_require__(288);
+	var BookStore = __webpack_require__(234);
+	var BookForm = __webpack_require__(252);
+	var UsersIndex = __webpack_require__(285);
+	
+	var UserBooks = React.createClass({
+	  displayName: 'UserBooks',
+	
+	
+	  getInitialState: function () {
+	    var userId = 0;
+	    if (this.props.params) {
+	      userId = this.props.params.userId;
+	    }
+	    return { books: [], showForm: false, currentUser: {}, userId: userId };
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    if (newProps.params !== this.props.params) {
+	      this.state.userId = newProps.params.userId;
+	      this.fromPropsListener = BookStore.addListener(this.getUserBooks);
+	      ClientActions.fetchUserBooks(this.state.userId);
+	    }
+	  },
+	  componentWillMount: function () {
+	    this.userBooksListener = BookStore.addListener(this.getUserBooks);
+	    ClientActions.fetchUserBooks(this.state.userId);
+	  },
+	
+	  componentWillUnmount: function () {
+	    if (this.userBooksListener) {
+	      this.userBooksListener.remove();
+	    }
+	    if (this.fromPropsListener) {
+	      this.fromPropsListener.remove();
+	    }
+	  },
+	
+	  _onChange: function (newProps) {
+	    this.setState({ userId: newProps.params.userId });
+	  },
+	
+	  getUser: function () {
+	    this.setState({ currentUser: UserStore.currentUser() });
+	  },
+	
+	  getUserBooks: function () {
+	    this.setState({ books: BookStore.all() });
+	  },
+	  // addBook: function(){
+	  //   this.setState({showForm: true});
+	  // },
+	  // displayForm: function(){
+	  //   if(this.state.showForm){
+	  //     return <BookForm/>;
+	  //   }
+	  //   else{
+	  //     return (<button  className="bk-button" onClick={this.addBook}>
+	  //       Add a new book to my collection!
+	  //     </button>);
+	  //   }
+	  // },
+	
+	  render: function () {
+	    if (this.state.userId !== 0 && !UserStore.findUser(this.state.userId)) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'couldn\'t find userId'
+	      );
+	    }
+	
+	    if (!this.state.books || !UserStore.currentUser()) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'there are no books in my state'
+	      );
+	      //Insert loading icon here
+	    }
+	
+	    var self = this;
+	    var owner = function () {
+	      if (self.state.userId === 0) {
+	        var name = UserStore.currentUser().username;
+	        name = name.charAt(0).toUpperCase() + name.slice(1);
+	        return React.createElement(
+	          'h2',
+	          null,
+	          name + "'s books'"
+	        );
+	      } else {
+	        return React.createElement(
+	          'h2',
+	          null,
+	          UserStore.findUser(self.state.userId).username + "'s books"
+	        );
+	      } //else
+	    };
+	
+	    // {this.displayForm()}
+	    return React.createElement(
+	      'div',
+	      { className: 'book-index' },
+	      this.props.children,
+	      owner(),
+	      React.createElement(
+	        'ul',
+	        { className: 'books-index' },
+	        self.state.books.map(function (book) {
+	          return React.createElement(
+	            'div',
+	            { key: book.id },
+	            React.createElement(UserBookIndexItem, { userId: self.props.params.userId, book: book })
+	          );
+	        })
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(UsersIndex, null)
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = UserBooks;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(166).hashHistory;
+	var Link = __webpack_require__(166).Link;
+	
+	var ClientActions = __webpack_require__(226);
+	var BookIndex = __webpack_require__(225);
+	var BookStore = __webpack_require__(234);
+	
+	var UserBook = React.createClass({
+	  displayName: 'UserBook',
+	
+	
+	  // editBook: function(event){
+	  //   event.preventDefault();
+	  //   var url = "/books/"+this.props.book.id+"/edit";
+	  //   hashHistory.push(url);
+	  // },
+	  // deleteBook: function(event){
+	  //   event.preventDefault();
+	  //   ClientActions.removeBook(this.props.book.id);
+	  // },
+	  render: function () {
+	
+	    var book = this.props.book;
+	    return React.createElement(
+	      'div',
+	      { className: 'book-detail-item' },
+	      React.createElement(
+	        'li',
+	        null,
+	        React.createElement(
+	          Link,
+	          { to: "/users/" + this.props.userId + "/" + book.id.toString() },
+	          React.createElement('img', { src: book.image_url, alt: book.title })
+	        ),
+	        React.createElement(
+	          'h3',
+	          null,
+	          book.title
+	        )
+	      )
+	    ); //return
+	  }
+	});
+	
+	module.exports = UserBook;
+	// <button
+	//   onClick={this.editBook}
+	//   className="bk-button"
+	//   bookId={book.id}>Edit</button>
+	// <button
+	//   onClick={this.deleteBook}
+	//   className="bk-button">Delete</button>
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(166).hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(226);
+	//component
+	var BookIndex = __webpack_require__(225);
+	//stores
+	var BookStore = __webpack_require__(234);
+	//mixin
+	var CurrentUserState = __webpack_require__(253);
+	
+	var BookDetail = React.createClass({
+	  displayName: 'BookDetail',
+	
+	  // mixins: [CurrentUserState],
+	  getInitialState: function () {
+	    return { book: BookStore.find(this.props.params.bookId) };
+	  },
+	
+	  componentDidMount: function () {
+	    this.bookListener = BookStore.addListener(this._onChange);
+	    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.bookListener.remove();
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore);
+	  },
+	
+	  getStateFromStore: function () {
+	    this.setState({ book: BookStore.find(this.props.params.bookId) });
+	  },
+	
+	  editBook: function (event) {
+	    event.preventDefault();
+	    var url = "/api/books/" + this.props.params.bookId;
+	    hashHistory.push(url);
+	  },
+	
+	  deleteBook: function (event) {
+	    event.preventDefault();
+	    ClientActions.removeBook(this.props.params.bookId);
+	  },
+	  render: function () {
+	    var book = this.state.book;
+	    var self = this;
+	
+	    if (!book) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Loading...'
+	      );
+	    }
+	
+	    var display = function () {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'button',
+	          { onClick: self.editBook },
+	          'Edit'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: self.deleteBook },
+	          'Delete'
+	        )
+	      );
+	    };
+	
+	    //In the edit form add facility to let user upload an images
+	    return React.createElement(
+	      'div',
+	      { className: 'book' },
+	      React.createElement(
+	        'h3',
+	        null,
+	        ' ',
+	        book.title,
+	        ' '
+	      ),
+	      React.createElement(
+	        'h4',
+	        null,
+	        book.author
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        book.description ? book.description : ""
+	      )
+	    );
+	  } //render
+	});
+	// {display()}
+	
+	module.exports = BookDetail;
 
 /***/ }
 /******/ ]);

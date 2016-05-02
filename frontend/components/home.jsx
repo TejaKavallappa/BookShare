@@ -20,7 +20,7 @@ var Home = React.createClass({
 
       return (<div className="home-page">
       <div><BookIndex/></div>
-      <div><UsersIndex/></div>
+      
       {this.props.children}
       </div>);
   }
