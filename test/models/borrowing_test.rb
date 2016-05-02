@@ -8,7 +8,7 @@
 #  borrower_id    :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  request_status :string
+#  request_status :string           default("with_owner"), not null
 #
 
 require 'test_helper'

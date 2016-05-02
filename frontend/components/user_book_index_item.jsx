@@ -23,7 +23,8 @@ var UserBook = React.createClass({
     };
     BorrowActions.requestBook(borrow);
   },
-  
+
+
   render: function(){
     var book = this.props.book;
     return (
@@ -34,6 +35,7 @@ var UserBook = React.createClass({
            </Link>
 
            <h3>{book.title}</h3>
+
              <button
                onClick={this.requestBook}
                className="bk-button"
