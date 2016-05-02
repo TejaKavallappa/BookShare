@@ -1,25 +1,30 @@
+//react
 var React = require('react');
 var hashHistory = require('react-router').hashHistory;
 var Link = require('react-router').Link;
-
+//actions
 var ClientActions = require('../actions/client_actions');
+var BorrowActions = require('../actions/borrow_actions');
+//components
 var BookIndex = require('./book_index');
+//stores
 var BookStore = require('../stores/book_store');
+var UserStore = require('../stores/user_store');
 
 var UserBook = React.createClass({
 
-  // editBook: function(event){
-  //   event.preventDefault();
-  //   var url = "/books/"+this.props.book.id+"/edit";
-  //   hashHistory.push(url);
-  // },
-  // deleteBook: function(event){
-  //   event.preventDefault();
-  //   ClientActions.removeBook(this.props.book.id);
-  // },
+  requestBook: function(event){
+    event.preventDefault();
+    var borrow = {
+      borrower_id: UserStore.currentUser(),
+      owner_id: this.props.book.owner_id,
+      book_id: this.props.book.id,
+      request: "pending"
+    };
+    BorrowActions.requestBook(borrow);
+  },
+  
   render: function(){
-
-    
     var book = this.props.book;
     return (
       <div className='book-detail-item'>
@@ -29,6 +34,11 @@ var UserBook = React.createClass({
            </Link>
 
            <h3>{book.title}</h3>
+             <button
+               onClick={this.requestBook}
+               className="bk-button"
+               bookId={book.id}>Borrow
+             </button>
 
 
     </li>
@@ -38,10 +48,3 @@ var UserBook = React.createClass({
 });
 
 module.exports = UserBook;
-// <button
-//   onClick={this.editBook}
-//   className="bk-button"
-//   bookId={book.id}>Edit</button>
-// <button
-//   onClick={this.deleteBook}
-//   className="bk-button">Delete</button>

@@ -16,7 +16,9 @@ var NavBar = React.createClass({
     event.preventDefault();
     UserActions.logout();
   },
-
+  guestLogin: function(){
+    UserActions.login({username: "alice", password: "bookshares"});
+  },
   render: function(){
     var self = this;
     var display = function() {
@@ -32,7 +34,7 @@ var NavBar = React.createClass({
         return (<ul className="header-list">
           <li><a href="#/login">Log In</a></li>
           <li><a href="#/signup">Sign Up</a></li>
-          <li><a href="#">Demo User</a></li>
+          <li><a href="#" onClick={self.guestLogin}>Demo User</a></li>
         </ul>);
       }
     };

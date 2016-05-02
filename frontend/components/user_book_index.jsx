@@ -21,7 +21,7 @@ var UserBooks = React.createClass({
     if (this.props.params){
       userId = this.props.params.userId;
     }
-    return {books: [], showForm: false, currentUser: {}, userId: userId};
+    return {books: [], currentUser: {}, userId: userId};
   },
 
 
@@ -57,19 +57,11 @@ var UserBooks = React.createClass({
   getUserBooks: function(){
     this.setState({books: BookStore.all()});
   },
-  // addBook: function(){
-  //   this.setState({showForm: true});
-  // },
-  // displayForm: function(){
-  //   if(this.state.showForm){
-  //     return <BookForm/>;
-  //   }
-  //   else{
-  //     return (<button  className="bk-button" onClick={this.addBook}>
-  //       Add a new book to my collection!
-  //     </button>);
-  //   }
-  // },
+
+  requestBook: function(){
+    this.setState({showForm: true});
+  },
+  
 
   render: function(){
     if(this.state.userId !== 0 && !UserStore.findUser(this.state.userId)){
@@ -93,7 +85,7 @@ var UserBooks = React.createClass({
             {UserStore.findUser(self.state.userId).username + "'s books"}
           </h2>);
         }//else
-    };
+    }; //owner
 
 
     // {this.displayForm()}
@@ -106,7 +98,9 @@ var UserBooks = React.createClass({
             self.state.books.map(function(book){
                 return (
                   <div key={book.id}>
-                    <UserBookIndexItem userId={self.props.params.userId} book={book}/>
+                    <UserBookIndexItem
+                      userId={self.props.params.userId}
+                      book={book}/>
                   </div>);
             })
           }
