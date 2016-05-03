@@ -13,6 +13,7 @@ var UserBookIndexItem = require('./user_book_index_item');
 var BookStore = require('../stores/book_store');
 var BookForm = require('./book_form');
 var UsersIndex = require('./user_index');
+//mixins
 var CurrentUserMixin = require('../mixins/current_user_state');
 
 var UserBooks = React.createClass({

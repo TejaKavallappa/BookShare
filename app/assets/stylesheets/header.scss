@@ -31,7 +31,7 @@ $black: #000002;
   background: $beige;
 }
 li{
-  padding:10px;
+  padding:10px 20px;
   list-style: none;
 }
 #login-form{
@@ -63,20 +63,7 @@ img{
   height: auto;
 }
 
-.book-detail-item{
-  display: flex;
-  align-items: baseline;
-  border: thin solid $yellow;
-  // padding: 10px;
-  list-style: none;
-  margin: 5px;
-  border-radius: 5px;
-  background: white;
-  width: 150px;
-}
-// html{
-//   height: 100%;
-// }
+
 .splash{
   background: image-url('splash-bg.jpg');
   -webkit-background-size: cover;

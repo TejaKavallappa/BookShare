@@ -54,16 +54,18 @@
 	var Route = ReactRouter.Route;
 	var IndexRoute = ReactRouter.IndexRoute;
 	var hashHistory = ReactRouter.hashHistory;
+	//actions
+	var UserActions = __webpack_require__(246);
 	//Components
 	var AuthPermit = __webpack_require__(245);
-	var BookIndex = __webpack_require__(271);
+	// var BookIndex = require('./components/book_index');
 	var UserBooks = __webpack_require__(281);
-	var BookDetail = __webpack_require__(285);
+	var UserBorrows = __webpack_require__(293);
 	var UserBookDetail = __webpack_require__(286);
+	var BookDetail = __webpack_require__(285);
 	var BookEdit = __webpack_require__(287);
 	var LoginForm = __webpack_require__(288);
 	var CurrentUserState = __webpack_require__(278);
-	var UserActions = __webpack_require__(246);
 	var App = __webpack_require__(289);
 	
 	var Routerr = React.createElement(
@@ -75,6 +77,7 @@
 	    React.createElement(IndexRoute, { component: AuthPermit }),
 	    React.createElement(Route, { path: 'login', component: LoginForm }),
 	    React.createElement(Route, { path: 'signup', component: LoginForm }),
+	    React.createElement(Route, { path: 'requests', component: UserBorrows }),
 	    React.createElement(
 	      Route,
 	      { path: 'users/:userId', component: UserBooks },
@@ -35121,6 +35124,7 @@
 	var BookStore = __webpack_require__(276);
 	var BookForm = __webpack_require__(277);
 	var UsersIndex = __webpack_require__(279);
+	//mixins
 	var CurrentUserMixin = __webpack_require__(278);
 	
 	var UserBooks = React.createClass({
@@ -35348,6 +35352,30 @@
 	    BorrowApiUtil.requestBook(borrow, BorrowActions.receiveRequest, BorrowActions.handleError);
 	  },
 	
+	  approveBook: function (borrow) {
+	    BorrowApiUtil.approveBook(borrow, BorrowActions.approvedBorrow, BorrowActions.handleError);
+	  },
+	
+	  fetchBorrowsByOwner: function () {
+	    BorrowApiUtil.fetchBorrowsByOwner(BorrowActions.receivedOwnerBorrows, BorrowActions.handleError);
+	  },
+	
+	  fetchBorrowsByBorrower: function () {
+	    BorrowApiUtil.fetchBorrowsByBorrower(BorrowActions.receivedBorrowerBorrows, BorrowActions.handleError);
+	  },
+	  receivedOwnerBorrows: function (borrows) {
+	    AppDispatcher.dispatch({
+	      actionType: "BORROWS_RECEIVED",
+	      borrows: borrows
+	    });
+	  },
+	  receivedBorrowerBorrows: function (borrows) {
+	    AppDispatcher.dispatch({
+	      actionType: "BORROW_RECEIVED",
+	      borrows: borrows
+	    });
+	  },
+	  approvedBorrow: function () {},
 	  receiveRequest: function (borrow) {
 	    AppDispatcher.dispatch({
 	      actionType: "BORROW_RECEIVED",
@@ -35365,67 +35393,6 @@
 	
 	module.exports = BorrowActions;
 	window.BorrowActions = BorrowActions;
-	
-	// var borrow = {
-	//   owner_id: 1,
-	//   borrower_id: 2,
-	//   book_id: 2,
-	//   request_status: "pending"};
-
-	// fetchAllUsers: function(){
-	//   UserApiUtil.fetchAllUsers(
-	//     UserActions.receiveAllUsers, UserActions.handleError);
-	// },
-	// fetchCurrentUser: function(){
-	//   UserApiUtil.fetchCurrentUser(
-	//     UserActions.receiveCurrentUser, UserActions.handleError);
-	// },
-	// login: function(user){
-	//   UserApiUtil.post({
-	//     url: "/api/session",
-	//     user: user,
-	//     success: UserActions.receiveCurrentUser,
-	//     error: UserActions.handleError
-	//   });
-	// },
-	// signup: function(user){
-	//   UserApiUtil.post({
-	//     url: "/api/users",
-	//     user: user,
-	//     success: UserActions.receiveCurrentUser,
-	//     error: UserActions.handleError
-	//   });
-	// },
-	// logout: function(){
-	//   UserApiUtil.logout(
-	//     UserActions.removeCurrentUser, UserActions.handleLogoutError);
-	// },
-	// receiveCurrentUser: function(user){
-	//   if (user.username){
-	//   AppDispatcher.dispatch({
-	//     actionType: "LOGIN",
-	//     user: user
-	//     });
-	//   }
-	// },
-	// receiveAllUsers: function(users){
-	//   AppDispatcher.dispatch({
-	//     actionType: "USERS",
-	//     users: users
-	//   });
-	// },
-	// removeCurrentUser: function(){
-	//   AppDispatcher.dispatch({
-	//     actionType: "LOGOUT"
-	//   });
-	//   hashHistory.push("/");
-	// },
-	//
-	// handleLogoutError: function(error){
-	//   UserActions.handleError(error);
-	//   hashHistory.push("/");
-	//
-	// },
 
 /***/ },
 /* 284 */
@@ -35442,34 +35409,37 @@
 	      success: success,
 	      error: error
 	    });
+	  },
+	  //request_status: approved, borrowed, rejected
+	  approveBook: function (borrow, success, error) {
+	    $.ajax({
+	      url: '/api/borrowing/' + borrow.id,
+	      type: 'PATCH',
+	      data: { borrowings: borrow },
+	      success: success,
+	      error: error
+	    });
+	  },
+	  fetchBorrowsByOwner: function (success, error) {
+	    $.ajax({
+	      url: '/api/borrowings/',
+	      type: 'GET',
+	      success: success,
+	      error: error
+	    });
+	  },
+	  fetchBorrowsByBorrower: function (borrowerId, success, error) {
+	    $.ajax({
+	      url: '/api/borrowings/',
+	      type: 'GET',
+	      data: { borrowerId: borrowerId }, //params
+	      success: success,
+	      error: error
+	    });
 	  }
+	
 	};
 	
-	// fetchCurrentUser: function(success, error){
-	//   $.ajax({
-	//     url: '/api/session',
-	//     success: success,
-	//     type: 'GET',
-	//     error: error
-	//   });
-	// },
-	// post: function(options){
-	//   $.ajax({
-	//     type: 'POST',
-	//     url: options.url,
-	//     data: {user: options.user},
-	//     success: options.success,
-	//     error: options.error
-	//   });
-	// },
-	// logout: function(success, error){
-	//   $.ajax({
-	//     url: '/api/session',
-	//     success: success,
-	//     type: 'DELETE',
-	//     error: error
-	//   });
-	// }
 	module.exports = BorrowApiUtil;
 	window.BorrowApiUtil = BorrowApiUtil;
 
@@ -36073,6 +36043,15 @@
 	          ),
 	          React.createElement(
 	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: '#/requests' },
+	              'Requests'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
 	            { onClick: self.logout },
 	            'Sign Out'
 	          )
@@ -36160,6 +36139,152 @@
 	  }
 	});
 	module.exports = Footer;
+
+/***/ },
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(247);
+	var Store = __webpack_require__(253).Store;
+	
+	var BorrowStore = new Store(AppDispatcher);
+	var _borrows = {};
+	
+	var receiveAllBorrows = function (borrows) {
+	  _borrows = {};
+	  borrows.forEach(function (borrow) {
+	    _borrows[borrow.id] = borrow;
+	  });
+	};
+	
+	BorrowStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case "BORROWS_RECEIVED":
+	      receiveAllBorrows(payload.borrows);
+	      break;
+	    case "BORROW_RECEIVED":
+	      receiveSingleBorrow(payload.borrow);
+	      break;
+	    case "BORROW_REMOVED":
+	      removeBorrow(payload.borrow);
+	      break;
+	  }
+	  this.__emitChange();
+	};
+	
+	var receiveSingleBorrow = function (borrow) {
+	  _borrows[borrow.id] = borrow;
+	};
+	
+	var removeBorrow = function (borrow) {
+	  delete _borrows[borrow.id];
+	};
+	
+	BorrowStore.all = function () {
+	  var borrows = [];
+	  for (var id in _borrows) {
+	    borrows.push(_borrows[id]);
+	  }
+	  return borrows;
+	};
+	
+	BorrowStore.find = function (id) {
+	  return _borrows[id];
+	};
+	
+	module.exports = BorrowStore;
+
+/***/ },
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	//react router
+	var ReactRouter = __webpack_require__(186);
+	var hashHistory = ReactRouter.hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(272);
+	var UserActions = __webpack_require__(246);
+	var BorrowActions = __webpack_require__(283);
+	//stores
+	var BorrowStore = __webpack_require__(292);
+	var UserStore = __webpack_require__(252);
+	//mixins
+	var CurrentUserMixin = __webpack_require__(278);
+	
+	var UserBorrows = React.createClass({
+	  displayName: 'UserBorrows',
+	
+	  mixins: [CurrentUserMixin],
+	
+	  getInitialState: function () {
+	    return { borrows: [] };
+	  },
+	
+	  componentWillMount: function () {
+	    this.borrowsListener = BorrowStore.addListener(this.setBorrows);
+	    BorrowActions.fetchBorrowsByOwner();
+	  },
+	
+	  componentWillUpdate: function () {
+	    if (!UserStore.currentUser()) {
+	      hashHistory.push("/");
+	    }
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.borrowsListener.remove();
+	  },
+	
+	  setBorrows: function () {
+	    this.setState({ borrows: BorrowStore.all() });
+	  },
+	
+	  render: function () {
+	    if (!this.state.borrows) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Loading'
+	      );
+	    }
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Your borrow requests'
+	      ),
+	      this.state.borrows.map(function (borrow) {
+	        return React.createElement(
+	          'div',
+	          { key: borrow.id, className: 'borrow-item' },
+	          React.createElement('img', { src: borrow.book.image_url, alt: borrow.book.title }),
+	          borrow.borrower.username,
+	          ' ',
+	          borrow.book.title,
+	          ' ',
+	          borrow.book.author,
+	          ' ',
+	          React.createElement(
+	            'button',
+	            { onClick: this.approveRequest },
+	            'Approve'
+	          ),
+	          ' ',
+	          React.createElement(
+	            'button',
+	            { onClick: this.rejectRequest },
+	            'Reject'
+	          )
+	        );
+	      })
+	    );
+	  }
+	});
+	
+	module.exports = UserBorrows;
 
 /***/ }
 /******/ ]);

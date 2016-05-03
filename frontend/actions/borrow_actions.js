@@ -9,6 +9,33 @@ var BorrowActions = {
       BorrowActions.handleError);
   },
 
+  approveBook: function(borrow){
+    BorrowApiUtil.approveBook(borrow, BorrowActions.approvedBorrow,
+      BorrowActions.handleError);
+  },
+
+  fetchBorrowsByOwner: function(){
+    BorrowApiUtil.fetchBorrowsByOwner(BorrowActions.receivedOwnerBorrows,
+      BorrowActions.handleError);
+  },
+
+  fetchBorrowsByBorrower: function(){
+    BorrowApiUtil.fetchBorrowsByBorrower(BorrowActions.receivedBorrowerBorrows,
+       BorrowActions.handleError);
+  },
+  receivedOwnerBorrows: function(borrows){
+    AppDispatcher.dispatch({
+      actionType: "BORROWS_RECEIVED",
+      borrows: borrows
+    });
+  },
+  receivedBorrowerBorrows: function(borrows){
+    AppDispatcher.dispatch({
+      actionType: "BORROW_RECEIVED",
+      borrows: borrows
+    });
+  },
+  approvedBorrow: function(){},
   receiveRequest: function(borrow){
     AppDispatcher.dispatch({
       actionType: "BORROW_RECEIVED",
@@ -26,64 +53,3 @@ var BorrowActions = {
 
 module.exports = BorrowActions;
 window.BorrowActions = BorrowActions;
-
-// var borrow = {
-//   owner_id: 1,
-//   borrower_id: 2,
-//   book_id: 2,
-//   request_status: "pending"};
-
-// fetchAllUsers: function(){
-//   UserApiUtil.fetchAllUsers(
-//     UserActions.receiveAllUsers, UserActions.handleError);
-// },
-// fetchCurrentUser: function(){
-//   UserApiUtil.fetchCurrentUser(
-//     UserActions.receiveCurrentUser, UserActions.handleError);
-// },
-// login: function(user){
-//   UserApiUtil.post({
-//     url: "/api/session",
-//     user: user,
-//     success: UserActions.receiveCurrentUser,
-//     error: UserActions.handleError
-//   });
-// },
-// signup: function(user){
-//   UserApiUtil.post({
-//     url: "/api/users",
-//     user: user,
-//     success: UserActions.receiveCurrentUser,
-//     error: UserActions.handleError
-//   });
-// },
-// logout: function(){
-//   UserApiUtil.logout(
-//     UserActions.removeCurrentUser, UserActions.handleLogoutError);
-// },
-// receiveCurrentUser: function(user){
-//   if (user.username){
-//   AppDispatcher.dispatch({
-//     actionType: "LOGIN",
-//     user: user
-//     });
-//   }
-// },
-// receiveAllUsers: function(users){
-//   AppDispatcher.dispatch({
-//     actionType: "USERS",
-//     users: users
-//   });
-// },
-// removeCurrentUser: function(){
-//   AppDispatcher.dispatch({
-//     actionType: "LOGOUT"
-//   });
-//   hashHistory.push("/");
-// },
-//
-// handleLogoutError: function(error){
-//   UserActions.handleError(error);
-//   hashHistory.push("/");
-//
-// },

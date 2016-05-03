@@ -18,6 +18,11 @@ class Api::BorrowingsController < ApplicationController
   end
 
   def index
+    @borrowings = Borrowing.where(owner_id: current_user, request_status: 'pending').joins(:book).joins(:borrower)
+    render :index
+    # For the currentUser, fetch all books where the request_status
+    # is "pending", and also fetch the borrower names
+
   end
 
   private

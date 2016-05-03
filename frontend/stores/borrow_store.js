@@ -26,7 +26,6 @@ BorrowStore.__onDispatch = function(payload){
   this.__emitChange();
 };
 
-
 var receiveSingleBorrow = function(borrow){
   _borrows[borrow.id] = borrow;
 };

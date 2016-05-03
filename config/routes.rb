@@ -6,6 +6,6 @@ Rails.application.routes.draw do
     resources :users, only: [:create, :index]
     resource :session, only: [:create, :destroy, :show]
     resources :books, only: [:create, :destroy, :show, :index, :update]
-    resources :borrowings, only: [:create, :destroy, :show, :update]
+    resources :borrowings, only: [:create, :destroy, :show, :update, :index]
   end
   end

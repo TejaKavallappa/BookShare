@@ -28,6 +28,7 @@ var NavBar = React.createClass({
         return (
           <ul className="header-list">
           <li>Hi, {self.state.currentUser.username}</li>
+          <li><a href="#/requests">Requests</a></li>
           <li onClick={self.logout}>Sign Out</li>
           </ul>);
       }

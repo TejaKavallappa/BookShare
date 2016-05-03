@@ -33,6 +33,8 @@ class Borrowing < ActiveRecord::Base
     foreign_key: :borrower_id,
     primary_key: :id
 
+  
+
   private
 
   def owner_borrower_not_same
