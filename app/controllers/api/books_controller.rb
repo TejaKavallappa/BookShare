@@ -50,9 +50,12 @@ class Api::BooksController < ApplicationController
   # PATCH/PUT /books/1.json
   def update
       if @book.update(book_params)
-        format.json { render :show, status: :ok, location: @book }
+        render :show, status: 200
+        # format.json { render :show, status: :ok, location: @book }
       else
-        format.json { render json: @book.errors, status: :unprocessable_entity }
+        @errors = @book.errors.full_messages
+        render "api/shared/error", status: 422
+        # format.json { render json: @book.errors, status: :unprocessable_entity }
       end
   end
 
@@ -71,6 +74,6 @@ class Api::BooksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:title, :author, :image_url, :description, :owner_id)
+      params.require(:book).permit(:title, :author, :image_url, :description, :owner_id,:id)
     end
 end

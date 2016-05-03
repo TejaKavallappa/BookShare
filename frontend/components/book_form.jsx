@@ -69,7 +69,7 @@ var BookForm = React.createClass({
         <label>Description
         <textarea
           value={this.state.description}
-          onChange={this.descriptionChange}/>
+          onChange={this.descriptionChange || ""}/>
         </label>
         <br></br>
         <input type="submit" value="Add New Book!"/>

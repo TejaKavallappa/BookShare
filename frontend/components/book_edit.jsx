@@ -15,7 +15,7 @@ var BookForm = React.createClass({
      return({author: bookToEdit.author,
                 id: bookToEdit.id,
                 title: bookToEdit.title,
-                description: bookToEdit.description,
+                description: bookToEdit.description || "",
                 image_url: bookToEdit.image_url});
     }
   },
@@ -51,7 +51,6 @@ var BookForm = React.createClass({
 
   handleSubmit: function(event){
     event.preventDefault();
-    //Remove this logic
     var ownerId = this.state.currentUser? this.state.currentUser.id : 1;
     var postData = {
       id: this.state.id,
@@ -61,7 +60,7 @@ var BookForm = React.createClass({
       owner_id: ownerId
     };
     ClientActions.updateBook(postData);
-    hashHistory.push("/books");
+    hashHistory.push("/");
   },
 
   render: function(){

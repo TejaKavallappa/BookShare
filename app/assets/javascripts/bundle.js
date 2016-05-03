@@ -34722,10 +34722,13 @@
 	    var url = "/books/" + this.props.book.id + "/edit";
 	    hashHistory.push(url);
 	  },
+	
 	  deleteBook: function (event) {
 	    event.preventDefault();
 	    ClientActions.removeBook(this.props.book.id);
+	    hashHistory.push("/");
 	  },
+	
 	  render: function () {
 	    var book = this.props.book;
 	    return React.createElement(
@@ -34778,9 +34781,12 @@
 	
 	var receiveAllBooks = function (books) {
 	  _books = {};
-	  books.forEach(function (book) {
-	    _books[book.id] = book;
-	  });
+	  //Check if books is not an empty object
+	  if (Object.keys(books).length) {
+	    books.forEach(function (book) {
+	      _books[book.id] = book;
+	    });
+	  }
 	};
 	
 	BookStore.__onDispatch = function (payload) {
@@ -34913,7 +34919,7 @@
 	          'Description',
 	          React.createElement('textarea', {
 	            value: this.state.description,
-	            onChange: this.descriptionChange })
+	            onChange: this.descriptionChange || "" })
 	        ),
 	        React.createElement('br', null),
 	        React.createElement('input', { type: 'submit', value: 'Add New Book!' })
@@ -35256,6 +35262,51 @@
 	    };
 	    BorrowActions.requestBook(borrow);
 	  },
+	  editBook: function (event) {
+	    event.preventDefault();
+	    var url = "/books/" + this.props.book.id + "/edit";
+	    hashHistory.push(url);
+	  },
+	  deleteBook: function (event) {
+	    event.preventDefault();
+	    ClientActions.removeBook(this.props.book.id);
+	  },
+	  displayButton: function (book) {
+	    if (UserStore.currentUser().id == book.owner_id) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'button',
+	          {
+	            onClick: this.editBook,
+	            className: 'bk-button',
+	            bookId: book.id },
+	          'Edit'
+	        ),
+	        React.createElement(
+	          'button',
+	          {
+	            onClick: this.deleteBook,
+	            className: 'bk-button' },
+	          'Delete'
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'button',
+	          {
+	            onClick: this.requestBook,
+	            className: 'bk-button',
+	            bookId: book.id },
+	          'Borrow'
+	        )
+	      );
+	    }
+	  },
 	
 	  render: function () {
 	    var book = this.props.book;
@@ -35267,7 +35318,7 @@
 	        null,
 	        React.createElement(
 	          Link,
-	          { to: "/users/" + this.props.userId + "/" + book.id.toString() },
+	          { to: "/users/" + book.owner_id + "/" + book.id.toString() },
 	          React.createElement('img', { src: book.image_url, alt: book.title })
 	        ),
 	        React.createElement(
@@ -35275,14 +35326,7 @@
 	          null,
 	          book.title
 	        ),
-	        React.createElement(
-	          'button',
-	          {
-	            onClick: this.requestBook,
-	            className: 'bk-button',
-	            bookId: book.id },
-	          'Borrow'
-	        )
+	        this.displayButton(book)
 	      )
 	    ); //return
 	  }
@@ -35674,7 +35718,7 @@
 	      return { author: bookToEdit.author,
 	        id: bookToEdit.id,
 	        title: bookToEdit.title,
-	        description: bookToEdit.description,
+	        description: bookToEdit.description || "",
 	        image_url: bookToEdit.image_url };
 	    }
 	  },
@@ -35710,7 +35754,6 @@
 	
 	  handleSubmit: function (event) {
 	    event.preventDefault();
-	    //Remove this logic
 	    var ownerId = this.state.currentUser ? this.state.currentUser.id : 1;
 	    var postData = {
 	      id: this.state.id,
@@ -35720,7 +35763,7 @@
 	      owner_id: ownerId
 	    };
 	    ClientActions.updateBook(postData);
-	    hashHistory.push("/books");
+	    hashHistory.push("/");
 	  },
 	
 	  render: function () {

@@ -6,9 +6,11 @@ var _books = {};
 
 var receiveAllBooks = function(books){
   _books = {};
+  //Check if books is not an empty object
+  if (Object.keys(books).length){
   books.forEach(function(book) {
     _books[book.id] = book;
-  });
+  });}
 };
 
 BookStore.__onDispatch = function(payload){

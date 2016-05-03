@@ -23,6 +23,34 @@ var UserBook = React.createClass({
     };
     BorrowActions.requestBook(borrow);
   },
+  editBook: function(event){
+    event.preventDefault();
+    var url = "/books/"+this.props.book.id+"/edit";
+    hashHistory.push(url);
+  },
+  deleteBook: function(event){
+    event.preventDefault();
+    ClientActions.removeBook(this.props.book.id);
+  },
+  displayButton: function(book){
+    if (UserStore.currentUser().id == book.owner_id){
+      return (<div><button
+        onClick={this.editBook}
+        className="bk-button"
+        bookId={book.id}>Edit</button>
+      <button
+        onClick={this.deleteBook}
+        className="bk-button">Delete
+      </button></div>);
+    }
+    else{
+      return(<div><button
+        onClick={this.requestBook}
+        className="bk-button"
+        bookId={book.id}>Borrow
+      </button></div>);
+    }
+  },
 
   render: function(){
     var book = this.props.book;
@@ -30,17 +58,13 @@ var UserBook = React.createClass({
       <div className='book-detail-item'>
       <li>
 
-      <Link to={ "/users/" + this.props.userId + "/" + book.id.toString() }>
+      <Link to={ "/users/" + book.owner_id + "/" + book.id.toString() }>
        <img src={book.image_url} alt={book.title} />
       </Link>
 
        <h3>{book.title}</h3>
 
-       <button
-         onClick={this.requestBook}
-         className="bk-button"
-         bookId={book.id}>Borrow
-       </button>
+       {this.displayButton(book)}
     </li>
     </div>
   ); //return

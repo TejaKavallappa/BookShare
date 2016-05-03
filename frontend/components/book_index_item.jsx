@@ -13,10 +13,13 @@ var Book = React.createClass({
     var url = "/books/"+this.props.book.id+"/edit";
     hashHistory.push(url);
   },
+
   deleteBook: function(event){
     event.preventDefault();
     ClientActions.removeBook(this.props.book.id);
+    hashHistory.push("/");
   },
+
   render: function(){
     var book = this.props.book;
     return (
@@ -25,7 +28,7 @@ var Book = React.createClass({
           <Link to={ "/books/" + book.id.toString() }>
            <img src={book.image_url} alt={book.title} />
            </Link>
-           
+
            <h3>{book.title}</h3>
 
           <button
