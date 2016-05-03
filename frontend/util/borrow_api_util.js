@@ -2,7 +2,6 @@ var AppDispatcher = require('../dispatcher/dispatcher');
 
 var BorrowApiUtil = {
   requestBook: function(borrow, success, error){
-    console.log("In borrow api util");
     $.ajax({
       url: '/api/borrowings',
       type: 'POST',

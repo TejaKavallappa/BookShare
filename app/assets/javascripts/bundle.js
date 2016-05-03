@@ -82,7 +82,7 @@
 	    ),
 	    React.createElement(
 	      Route,
-	      { path: 'books', component: BookIndex },
+	      { path: 'books', component: UserBooks },
 	      React.createElement(Route, { path: ':bookId', component: BookDetail }),
 	      React.createElement(Route, { path: ':bookId/edit', component: BookEdit })
 	    )
@@ -34941,7 +34941,7 @@
 	      currentUser: UserStore.currentUser(),
 	      userErrors: UserStore.errors() };
 	  },
-	  componentDidMount: function () {
+	  componentWillMount: function () {
 	    this.userListener = UserStore.addListener(this.updateUser);
 	    if (!this.state.currentUser) {
 	      UserActions.fetchCurrentUser();
@@ -34979,21 +34979,60 @@
 	var UsersIndex = React.createClass({
 	  displayName: 'UsersIndex',
 	
+	
 	  getInitialState: function () {
 	    return { users: [] };
 	  },
+	
 	  componentWillMount: function () {
 	    this.usersListener = UserStore.addListener(this._onChange);
 	    UserActions.fetchAllUsers();
 	  },
+	
 	  componentWillUnmount: function () {
 	    this.usersListener.remove();
 	  },
+	
 	  _onChange: function () {
 	    this.setState({ users: UserStore.allUsers() });
 	  },
 	
+	  displayUsers: function (user) {
+	    var link = user.id === UserStore.currentUser().id ? "/" : "users/" + user.id;
+	
+	    if (user.id === UserStore.currentUser().id) {
+	      return React.createElement(
+	        'li',
+	        { key: user.id },
+	        React.createElement(
+	          Link,
+	          { to: "/" },
+	          React.createElement(
+	            'h4',
+	            null,
+	            user.username.charAt(0).toUpperCase() + user.username.slice(1)
+	          )
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        'li',
+	        { key: user.id },
+	        React.createElement(
+	          Link,
+	          { to: "users/" + user.id },
+	          React.createElement(
+	            'h4',
+	            null,
+	            user.username.charAt(0).toUpperCase() + user.username.slice(1)
+	          )
+	        )
+	      );
+	    }
+	  },
+	
 	  render: function () {
+	
 	    if (!this.state.users) {
 	      return React.createElement(
 	        'div',
@@ -35001,41 +35040,9 @@
 	        'Loading users...'
 	      );
 	    }
-	    var self = this;
-	    var displayUsers = function (user) {
-	      // self.state.users.map(function(user){
-	      if (user.id === UserStore.currentUser().id) {
-	        return React.createElement(
-	          'li',
-	          { key: user.id },
-	          React.createElement(
-	            Link,
-	            { to: "/" },
-	            React.createElement(
-	              'h4',
-	              null,
-	              user.username.charAt(0).toUpperCase() + user.username.slice(1)
-	            )
-	          )
-	        );
-	      } else {
 	
-	        return React.createElement(
-	          'li',
-	          { key: user.id },
-	          React.createElement(
-	            Link,
-	            { to: "users/" + user.id },
-	            React.createElement(
-	              'h4',
-	              null,
-	              user.username.charAt(0).toUpperCase() + user.username.slice(1)
-	            )
-	          )
-	        );
-	      }
-	      // });
-	    }; //displayUsers
+	    var self = this;
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'users-page' },
@@ -35043,7 +35050,7 @@
 	        'ul',
 	        { className: 'users-index' },
 	        self.state.users.map(function (user) {
-	          return displayUsers(user);
+	          return self.displayUsers(user);
 	        })
 	      )
 	    );
@@ -35070,6 +35077,7 @@
 	var BookStore = __webpack_require__(276);
 	var BookForm = __webpack_require__(277);
 	var UsersIndex = __webpack_require__(279);
+	var UserBooks = __webpack_require__(281);
 	
 	var Home = React.createClass({
 	  displayName: 'Home',
@@ -35083,7 +35091,7 @@
 	      React.createElement(
 	        'div',
 	        null,
-	        React.createElement(BookIndex, null)
+	        React.createElement(UserBooks, null)
 	      ),
 	      this.props.children
 	    );
@@ -35111,78 +35119,71 @@
 	var BookStore = __webpack_require__(276);
 	var BookForm = __webpack_require__(277);
 	var UsersIndex = __webpack_require__(279);
+	var CurrentUserMixin = __webpack_require__(278);
 	
 	var UserBooks = React.createClass({
 	  displayName: 'UserBooks',
 	
+	  mixins: [CurrentUserMixin],
 	
 	  getInitialState: function () {
-	    var userId = 0;
+	    var user = 0;
 	    if (this.props.params) {
-	      userId = this.props.params.userId;
+	      user = this.props.params.userId;
 	    }
-	    return { books: [], currentUser: {}, userId: userId };
+	    return { books: [], displayUser: user };
+	  },
+	
+	  componentWillMount: function () {
+	    this.userBooksListener = BookStore.addListener(this.getUserBooks);
+	    this.userStoreListener = UserStore.addListener(this.setDisplayUser);
+	
+	    ClientActions.fetchUserBooks(this.state.displayUser);
 	  },
 	
 	  componentWillReceiveProps: function (newProps) {
 	    if (newProps.params !== this.props.params) {
-	      this.state.userId = newProps.params.userId;
-	      this.fromPropsListener = BookStore.addListener(this.getUserBooks);
-	      ClientActions.fetchUserBooks(this.state.userId);
+	      this.setState({ displayUser: newProps.params.userId });
+	      ClientActions.fetchUserBooks(newProps.params.userId);
 	    }
 	  },
-	  componentWillMount: function () {
-	    this.userBooksListener = BookStore.addListener(this.getUserBooks);
-	    ClientActions.fetchUserBooks(this.state.userId);
+	
+	  componentWillUpdate: function () {
+	    if (!UserStore.currentUser()) {
+	      hashHistory.push("/");
+	    }
 	  },
 	
 	  componentWillUnmount: function () {
-	    if (this.userBooksListener) {
-	      this.userBooksListener.remove();
-	    }
-	    if (this.fromPropsListener) {
-	      this.fromPropsListener.remove();
-	    }
+	    this.userStoreListener.remove();
+	    this.userBooksListener.remove();
 	  },
 	
-	  _onChange: function (newProps) {
-	    this.setState({ userId: newProps.params.userId });
-	  },
-	
-	  getUser: function () {
-	    this.setState({ currentUser: UserStore.currentUser() });
+	  setDisplayUser: function () {
+	    if (this.state.displayUser === 0 && UserStore.currentUser()) {
+	      this.setState({ displayUser: UserStore.currentUser().id });
+	    }
 	  },
 	
 	  getUserBooks: function () {
 	    this.setState({ books: BookStore.all() });
 	  },
 	
-	  requestBook: function () {
-	    this.setState({ showForm: true });
-	  },
-	
 	  render: function () {
-	    if (this.state.userId !== 0 && !UserStore.findUser(this.state.userId)) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'couldn\'t find userId'
-	      );
-	    }
 	
-	    if (!this.state.books || !UserStore.currentUser()) {
+	    if (!this.state.books) {
 	      return React.createElement(
 	        'div',
 	        null,
-	        'there are no books in my state'
+	        'Loading'
 	      );
-	      //Insert loading icon here
 	    }
 	
 	    var self = this;
+	
 	    var owner = function () {
-	      if (self.state.userId === 0) {
-	        var name = UserStore.currentUser().username;
+	      if (UserStore.findUser(self.state.displayUser)) {
+	        var name = UserStore.findUser(self.state.displayUser).username;
 	        name = name.charAt(0).toUpperCase() + name.slice(1);
 	        return React.createElement(
 	          'h2',
@@ -35193,7 +35194,7 @@
 	        return React.createElement(
 	          'h2',
 	          null,
-	          UserStore.findUser(self.state.userId).username + "'s books"
+	          'Fetching user..'
 	        );
 	      } //else
 	    }; //owner
@@ -35203,24 +35204,24 @@
 	      'div',
 	      { className: 'book-index' },
 	      this.props.children,
-	      owner(),
+	      React.createElement(
+	        'div',
+	        { className: 'users-list' },
+	        React.createElement(UsersIndex, null)
+	      ),
 	      React.createElement(
 	        'ul',
 	        { className: 'books-index' },
+	        owner(),
 	        self.state.books.map(function (book) {
 	          return React.createElement(
 	            'div',
 	            { key: book.id },
 	            React.createElement(UserBookIndexItem, {
-	              userId: self.props.params.userId,
+	              userId: self.state.displayUser,
 	              book: book })
 	          );
 	        })
-	      ),
-	      React.createElement(
-	        'div',
-	        null,
-	        React.createElement(UsersIndex, null)
 	      )
 	    );
 	  }
@@ -35252,10 +35253,10 @@
 	  requestBook: function (event) {
 	    event.preventDefault();
 	    var borrow = {
-	      borrower_id: UserStore.currentUser(),
+	      borrower_id: UserStore.currentUser().id,
 	      owner_id: this.props.book.owner_id,
 	      book_id: this.props.book.id,
-	      request: "pending"
+	      request_status: "pending"
 	    };
 	    BorrowActions.requestBook(borrow);
 	  },
@@ -35302,83 +35303,89 @@
 	var hashHistory = __webpack_require__(186).hashHistory;
 	
 	var BorrowActions = {
+	
 	  requestBook: function (borrow) {
-	    console.log("In borrow actions");
-	    // var borrow = {
-	    //   owner_id: 1,
-	    //   borrower_id: 2,
-	    //   book_id: 2,
-	    //   request_status: "pending"};
 	    BorrowApiUtil.requestBook(borrow, BorrowActions.receiveRequest, BorrowActions.handleError);
 	  },
-	  // fetchAllUsers: function(){
-	  //   UserApiUtil.fetchAllUsers(
-	  //     UserActions.receiveAllUsers, UserActions.handleError);
-	  // },
-	  // fetchCurrentUser: function(){
-	  //   UserApiUtil.fetchCurrentUser(
-	  //     UserActions.receiveCurrentUser, UserActions.handleError);
-	  // },
-	  // login: function(user){
-	  //   UserApiUtil.post({
-	  //     url: "/api/session",
-	  //     user: user,
-	  //     success: UserActions.receiveCurrentUser,
-	  //     error: UserActions.handleError
-	  //   });
-	  // },
-	  // signup: function(user){
-	  //   UserApiUtil.post({
-	  //     url: "/api/users",
-	  //     user: user,
-	  //     success: UserActions.receiveCurrentUser,
-	  //     error: UserActions.handleError
-	  //   });
-	  // },
-	  // logout: function(){
-	  //   UserApiUtil.logout(
-	  //     UserActions.removeCurrentUser, UserActions.handleLogoutError);
-	  // },
-	  // receiveCurrentUser: function(user){
-	  //   if (user.username){
-	  //   AppDispatcher.dispatch({
-	  //     actionType: "LOGIN",
-	  //     user: user
-	  //     });
-	  //   }
-	  // },
-	  // receiveAllUsers: function(users){
-	  //   AppDispatcher.dispatch({
-	  //     actionType: "USERS",
-	  //     users: users
-	  //   });
-	  // },
-	  // removeCurrentUser: function(){
-	  //   AppDispatcher.dispatch({
-	  //     actionType: "LOGOUT"
-	  //   });
-	  //   hashHistory.push("/");
-	  // },
-	  //
-	  // handleLogoutError: function(error){
-	  //   UserActions.handleError(error);
-	  //   hashHistory.push("/");
-	  //
-	  // },
-	  receiveRequest: function () {
-	    console.log("In receive request");
+	
+	  receiveRequest: function (borrow) {
+	    AppDispatcher.dispatch({
+	      actionType: "BORROW_RECEIVED",
+	      borrow: borrow
+	    });
 	  },
+	
 	  handleError: function (error) {
-	    console.log("Request not successful");
-	    // AppDispatcher.dispatch({
-	    //   actionType: "ERROR",
-	    //   errors: error.responseJSON.errors
-	    // });
+	    AppDispatcher.dispatch({
+	      actionType: "ERROR",
+	      errors: error.responseJSON.errors
+	    });
 	  }
 	};
 	
 	module.exports = BorrowActions;
-	window.UserActions = BorrowActions;
+	window.BorrowActions = BorrowActions;
+	
+	// var borrow = {
+	//   owner_id: 1,
+	//   borrower_id: 2,
+	//   book_id: 2,
+	//   request_status: "pending"};
+
+	// fetchAllUsers: function(){
+	//   UserApiUtil.fetchAllUsers(
+	//     UserActions.receiveAllUsers, UserActions.handleError);
+	// },
+	// fetchCurrentUser: function(){
+	//   UserApiUtil.fetchCurrentUser(
+	//     UserActions.receiveCurrentUser, UserActions.handleError);
+	// },
+	// login: function(user){
+	//   UserApiUtil.post({
+	//     url: "/api/session",
+	//     user: user,
+	//     success: UserActions.receiveCurrentUser,
+	//     error: UserActions.handleError
+	//   });
+	// },
+	// signup: function(user){
+	//   UserApiUtil.post({
+	//     url: "/api/users",
+	//     user: user,
+	//     success: UserActions.receiveCurrentUser,
+	//     error: UserActions.handleError
+	//   });
+	// },
+	// logout: function(){
+	//   UserApiUtil.logout(
+	//     UserActions.removeCurrentUser, UserActions.handleLogoutError);
+	// },
+	// receiveCurrentUser: function(user){
+	//   if (user.username){
+	//   AppDispatcher.dispatch({
+	//     actionType: "LOGIN",
+	//     user: user
+	//     });
+	//   }
+	// },
+	// receiveAllUsers: function(users){
+	//   AppDispatcher.dispatch({
+	//     actionType: "USERS",
+	//     users: users
+	//   });
+	// },
+	// removeCurrentUser: function(){
+	//   AppDispatcher.dispatch({
+	//     actionType: "LOGOUT"
+	//   });
+	//   hashHistory.push("/");
+	// },
+	//
+	// handleLogoutError: function(error){
+	//   UserActions.handleError(error);
+	//   hashHistory.push("/");
+	//
+	// },
 
 /***/ },
 /* 284 */
@@ -35388,7 +35395,6 @@
 	
 	var BorrowApiUtil = {
 	  requestBook: function (borrow, success, error) {
-	    console.log("In borrow api util");
 	    $.ajax({
 	      url: '/api/borrowings',
 	      type: 'POST',
@@ -36005,6 +36011,7 @@
 	  logout: function (event) {
 	    event.preventDefault();
 	    UserActions.logout();
+	    hashHistory.push("/");
 	  },
 	  guestLogin: function () {
 	    UserActions.login({ username: "alice", password: "bookshares" });

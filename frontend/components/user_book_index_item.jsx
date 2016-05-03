@@ -16,33 +16,31 @@ var UserBook = React.createClass({
   requestBook: function(event){
     event.preventDefault();
     var borrow = {
-      borrower_id: UserStore.currentUser(),
+      borrower_id: UserStore.currentUser().id,
       owner_id: this.props.book.owner_id,
       book_id: this.props.book.id,
-      request: "pending"
+      request_status: "pending"
     };
     BorrowActions.requestBook(borrow);
   },
-
 
   render: function(){
     var book = this.props.book;
     return (
       <div className='book-detail-item'>
       <li>
-          <Link to={ "/users/" + this.props.userId + "/" + book.id.toString() }>
-           <img src={book.image_url} alt={book.title} />
-           </Link>
 
-           <h3>{book.title}</h3>
+      <Link to={ "/users/" + this.props.userId + "/" + book.id.toString() }>
+       <img src={book.image_url} alt={book.title} />
+      </Link>
 
-             <button
-               onClick={this.requestBook}
-               className="bk-button"
-               bookId={book.id}>Borrow
-             </button>
+       <h3>{book.title}</h3>
 
-
+       <button
+         onClick={this.requestBook}
+         className="bk-button"
+         bookId={book.id}>Borrow
+       </button>
     </li>
     </div>
   ); //return

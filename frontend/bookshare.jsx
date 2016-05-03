@@ -31,7 +31,7 @@ var Routerr = (
           <Route path=":bookId" component={UserBookDetail}/>
         </Route>
 
-        <Route path="books" component={BookIndex}>
+        <Route path="books" component={UserBooks}>
           <Route path=":bookId" component={BookDetail}/>
           <Route path=":bookId/edit" component={BookEdit}/>
         </Route>

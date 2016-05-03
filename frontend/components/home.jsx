@@ -13,14 +13,15 @@ var BookIndex = require('./book_index');
 var BookStore = require('../stores/book_store');
 var BookForm = require('./book_form');
 var UsersIndex = require('./user_index');
+var UserBooks = require('./user_book_index');
 
 var Home = React.createClass({
   render: function(){
     var self = this;
 
       return (<div className="home-page">
-      <div><BookIndex/></div>
-      
+      <div><UserBooks/></div>
+
       {this.props.children}
       </div>);
   }

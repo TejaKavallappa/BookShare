@@ -15,6 +15,7 @@ var NavBar = React.createClass({
   logout: function(event){
     event.preventDefault();
     UserActions.logout();
+    hashHistory.push("/");
   },
   guestLogin: function(){
     UserActions.login({username: "alice", password: "bookshares"});

@@ -7,7 +7,7 @@ var CurrentUserState = {
       currentUser: UserStore.currentUser(),
       userErrors: UserStore.errors()};
   },
-  componentDidMount: function(){
+  componentWillMount: function(){
     this.userListener = UserStore.addListener(this.updateUser);
     if (!this.state.currentUser){
       UserActions.fetchCurrentUser();

@@ -1,4 +1,4 @@
-
+require 'byebug'
 class Api::BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
@@ -7,9 +7,14 @@ class Api::BooksController < ApplicationController
   def index
     #display all books that a user owns
     userId = Integer(params[:userId])
-    if userId == 0
+
+    if userId == 0 && !current_user
+      render json: {}
+      return
+    elsif userId == 0
       userId = current_user.id
     end
+
     @books = Book.find_user_books(userId)
     render json: @books
     # @books = Book.all

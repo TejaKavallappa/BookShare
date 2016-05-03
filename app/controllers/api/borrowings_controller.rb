@@ -1,7 +1,7 @@
-require 'byebug'
+
 class Api::BorrowingsController < ApplicationController
 
-  before_action :set_borrow, only: [:destroy]
+  before_action :set_borrow, only: [:destroy, :update]
 
   def create
     @borrowing = Borrowing.create(borrow_params);

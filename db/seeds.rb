@@ -13,6 +13,32 @@ User.create!(
       username: "frodo",
       password: "bookspace"
 )
+User.create!(
+      username: "teja",
+      password: "bookspace"
+)
+
+20.times do
+  Book.create!(
+        title: Faker::Book.title,
+        author: Faker::Book.author,
+        owner_id: 1
+  )
+end
+20.times do
+  Book.create!(
+        title: Faker::Book.title,
+        author: Faker::Book.author,
+        owner_id: 2
+  )
+end
+20.times do
+  Book.create!(
+        title: Faker::Book.title,
+        author: Faker::Book.author,
+        owner_id: 3
+  )
+end
 
 Book.create!(
       title: "1984",
@@ -40,6 +66,32 @@ Book.create!(
       author: "Jane Austen",
       owner_id: 2,
       description: "Beautiful, clever, rich - and single - Emma Woodhouse is perfectly content with her life and sees no need for either love or marriage. Nothing, however, delights her more than interfering in the romantic lives of others. But when she ignores the warnings of her good friend Mr. Knightley and attempts to arrange a suitable match for her protegee Harriet Smith, her carefully laid plans soon unravel and have consequences that she never expected. With its imperfect but charming heroine and its witty and subtle exploration of relationships, Emma is often seen as Jane Austen's most flawless work."
+
+)
+Book.create!(
+      title: "Animal Farm",
+      author: "George Orwell",
+      owner_id: 3,
+      image_url: "http://farm1.static.flickr.com/126/4545312810_6841a6a870_m.jpg"
+    )
+Book.create!(
+      title: "Where eagles dare",
+      author: "Alistair McLean",
+      description: "World war II",
+      owner_id: 3,
+      image_url: "http://www.literarytraveler.net/wp-content/uploads/2012/07/Wild.jpg"
+    )
+Book.create(
+      title: "Thud",
+      author: "Terry Pratchett",
+      description: "Fantasy",
+      owner_id: 2,
+      image_url: "https://magrudy-assets.storage.googleapis.com/__sized__/9781406790092-thumbnail-300x400.jpg"
+)
+Book.create!(
+      title: "Pride and Prejudice",
+      author: "Jane Austen",
+      owner_id: 1
 
 )
 # Borrowing.create!(
