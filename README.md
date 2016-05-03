@@ -10,9 +10,9 @@ BookSpace/BookShare is a web application inspired by Goodreads, and built using 
 BookShare allows users to lend/borrow books to/from other users. BookSpace/BookShare has the following features:
 
 - [x] Create new user account
-- [ ] Log in/ Log out, 1 - 2 guest/demo logins
+- [x] Log in/ Log out, 1 - 2 guest/demo logins
 - [x] Create read, edit, and delete books
-- [ ] View user's shelf and request to borrow user's book(s)
+- [x] View user's shelf and request to borrow user's book(s)
 - [ ] Approve or reject borrow requests
 
 ## Design Docs
@@ -69,11 +69,18 @@ user interface.
 
 **Objective:** Existing pages (including signup/log in) will look good.
 
-- [ ] create a basic style guide
-- [ ] position elements on the page
-- [ ] add basic colors & styles
+- [x] create a basic style guide
+- [x] position elements on the page
+- [x] add basic colors & styles
 
-### Phase 5: Borrowings (1 day)
+### Phase 5: Set up navbar and footer(0.5 day)
+
+**Objective:** Set up navbar and footer
+
+- [x] Create navbar comprising Log in/Log out and a homepage button
+- [x] Create footer
+
+### Phase 6: Borrowings (1 day)
 
 **Objective:** Borrowings is the join table linking books, their owner_id,
 the borrower_id (maybe null), and the request status which has one of four
@@ -87,24 +94,30 @@ possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with ow
   - [ ] If request approved, owner can send book to requester(sets request_status to 3)
 - Use CSS to style new views [This will very likely take extra time]
 
-### Phase 6: Populate database and create navbar(1 day)
+### Phase 7: Populate database (1 day)
 
 **Objective:** Make API requests to https://openlibrary.org/ to obtain seed data for the web application
 
 - [ ] Obtain API key
 - [ ] Configure web API requests to obtain book data[covers, descriptions, etc]
-- [ ] Create navbar comprising Log in/Log out and a homepage button
-- [ ] Create footer
 
-### Phase 7: Allow Complex Styling (1.5 days)
+### Phase 8: Following  (1 day)
+
+**objective:** Enable users to follow other users. Following is a join table that links two user id's
+
+- [ ] Followings CRUD
+- [ ] A current_user can follow other users
+- [ ] A user can view followed users' books, and request to borrow them.
+
+### Phase 9: Allow Complex Styling (1.5 days)
 
 **objective:** Enable complex styling of BookShare.
 
 - [ ] Use Rails helpers to sanitize HTML before rendering.
-- [ ] Style the new Quill elements.
-- [ ] Add favicon
+- [x] Add favicon
+- [ ] Add modals to login/signup and edit/view forms
 
-### Phase 8: Styling Cleanup and Seeding (1 day)
+### Phase 10: Styling Cleanup and Seeding (1 day)
 
 **objective:** Make the site feel more cohesive and awesome.
 
