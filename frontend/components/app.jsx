@@ -7,6 +7,7 @@ var hashHistory = ReactRouter.hashHistory;
 var LoginForm = require('./login_form');
 var CurrentUserState = require('../mixins/current_user_state');
 var NavBar = require('./nav_bar');
+var Footer = require('./footer');
 //actions
 var UserActions = require('../actions/user_actions');
 var modalStyle = {
@@ -48,6 +49,7 @@ var App = React.createClass({
     return (<div>
         <NavBar/>
         {this.props.children}
+        <Footer/>
       </div>);//return
   }//render
 });

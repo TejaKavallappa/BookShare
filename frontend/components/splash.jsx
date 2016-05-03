@@ -2,7 +2,7 @@ var React = require('react');
 
 var Splash = React.createClass({
   render: function(){
-    return(<div>Welcome!</div>);}
+    return(<div className="splash"></div>);}
 
 });
 

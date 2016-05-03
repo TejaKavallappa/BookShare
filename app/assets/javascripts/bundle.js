@@ -34416,14 +34416,10 @@
 	var React = __webpack_require__(1);
 	
 	var Splash = React.createClass({
-	  displayName: 'Splash',
+	  displayName: "Splash",
 	
 	  render: function () {
-	    return React.createElement(
-	      'div',
-	      null,
-	      'Welcome!'
-	    );
+	    return React.createElement("div", { className: "splash" });
 	  }
 	
 	});
@@ -35930,6 +35926,7 @@
 	var LoginForm = __webpack_require__(288);
 	var CurrentUserState = __webpack_require__(278);
 	var NavBar = __webpack_require__(290);
+	var Footer = __webpack_require__(291);
 	//actions
 	var UserActions = __webpack_require__(246);
 	var modalStyle = {
@@ -35974,7 +35971,8 @@
 	      'div',
 	      null,
 	      React.createElement(NavBar, null),
-	      this.props.children
+	      this.props.children,
+	      React.createElement(Footer, null)
 	    ); //return
 	  } //render
 	});
@@ -36099,6 +36097,26 @@
 	  }
 	});
 	module.exports = NavBar;
+
+/***/ },
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//React
+	var React = __webpack_require__(1);
+	
+	var Footer = React.createClass({
+	  displayName: "Footer",
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      { className: "footer" },
+	      " "
+	    );
+	  }
+	});
+	module.exports = Footer;
 
 /***/ }
 /******/ ]);
