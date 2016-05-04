@@ -13,6 +13,10 @@ $yellow: #EAA732;
   background: white;
   width: 200px;
   height: 200px;
+  button:disabled{
+    background: #ccc;
+  }
+  
 }
 
 .book-detail-item{

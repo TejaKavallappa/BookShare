@@ -21,11 +21,11 @@ class Book < ActiveRecord::Base
     foreign_key: :owner_id,
     primary_key: :id
 
-  # has_one :borrowing,
-    # class_name: "Borrowing",
-    # foreign_key: book_id,
-    # primary_key: :id
-  #
+  has_one :borrowing,
+    class_name: "Borrowing",
+    foreign_key: :book_id,
+    primary_key: :id
+
 
   def self.find_user_books(user_id)
     @books = ActiveRecord::Base.connection.execute(<<-SQL)

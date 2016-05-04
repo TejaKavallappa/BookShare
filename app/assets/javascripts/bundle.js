@@ -35279,9 +35279,13 @@
 	var UserBook = React.createClass({
 	  displayName: 'UserBook',
 	
-	
+	  getInitialState: function () {
+	    return { disabled: false };
+	  },
 	  requestBook: function (event) {
-	    event.preventDefault();
+	    // event.target.disabled = true;
+	    // this.disabled = true;
+	    this.setState({ disabled: true });
 	    var borrow = {
 	      borrower_id: UserStore.currentUser().id,
 	      owner_id: this.props.book.owner_id,
@@ -35327,6 +35331,7 @@
 	        React.createElement(
 	          'button',
 	          {
+	            disabled: this.state.disabled,
 	            onClick: this.requestBook,
 	            className: 'bk-button',
 	            bookId: book.id },
@@ -36338,7 +36343,6 @@
 	          'Loading...'
 	        )
 	      );
-	      // return <div>Loading</div>;
 	    }
 	    var self = this;
 	    if (BorrowStore.all().length === 0) {

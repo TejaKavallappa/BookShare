@@ -12,9 +12,13 @@ var BookStore = require('../stores/book_store');
 var UserStore = require('../stores/user_store');
 
 var UserBook = React.createClass({
-
+  getInitialState: function(){
+    return ({disabled: false});
+  },
   requestBook: function(event){
-    event.preventDefault();
+    // event.target.disabled = true;
+    // this.disabled = true;
+    this.setState({disabled: true});
     var borrow = {
       borrower_id: UserStore.currentUser().id,
       owner_id: this.props.book.owner_id,
@@ -45,6 +49,7 @@ var UserBook = React.createClass({
     }
     else{
       return(<div><button
+        disabled={this.state.disabled}
         onClick={this.requestBook}
         className="bk-button"
         bookId={book.id}>Borrow

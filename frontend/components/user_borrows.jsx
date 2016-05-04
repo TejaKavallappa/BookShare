@@ -57,7 +57,6 @@ var UserBorrows = React.createClass({
       return (<div>
         <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
     <span class="sr-only">Loading...</span></div>);
-      // return <div>Loading</div>;
     }
     var self = this;
     if(BorrowStore.all().length === 0){

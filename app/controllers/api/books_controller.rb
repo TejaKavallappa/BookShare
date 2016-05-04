@@ -1,4 +1,4 @@
-
+require 'byebug'
 class Api::BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
@@ -8,22 +8,37 @@ class Api::BooksController < ApplicationController
     #display all books that a user owns
     userId = Integer(params[:userId])
 
+    # If displaying books of !current_user then display only the books that are not in @borrowings
+    # @borrowings = Borrowing.where(owner_id: current_user, request_status: 'pending').joins(:book).joins(:borrower)
     if userId == 0 && !current_user
+      # If not logged in user
+      debugger;
       render json: {}
       return
     elsif userId == 0
-      userId = current_user.id
+      # requesting books belonging to the current_user
+      @books = Book.find_user_books(current_user.id)
+      render json: @books
+      return
+    else
+      # requesting books belonging to another user, that have not been already requested or borrowed
+      # @books = Book.where(owner_id: userId && 'owner_id NOT IN (SELECT owner_id FROM borrowings)')
+      @books = ActiveRecord::Base.connection.execute(<<-SQL)
+        SELECT
+         books.*
+        FROM
+          books
+        LEFT JOIN
+          borrowings ON borrowings.book_id = books.id
+        WHERE
+          borrowings.book_id IS NULL AND books.owner_id = #{userId}
+      SQL
+      @book_array = []
+      @books.each { |book| @book_array << book}
+      @book_array
+      render json: @book_array
     end
-    # If displaying books of !current_user then display only the books that are not in @borrowings
-    # @borrowings = Borrowing.where(owner_id: current_user, request_status: 'pending').joins(:book).joins(:borrower)
-    # if userId == 0
-    # @books = Book.find_user_books(current_user.id)
-    # else
-    # @books = Book.where(owner_id: userId).joins(:borrowing)
 
-    @books = Book.find_user_books(userId)
-    render json: @books
-    # @books = Book.all
   end
 
   # GET /books/1
