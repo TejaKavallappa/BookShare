@@ -35042,8 +35042,14 @@
 	      return React.createElement(
 	        'div',
 	        null,
-	        'Loading users...'
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
 	      );
+	      // return (<div>Loading users...</div>);
 	    }
 	
 	    var self = this;
@@ -35051,6 +35057,11 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'users-page' },
+	      React.createElement(
+	        'p',
+	        null,
+	        'USERS'
+	      ),
 	      React.createElement(
 	        'ul',
 	        { className: 'users-index' },
@@ -35092,10 +35103,10 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'home-page' },
+	      null,
 	      React.createElement(
 	        'div',
-	        null,
+	        { className: 'books-list' },
 	        React.createElement(UserBooks, null)
 	      ),
 	      this.props.children
@@ -35197,37 +35208,50 @@
 	          name + "'s books'"
 	        );
 	      } else {
+	
 	        return React.createElement(
-	          'h2',
+	          'div',
 	          null,
-	          'Fetching user..'
+	          React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	          React.createElement(
+	            'span',
+	            { 'class': 'sr-only' },
+	            'Loading...'
+	          )
 	        );
+	        // return (<h2>
+	        //   Fetching user..
+	        // </h2>);
 	      } //else
 	    }; //owner
 	
 	    // {this.displayForm()}
 	    return React.createElement(
 	      'div',
-	      { className: 'book-index' },
-	      this.props.children,
+	      { className: 'home-page' },
+	      React.createElement(
+	        'div',
+	        { className: 'book-index' },
+	        owner(),
+	        this.props.children,
+	        React.createElement(
+	          'ul',
+	          { className: 'books-index' },
+	          self.state.books.map(function (book) {
+	            return React.createElement(
+	              'div',
+	              { key: book.id },
+	              React.createElement(UserBookIndexItem, {
+	                userId: self.state.displayUser,
+	                book: book })
+	            );
+	          })
+	        )
+	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'users-list' },
 	        React.createElement(UsersIndex, null)
-	      ),
-	      React.createElement(
-	        'ul',
-	        { className: 'books-index' },
-	        owner(),
-	        self.state.books.map(function (book) {
-	          return React.createElement(
-	            'div',
-	            { key: book.id },
-	            React.createElement(UserBookIndexItem, {
-	              userId: self.state.displayUser,
-	              book: book })
-	          );
-	        })
 	      )
 	    );
 	  }
@@ -35535,8 +35559,15 @@
 	      return React.createElement(
 	        'div',
 	        null,
-	        'Loading...'
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        '); // ',
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
 	      );
+	      // return <div>Loading...</div>;
 	    }
 	
 	    var display = function () {
@@ -35646,8 +35677,15 @@
 	      return React.createElement(
 	        'div',
 	        null,
-	        'Loading...'
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        '); // ',
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
 	      );
+	      // return <div>Loading...</div>;
 	    }
 	
 	    var display = function () {
@@ -36066,17 +36104,21 @@
 	          'ul',
 	          { className: 'header-list' },
 	          React.createElement(
-	            'li',
-	            null,
-	            'Hi, ',
-	            self.state.currentUser.username
+	            'a',
+	            { href: '#' },
+	            React.createElement(
+	              'li',
+	              null,
+	              'Hi, ',
+	              self.state.currentUser.username
+	            )
 	          ),
 	          React.createElement(
-	            'li',
-	            null,
+	            'a',
+	            { href: '#/requests' },
 	            React.createElement(
-	              'a',
-	              { href: '#/requests' },
+	              'li',
+	              null,
 	              'Requests'
 	            )
 	          ),
@@ -36289,8 +36331,14 @@
 	      return React.createElement(
 	        'div',
 	        null,
-	        'Loading'
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
 	      );
+	      // return <div>Loading</div>;
 	    }
 	    var self = this;
 	    if (BorrowStore.all().length === 0) {

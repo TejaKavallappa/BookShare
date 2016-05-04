@@ -77,20 +77,23 @@ var UserBooks = React.createClass({
         return (<h2>{name + "'s books'"}</h2>);
       }
       else {
-          return (<h2>
-            Fetching user..
-          </h2>);
+
+        return (<div>
+          <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+      <span class="sr-only">Loading...</span></div>);
+          // return (<h2>
+          //   Fetching user..
+          // </h2>);
         }//else
     }; //owner
 
 
     // {this.displayForm()}
-      return (<div className="book-index">
+      return (<div className="home-page"><div className="book-index">
 
+      {owner()}
       {this.props.children}
-      <div className="users-list"><UsersIndex/></div>
         <ul className="books-index">
-          {owner()}
           {
             self.state.books.map(function(book){
                 return (
@@ -102,7 +105,8 @@ var UserBooks = React.createClass({
             })
           }
         </ul>
-      </div>);
+      </div>
+      <div className="users-list"><UsersIndex/></div></div>);
   }
 });
 

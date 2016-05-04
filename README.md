@@ -13,7 +13,7 @@ BookShare allows users to lend/borrow books to/from other users. BookSpace/BookS
 - [x] Log in/ Log out, 1 - 2 guest/demo logins
 - [x] Create read, edit, and delete books
 - [x] View user's shelf and request to borrow user's book(s)
-- [ ] Approve or reject borrow requests
+- [x] Approve or reject borrow requests
 
 ## Design Docs
 * [View Wireframes][views]
@@ -88,9 +88,9 @@ possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with ow
 
 - [x] create `Borrowings` model
 - build out API, Flux loop, and components for:
-  - [ ] Borrowings CRUD
-  - [ ] A current_user who is not the owner can request books
-  - [ ] The owner can approve or reject pending requests
+  - [x] Borrowings CRUD
+  - [x] A current_user who is not the owner can request books
+  - [x] The owner can approve or reject pending requests
   - [ ] If request approved, owner can send book to requester(sets request_status to 3)
 - Use CSS to style new views [This will very likely take extra time]
 

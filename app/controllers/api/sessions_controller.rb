@@ -13,10 +13,20 @@ class Api::SessionsController < ApplicationController
 
   def create
 
-    @user = User.find_by_credentials(
-      params[:user][:username],
-      params[:user][:password]
-    )
+    if !params[:user]
+      @errors = ["Username and password cannot be empty"]
+      render "api/shared/error", status: 422
+      return
+    elsif !params[:user][:username] || !params[:user][:password]
+      @errors = ["Input fields cannot be empty"]
+      render "api/shared/error", status: 422
+      return
+    else
+      @user = User.find_by_credentials(
+        params[:user][:username],
+        params[:user][:password]
+      )
+    end
 
     if @user
       login(@user)

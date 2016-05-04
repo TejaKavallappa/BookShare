@@ -14,6 +14,12 @@ class Api::BooksController < ApplicationController
     elsif userId == 0
       userId = current_user.id
     end
+    # If displaying books of !current_user then display only the books that are not in @borrowings
+    # @borrowings = Borrowing.where(owner_id: current_user, request_status: 'pending').joins(:book).joins(:borrower)
+    # if userId == 0
+    # @books = Book.find_user_books(current_user.id)
+    # else
+    # @books = Book.where(owner_id: userId).joins(:borrowing)
 
     @books = Book.find_user_books(userId)
     render json: @books

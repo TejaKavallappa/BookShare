@@ -19,8 +19,9 @@ var Home = React.createClass({
   render: function(){
     var self = this;
 
-      return (<div className="home-page">
-      <div><UserBooks/></div>
+      return (<div>
+
+      <div className="books-list"><UserBooks/></div>
 
       {this.props.children}
       </div>);

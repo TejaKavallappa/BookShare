@@ -53,12 +53,15 @@ var UsersIndex = React.createClass({
   render: function(){
 
     if (!this.state.users){
-      return (<div>Loading users...</div>);
+      return (<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+    <span class="sr-only">Loading...</span></div>);
+      // return (<div>Loading users...</div>);
     }
 
     var self = this;
 
       return (<div className="users-page">
+      <p>USERS</p>
         <ul className="users-index">
           {self.state.users.map(function(user){
               return self.displayUsers(user);

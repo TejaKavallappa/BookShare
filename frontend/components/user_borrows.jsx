@@ -54,7 +54,10 @@ var UserBorrows = React.createClass({
 
   render: function(){
     if (!this.state.borrows){
-      return <div>Loading</div>;
+      return (<div>
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+    <span class="sr-only">Loading...</span></div>);
+      // return <div>Loading</div>;
     }
     var self = this;
     if(BorrowStore.all().length === 0){
@@ -68,8 +71,10 @@ var UserBorrows = React.createClass({
           {borrow.borrower.username}&nbsp;
           {borrow.book.title}&nbsp;
           {borrow.book.author}&nbsp;
-          <button onClick={self.approveRequest.bind(self,borrow)}>Approve</button>&nbsp;
-          <button onClick={self.rejectRequest.bind(self,borrow)}>Reject</button>
+          <button onClick={self.approveRequest.bind(self,borrow)}>
+            Approve</button>&nbsp;
+          <button onClick={self.rejectRequest.bind(self,borrow)}>
+            Reject</button>
         </div>);
 
       })}

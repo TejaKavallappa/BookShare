@@ -51,7 +51,9 @@ var BookDetail = React.createClass({
     var self = this;
 
     if (!book){
-      return <div>Loading...</div>;
+      return (<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>);
+    // <span class="sr-only">Loading...</span></div>);
+      // return <div>Loading...</div>;
     }
 
     var display = function() {

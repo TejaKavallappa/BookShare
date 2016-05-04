@@ -22,6 +22,11 @@ class Api::UsersController < ApplicationController
   end
 
   def create
+    if !params[:user]
+      @errors = ["Input fields cannot be empty"]
+      render "api/shared/error", status: 422
+      return
+    end
     @user = User.new(user_params)
       if @user.save
         login(@user)
