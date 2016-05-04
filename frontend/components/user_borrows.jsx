@@ -38,10 +38,25 @@ var UserBorrows = React.createClass({
     this.setState({borrows: BorrowStore.all()});
   },
 
+  approveRequest: function(borrow){
+    var req = {id: borrow.id,
+      owner_id: UserStore.currentUser(),
+      borrower_id: borrow.borrower.borrower_id,
+      request_status: 'pending',
+      book_id: borrow.book.book_id};
+    BorrowActions.approveRequest(req);
+  },
+
+  rejectRequest: function(borrow){
+    //Send a notification to the borrower
+    BorrowActions.rejectRequest(borrow.id);
+  },
+
   render: function(){
     if (!this.state.borrows){
       return <div>Loading</div>;
     }
+    var self = this;
     return (<div>
       <h2>Your borrow requests</h2>
       {this.state.borrows.map(function(borrow){
@@ -50,8 +65,8 @@ var UserBorrows = React.createClass({
           {borrow.borrower.username}&nbsp;
           {borrow.book.title}&nbsp;
           {borrow.book.author}&nbsp;
-          <button onClick={this.approveRequest}>Approve</button>&nbsp;
-          <button onClick={this.rejectRequest}>Reject</button>
+          <button onClick={self.approveRequest.bind(self,borrow)}>Approve</button>&nbsp;
+          <button onClick={self.rejectRequest.bind(self,borrow)}>Reject</button>
         </div>);
 
       })}

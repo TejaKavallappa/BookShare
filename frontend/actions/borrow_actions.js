@@ -9,9 +9,14 @@ var BorrowActions = {
       BorrowActions.handleError);
   },
 
-  approveBook: function(borrow){
-    BorrowApiUtil.approveBook(borrow, BorrowActions.approvedBorrow,
+  approveRequest: function(borrow){
+    BorrowApiUtil.approveBorrow(borrow, BorrowActions.approvedBorrow,
       BorrowActions.handleError);
+  },
+
+  rejectRequest: function(borrowId){
+    BorrowApiUtil.rejectBorrow(borrowId, BorrowActions.rejectedBorrow,
+    BorrowActions.handleError);
   },
 
   fetchBorrowsByOwner: function(){
@@ -35,7 +40,16 @@ var BorrowActions = {
       borrows: borrows
     });
   },
-  approvedBorrow: function(){},
+  approvedBorrow: function(){
+    console.log("Request approved!");
+  },
+  rejectedBorrow: function(borrow){
+    console.log("rejectedborrow");
+    AppDispatcher.dispatch({
+      actionType: "BORROW_REMOVED",
+      borrow: borrow
+    });
+  },
   receiveRequest: function(borrow){
     AppDispatcher.dispatch({
       actionType: "BORROW_RECEIVED",

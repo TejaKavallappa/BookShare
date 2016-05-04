@@ -5,21 +5,32 @@ var BorrowApiUtil = {
     $.ajax({
       url: '/api/borrowings',
       type: 'POST',
-      data: {borrowings: borrow},
+      data: {borrow: borrow},
       success: success,
       error: error
     });
   },
-  //request_status: approved, borrowed, rejected
-  approveBook: function(borrow, success, error){
+  //request_status: requested, borrowed
+  approveBorrow: function(borrow, success, error){
     $.ajax({
-      url: '/api/borrowing/'+ borrow.id,
+      url: '/api/borrowings/'+ borrow.id,
       type: 'PATCH',
-      data: {borrowings: borrow},
+      data: {borrow: borrow},
       success: success,
       error: error
     });
   },
+
+  rejectBorrow: function(borrowId, success, error){
+    //Called when a borrow request is rejected or when a book is returned
+    $.ajax({
+      url: '/api/borrowings/'+ borrowId,
+      type: 'DELETE',
+      success: success,
+      error: error
+    });
+  },
+
   fetchBorrowsByOwner: function(success, error){
     $.ajax({
       url: '/api/borrowings/',

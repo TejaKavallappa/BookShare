@@ -1,4 +1,5 @@
 
+
 class Api::BorrowingsController < ApplicationController
 
   before_action :set_borrow, only: [:destroy, :update]
@@ -13,8 +14,20 @@ class Api::BorrowingsController < ApplicationController
     end
   end
 
+  def update
+    if @borrowing.update(borrow_params)
+      render :show, status: 200
+      # format.json { render :show, status: :ok, location: @book }
+    else
+      @errors = @borrowing.errors.full_messages
+      render "api/shared/error", status: 422
+      # format.json { render json: @book.errors, status: :unprocessable_entity }
+    end
+  end
+
   def destroy
     @borrowing.destroy
+    render :show
   end
 
   def index
@@ -31,6 +44,6 @@ class Api::BorrowingsController < ApplicationController
   end
 
   def borrow_params
-    params.require(:borrowings).permit(:owner_id, :borrower_id, :book_id, :request_status)
+    params.require(:borrow).permit(:owner_id, :borrower_id, :book_id, :request_status)
   end
 end

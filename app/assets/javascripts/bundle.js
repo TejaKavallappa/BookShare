@@ -35352,8 +35352,12 @@
 	    BorrowApiUtil.requestBook(borrow, BorrowActions.receiveRequest, BorrowActions.handleError);
 	  },
 	
-	  approveBook: function (borrow) {
-	    BorrowApiUtil.approveBook(borrow, BorrowActions.approvedBorrow, BorrowActions.handleError);
+	  approveRequest: function (borrow) {
+	    BorrowApiUtil.approveBorrow(borrow, BorrowActions.approvedBorrow, BorrowActions.handleError);
+	  },
+	
+	  rejectRequest: function (borrowId) {
+	    BorrowApiUtil.rejectBorrow(borrowId, BorrowActions.rejectedBorrow, BorrowActions.handleError);
 	  },
 	
 	  fetchBorrowsByOwner: function () {
@@ -35375,7 +35379,16 @@
 	      borrows: borrows
 	    });
 	  },
-	  approvedBorrow: function () {},
+	  approvedBorrow: function () {
+	    console.log("Request approved!");
+	  },
+	  rejectedBorrow: function (borrow) {
+	    console.log("rejectedborrow");
+	    AppDispatcher.dispatch({
+	      actionType: "BORROW_REMOVED",
+	      borrow: borrow
+	    });
+	  },
 	  receiveRequest: function (borrow) {
 	    AppDispatcher.dispatch({
 	      actionType: "BORROW_RECEIVED",
@@ -35405,21 +35418,32 @@
 	    $.ajax({
 	      url: '/api/borrowings',
 	      type: 'POST',
-	      data: { borrowings: borrow },
+	      data: { borrow: borrow },
 	      success: success,
 	      error: error
 	    });
 	  },
-	  //request_status: approved, borrowed, rejected
-	  approveBook: function (borrow, success, error) {
+	  //request_status: requested, borrowed
+	  approveBorrow: function (borrow, success, error) {
 	    $.ajax({
-	      url: '/api/borrowing/' + borrow.id,
+	      url: '/api/borrowings/' + borrow.id,
 	      type: 'PATCH',
-	      data: { borrowings: borrow },
+	      data: { borrow: borrow },
 	      success: success,
 	      error: error
 	    });
 	  },
+	
+	  rejectBorrow: function (borrowId, success, error) {
+	    //Called when a borrow request is rejected or when a book is returned
+	    $.ajax({
+	      url: '/api/borrowings/' + borrowId,
+	      type: 'DELETE',
+	      success: success,
+	      error: error
+	    });
+	  },
+	
 	  fetchBorrowsByOwner: function (success, error) {
 	    $.ajax({
 	      url: '/api/borrowings/',
@@ -36240,6 +36264,20 @@
 	    this.setState({ borrows: BorrowStore.all() });
 	  },
 	
+	  approveRequest: function (borrow) {
+	    var req = { id: borrow.id,
+	      owner_id: UserStore.currentUser(),
+	      borrower_id: borrow.borrower.borrower_id,
+	      request_status: 'pending',
+	      book_id: borrow.book.book_id };
+	    BorrowActions.approveRequest(req);
+	  },
+	
+	  rejectRequest: function (borrow) {
+	    //Send a notification to the borrower
+	    BorrowActions.rejectRequest(borrow.id);
+	  },
+	
 	  render: function () {
 	    if (!this.state.borrows) {
 	      return React.createElement(
@@ -36248,6 +36286,7 @@
 	        'Loading'
 	      );
 	    }
+	    var self = this;
 	    return React.createElement(
 	      'div',
 	      null,
@@ -36269,13 +36308,13 @@
 	          ' ',
 	          React.createElement(
 	            'button',
-	            { onClick: this.approveRequest },
+	            { onClick: self.approveRequest.bind(self, borrow) },
 	            'Approve'
 	          ),
 	          ' ',
 	          React.createElement(
 	            'button',
-	            { onClick: this.rejectRequest },
+	            { onClick: self.rejectRequest.bind(self, borrow) },
 	            'Reject'
 	          )
 	        );
