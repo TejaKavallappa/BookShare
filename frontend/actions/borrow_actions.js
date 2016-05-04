@@ -40,8 +40,14 @@ var BorrowActions = {
       borrows: borrows
     });
   },
-  approvedBorrow: function(){
+  approvedBorrow: function(borrow){
     console.log("Request approved!");
+    //Remove the request from the store as it has been approvedBorrow
+    //Send a notification to borrower that it has been accepted
+    AppDispatcher.dispatch({
+      actionType: "BORROW_REMOVED",
+      borrow: borrow
+    });
   },
   rejectedBorrow: function(borrow){
     console.log("rejectedborrow");

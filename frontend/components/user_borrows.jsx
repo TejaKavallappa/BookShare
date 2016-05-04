@@ -42,7 +42,7 @@ var UserBorrows = React.createClass({
     var req = {id: borrow.id,
       owner_id: UserStore.currentUser(),
       borrower_id: borrow.borrower.borrower_id,
-      request_status: 'pending',
+      request_status: 'borrowed',
       book_id: borrow.book.book_id};
     BorrowActions.approveRequest(req);
   },
@@ -57,6 +57,9 @@ var UserBorrows = React.createClass({
       return <div>Loading</div>;
     }
     var self = this;
+    if(BorrowStore.all().length === 0){
+      return (<div>No pending borrow requests!</div>);
+    }
     return (<div>
       <h2>Your borrow requests</h2>
       {this.state.borrows.map(function(borrow){

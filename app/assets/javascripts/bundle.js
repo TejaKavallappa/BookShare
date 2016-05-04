@@ -35379,8 +35379,14 @@
 	      borrows: borrows
 	    });
 	  },
-	  approvedBorrow: function () {
+	  approvedBorrow: function (borrow) {
 	    console.log("Request approved!");
+	    //Remove the request from the store as it has been approvedBorrow
+	    //Send a notification to borrower that it has been accepted
+	    AppDispatcher.dispatch({
+	      actionType: "BORROW_REMOVED",
+	      borrow: borrow
+	    });
 	  },
 	  rejectedBorrow: function (borrow) {
 	    console.log("rejectedborrow");
@@ -36268,7 +36274,7 @@
 	    var req = { id: borrow.id,
 	      owner_id: UserStore.currentUser(),
 	      borrower_id: borrow.borrower.borrower_id,
-	      request_status: 'pending',
+	      request_status: 'borrowed',
 	      book_id: borrow.book.book_id };
 	    BorrowActions.approveRequest(req);
 	  },
@@ -36287,6 +36293,13 @@
 	      );
 	    }
 	    var self = this;
+	    if (BorrowStore.all().length === 0) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'No pending borrow requests!'
+	      );
+	    }
 	    return React.createElement(
 	      'div',
 	      null,
