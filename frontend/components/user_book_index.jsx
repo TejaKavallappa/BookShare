@@ -101,6 +101,7 @@ var UserBooks = React.createClass({
 
     // {this.displayForm()}
       return (<div className="home-page">
+      <UsersIndex/>
       <div className="book-index">
       {owner()}
       {this.props.children}
@@ -117,7 +118,6 @@ var UserBooks = React.createClass({
           }
         </ul>
       </div>
-      <div className="users-list"><UsersIndex/></div>
 
       </div>);
   }

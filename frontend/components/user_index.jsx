@@ -61,7 +61,7 @@ var UsersIndex = React.createClass({
     var self = this;
 
       return (<div id="slideout-users">
-      <p>U</p>
+      <p>Friends</p>
       <div id="slideout-inner">
         <ul className="users-index">
           {self.state.users.map(function(user){

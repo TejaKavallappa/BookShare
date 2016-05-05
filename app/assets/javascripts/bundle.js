@@ -35061,7 +35061,7 @@
 	      React.createElement(
 	        'p',
 	        null,
-	        'U'
+	        'Friends'
 	      ),
 	      React.createElement(
 	        'div',
@@ -35246,6 +35246,7 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'home-page' },
+	      React.createElement(UsersIndex, null),
 	      React.createElement(
 	        'div',
 	        { className: 'book-index' },
@@ -35264,11 +35265,6 @@
 	            );
 	          })
 	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'users-list' },
-	        React.createElement(UsersIndex, null)
 	      )
 	    );
 	  }
