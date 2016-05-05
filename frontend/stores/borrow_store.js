@@ -3,13 +3,8 @@ var Store = require('flux/utils').Store;
 
 var BorrowStore = new Store(AppDispatcher);
 var _borrows = {};
+var _madeBorrows = {};
 
-var receiveAllBorrows = function(borrows){
-  _borrows = {};
-  borrows.forEach(function(borrow) {
-    _borrows[borrow.id] = borrow;
-  });
-};
 
 BorrowStore.__onDispatch = function(payload){
   switch(payload.actionType){
@@ -22,8 +17,26 @@ BorrowStore.__onDispatch = function(payload){
     case "BORROW_REMOVED":
       removeBorrow(payload.borrow);
       break;
+    case "BORROW_REQUESTS_MADE_RECEIVED":
+      receiveRequestedBorrows(payload.borrows);
+      break;
   }
   this.__emitChange();
+};
+
+var receiveAllBorrows = function(borrows){
+  _borrows = {};
+  borrows.forEach(function(borrow) {
+    _borrows[borrow.id] = borrow;
+  });
+};
+
+var receiveRequestedBorrows = function(borrows){
+  _madeBorrows = {};
+  borrows.forEach(function(borrow){
+    _madeBorrows[borrow.id] = borrow;
+  });
+  console.log(_madeBorrows);
 };
 
 var receiveSingleBorrow = function(borrow){
@@ -38,6 +51,14 @@ BorrowStore.all = function(){
   var borrows = [];
   for(var id in _borrows){
     borrows.push(_borrows[id]);
+  }
+  return borrows;
+};
+
+BorrowStore.madeAll = function(){
+  var borrows = [];
+  for(var id in _madeBorrows){
+    borrows.push(_madeBorrows[id]);
   }
   return borrows;
 };

@@ -62,6 +62,17 @@ var UserBooks = React.createClass({
     this.setState({books: BookStore.all()});
   },
 
+  displayForm: function(){
+    if(UserStore.currentUser()){
+      return <BookForm/>;
+    }
+    else{
+      return (<button  className="bk-button" onClick={this.addBook}>
+        Add a new book to my collection!
+      </button>);
+    }
+  },
+
   render: function(){
 
     if(!this.state.books){

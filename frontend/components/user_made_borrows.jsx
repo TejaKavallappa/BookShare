@@ -12,7 +12,7 @@ var UserStore = require('../stores/user_store');
 //mixins
 var CurrentUserMixin = require('../mixins/current_user_state');
 
-var UserBorrows = React.createClass({
+var UserMadeBorrows = React.createClass({
   mixins: [CurrentUserMixin],
 
   getInitialState: function(){
@@ -21,8 +21,7 @@ var UserBorrows = React.createClass({
 
   componentWillMount: function(){
     this.borrowsListener = BorrowStore.addListener(this.setBorrows);
-    BorrowActions.fetchBorrowsByOwner();
-    // BorrowActions.fetchBorrowsByBorrower();
+    BorrowActions.fetchBorrowsByBorrower();
   },
 
   componentWillUpdate: function(){
@@ -36,23 +35,26 @@ var UserBorrows = React.createClass({
   },
 
   setBorrows: function(){
-    this.setState({borrows: BorrowStore.all()});
+    this.setState({borrows: BorrowStore.madeAll()});
   },
 
-  approveRequest: function(borrow){
-    var req = {id: borrow.id,
-      owner_id: UserStore.currentUser(),
-      borrower_id: borrow.borrower.borrower_id,
-      request_status: 'borrowed',
-      book_id: borrow.book.book_id};
-    BorrowActions.approveRequest(req);
-  },
+  // approveRequest: function(borrow){
+  //   var req = {id: borrow.id,
+  //     owner_id: UserStore.currentUser(),
+  //     borrower_id: borrow.borrower.borrower_id,
+  //     request_status: 'borrowed',
+  //     book_id: borrow.book.book_id};
+  //   BorrowActions.approveRequest(req);
+  // },
+  //
+  // rejectRequest: function(borrow){
+  //   //Send a notification to the borrower
+  //   BorrowActions.rejectRequest(borrow.id);
+  // },
 
-  rejectRequest: function(borrow){
-    //Send a notification to the borrower
-    BorrowActions.rejectRequest(borrow.id);
-  },
-
+  // if(BorrowStore.all().length === 0){
+  //   return (<div>No pending borrow requests!</div>);
+  // }
   render: function(){
     if (!this.state.borrows){
       return (<div>
@@ -60,21 +62,16 @@ var UserBorrows = React.createClass({
     <span class="sr-only">Loading...</span></div>);
     }
     var self = this;
-    if(BorrowStore.all().length === 0){
-      return (<div>No pending borrow requests!</div>);
-    }
     return (<div>
-      <h2>Your borrow requests</h2>
+
+      <h2>Status of your requests</h2>
+
       {this.state.borrows.map(function(borrow){
         return (<div key={borrow.id} className="borrow-item">
         <img src={borrow.book.image_url} alt={borrow.book.title} />
-          {borrow.borrower.username}&nbsp;
+          {borrow.owner.username}&nbsp;
           {borrow.book.title}&nbsp;
           {borrow.book.author}&nbsp;
-          <button onClick={self.approveRequest.bind(self,borrow)}>
-            Approve</button>&nbsp;
-          <button onClick={self.rejectRequest.bind(self,borrow)}>
-            Reject</button>
         </div>);
 
       })}
@@ -82,4 +79,6 @@ var UserBorrows = React.createClass({
   }
 });
 
-module.exports = UserBorrows;
+
+
+module.exports = UserMadeBorrows;

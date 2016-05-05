@@ -14,7 +14,7 @@
 class Borrowing < ActiveRecord::Base
   validates :book_id, :owner_id, :request_status, presence: true
   validates :book_id, uniqueness: true
-  # validates :request_id, inclusion: {in: 1..4}
+  
   validates :request_status, inclusion: { in: %w(pending approved borrowed with_owner)}
   validate :owner_borrower_not_same, on: :create
 
@@ -32,8 +32,6 @@ class Borrowing < ActiveRecord::Base
     class_name: "User",
     foreign_key: :borrower_id,
     primary_key: :id
-
-  
 
   private
 

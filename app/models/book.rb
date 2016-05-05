@@ -26,20 +26,8 @@ class Book < ActiveRecord::Base
     foreign_key: :book_id,
     primary_key: :id
 
-
-  def self.find_user_books(user_id)
-    @books = ActiveRecord::Base.connection.execute(<<-SQL)
-      SELECT
-       *
-      FROM
-        books
-      WHERE
-        books.owner_id = #{user_id}
-    SQL
-
-    @book_array = []
-    @books.each { |book| @book_array << (book)}
-    @book_array
-  end
+def borrow_status
+  borrowing.nil? ? 'with_owner' : borrowing.request_status
+end
 
 end

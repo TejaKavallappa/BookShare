@@ -1,15 +1,6 @@
 json.array!(@borrowings) do |borrowing|
     json.id borrowing.id
-    json.book do |book|
-      json.author borrowing.book.author
-      json.title borrowing.book.title
-      json.book_id borrowing.book.id
-      json.image_url borrowing.book.image_url
-    end
-
-    json.borrower do |user|
-      json.username borrowing.borrower.username
-      json.borrower_id borrowing.borrower.id
-    end
-
+    json.book borrowing.book, :author, :title, :id, :image_url
+    json.borrower borrowing.borrower, :username, :id
+    json.owner borrowing.owner, :username, :id
 end

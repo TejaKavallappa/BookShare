@@ -35,13 +35,13 @@ var BorrowActions = {
     });
   },
   receivedBorrowerBorrows: function(borrows){
+    console.log(borrows);
     AppDispatcher.dispatch({
-      actionType: "BORROW_RECEIVED",
+      actionType: "BORROW_REQUESTS_MADE_RECEIVED",
       borrows: borrows
     });
   },
   approvedBorrow: function(borrow){
-    console.log("Request approved!");
     //Remove the request from the store as it has been approvedBorrow
     //Send a notification to borrower that it has been accepted
     AppDispatcher.dispatch({

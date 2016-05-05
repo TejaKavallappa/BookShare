@@ -16,8 +16,6 @@ var UserBook = React.createClass({
     return ({disabled: false});
   },
   requestBook: function(event){
-    // event.target.disabled = true;
-    // this.disabled = true;
     this.setState({disabled: true});
     var borrow = {
       borrower_id: UserStore.currentUser().id,

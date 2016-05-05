@@ -31,6 +31,7 @@ var NavBar = React.createClass({
             <li>Hi, {self.state.currentUser.username}</li>
           </a>
           <a href="#/requests"><li>Requests</li></a>
+          <a href="#/request-status"><li>Requests Made</li></a>
           <li onClick={self.logout}>Sign Out</li>
           </ul>);
       }

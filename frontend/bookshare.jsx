@@ -15,6 +15,7 @@ var AuthPermit = require('./components/auth_permit');
 // var BookIndex = require('./components/book_index');
 var UserBooks = require('./components/user_book_index');
 var UserBorrows = require('./components/user_borrows');
+var UserMadeBorrows = require('./components/user_made_borrows');
 var UserBookDetail = require('./components/user_book_detail');
 var BookDetail = require('./components/book_detail');
 var BookEdit = require('./components/book_edit');
@@ -30,6 +31,7 @@ var Routerr = (
         <Route path="signup" component={LoginForm}/>
 
         <Route path="requests" component={UserBorrows}/>
+        <Route path="request-status" component={UserMadeBorrows}/>
 
         <Route path="users/:userId" component={UserBooks}>
           <Route path=":bookId" component={UserBookDetail}/>
@@ -47,6 +49,5 @@ var Routerr = (
 
 document.addEventListener('DOMContentLoaded', function(){
   var root = document.getElementById('root');
-  // Modal.setAppElement(document.body);
   ReactDOM.render(Routerr, root);
 });

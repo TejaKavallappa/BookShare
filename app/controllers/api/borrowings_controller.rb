@@ -3,6 +3,22 @@ class Api::BorrowingsController < ApplicationController
 
   before_action :set_borrow, only: [:destroy, :update]
 
+  def index
+    if params[:asker] == "owner"
+      # View borrowings where I am the owner
+      @borrowings = Borrowing.where(owner_id: current_user,
+      request_status: 'pending').includes(:book).includes(:borrower)
+      render :index
+      return
+    else
+      # View borrowings where I am the requester
+      @borrowings = Borrowing.where(borrower_id: current_user,
+      request_status: 'pending').includes(:book).includes(:owner)
+      render :index
+    end
+
+  end
+
   def create
     @borrowing = Borrowing.create(borrow_params);
     if @borrowing.save
@@ -27,14 +43,6 @@ class Api::BorrowingsController < ApplicationController
   def destroy
     @borrowing.destroy
     render :show
-  end
-
-  def index
-    @borrowings = Borrowing.where(owner_id: current_user, request_status: 'pending').joins(:book).joins(:borrower)
-    render :index
-    # For the currentUser, fetch all books where the request_status
-    # is "pending", and also fetch the borrower names
-
   end
 
   private

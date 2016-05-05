@@ -35,15 +35,16 @@ var BorrowApiUtil = {
     $.ajax({
       url: '/api/borrowings/',
       type: 'GET',
+      data: {asker: "owner"},
       success: success,
       error: error
     });
   },
-  fetchBorrowsByBorrower: function(borrowerId, success, error){
+  fetchBorrowsByBorrower: function(success, error){
     $.ajax({
       url: '/api/borrowings/',
       type: 'GET',
-      data: {borrowerId: borrowerId},//params
+      data: {asker: "borrower"},//params
       success: success,
       error: error
     });

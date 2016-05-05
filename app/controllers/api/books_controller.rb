@@ -2,57 +2,42 @@
 class Api::BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
-  # GET /books
-  # GET /books.json
+
   def index
-    #display all books that a user owns
     userId = Integer(params[:userId])
 
     # If displaying books of !current_user then display only the books that are not in @borrowings
     # @borrowings = Borrowing.where(owner_id: current_user, request_status: 'pending').joins(:book).joins(:borrower)
     if userId == 0 && !current_user
       # If not logged in user
-      debugger;
       render json: {}
       return
     elsif userId == 0
       # requesting books belonging to the current_user
-      @books = Book.find_user_books(current_user.id)
-      render json: @books
+      @books = current_user.books.includes(:borrowing)
+      render :index
       return
     else
       # requesting books belonging to another user, that have not been already requested or borrowed
       # @books = Book.where(owner_id: userId && 'owner_id NOT IN (SELECT owner_id FROM borrowings)')
-      @books = ActiveRecord::Base.connection.execute(<<-SQL)
-        SELECT
-         books.*
-        FROM
-          books
-        LEFT JOIN
-          borrowings ON borrowings.book_id = books.id
-        WHERE
-          borrowings.book_id IS NULL AND books.owner_id = #{userId}
-      SQL
-      @book_array = []
-      @books.each { |book| @book_array << book}
-      @book_array
-      render json: @book_array
+      @books = Book.where(owner_id: userId).includes(:borrowing)
+      # ActiveRecord::Base.connection.execute(<<-SQL)
+      #   SELECT
+      #    books.*
+      #   FROM
+      #     books
+      #   LEFT JOIN
+      #     borrowings ON borrowings.book_id = books.id
+      #   WHERE
+      #     borrowings.book_id IS NULL AND books.owner_id = #{userId}
+      # SQL
+      render :index
     end
 
   end
 
-  # GET /books/1
-  # GET /books/1.json
-  def show
-    if @book
-      render :show
-    else
-      render "api/shared/error", status: 500
-    end
-  end
 
-  # POST /books
-  # POST /books.json
+
   def create
     @book = Book.new(book_params)
       if @book.save
@@ -63,8 +48,15 @@ class Api::BooksController < ApplicationController
       end
   end
 
-  # PATCH/PUT /books/1
-  # PATCH/PUT /books/1.json
+  def show
+    if @book
+      render :show
+    else
+      render "api/shared/error", status: 500
+    end
+  end
+
+
   def update
       if @book.update(book_params)
         render :show, status: 200
@@ -76,8 +68,6 @@ class Api::BooksController < ApplicationController
       end
   end
 
-  # DELETE /books/1
-  # DELETE /books/1.json
   def destroy
     @book.destroy
     render :show, status: 200

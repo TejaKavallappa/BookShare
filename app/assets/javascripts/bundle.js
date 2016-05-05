@@ -55,18 +55,19 @@
 	var IndexRoute = ReactRouter.IndexRoute;
 	var hashHistory = ReactRouter.hashHistory;
 	//actions
-	var UserActions = __webpack_require__(246);
+	var UserActions = __webpack_require__(245);
 	//Components
-	var AuthPermit = __webpack_require__(245);
+	var AuthPermit = __webpack_require__(251);
 	// var BookIndex = require('./components/book_index');
 	var UserBooks = __webpack_require__(281);
-	var UserBorrows = __webpack_require__(293);
-	var UserBookDetail = __webpack_require__(286);
-	var BookDetail = __webpack_require__(285);
-	var BookEdit = __webpack_require__(287);
-	var LoginForm = __webpack_require__(288);
+	var UserBorrows = __webpack_require__(285);
+	var UserMadeBorrows = __webpack_require__(287);
+	var UserBookDetail = __webpack_require__(288);
+	var BookDetail = __webpack_require__(289);
+	var BookEdit = __webpack_require__(290);
+	var LoginForm = __webpack_require__(291);
 	var CurrentUserState = __webpack_require__(278);
-	var App = __webpack_require__(289);
+	var App = __webpack_require__(292);
 	
 	var Routerr = React.createElement(
 	  Router,
@@ -78,6 +79,7 @@
 	    React.createElement(Route, { path: 'login', component: LoginForm }),
 	    React.createElement(Route, { path: 'signup', component: LoginForm }),
 	    React.createElement(Route, { path: 'requests', component: UserBorrows }),
+	    React.createElement(Route, { path: 'request-status', component: UserMadeBorrows }),
 	    React.createElement(
 	      Route,
 	      { path: 'users/:userId', component: UserBooks },
@@ -94,7 +96,6 @@
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	  var root = document.getElementById('root');
-	  // Modal.setAppElement(document.body);
 	  ReactDOM.render(Routerr, root);
 	});
 
@@ -27416,56 +27417,8 @@
 /* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1);
-	var UserActions = __webpack_require__(246);
-	//stores
-	var UserStore = __webpack_require__(252);
-	//components
-	var Splash = __webpack_require__(270);
-	var BookIndex = __webpack_require__(271);
-	var Home = __webpack_require__(280);
-	
-	var AuthPermit = React.createClass({
-	  displayName: 'AuthPermit',
-	
-	  getInitialState: function () {
-	    return { currentUser: {} };
-	  },
-	  componentDidMount: function () {
-	    this.userListener = UserStore.addListener(this.getLoggedInUser);
-	    UserActions.fetchCurrentUser();
-	  },
-	  componentWillUnmount: function () {
-	    this.userListener.remove();
-	  },
-	  getLoggedInUser: function () {
-	    this.setState({ currentUser: UserStore.currentUser() });
-	  },
-	  render: function () {
-	    if (UserStore.currentUser()) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(Home, null)
-	      );
-	    } else {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(Splash, null)
-	      );
-	    }
-	  }
-	});
-	
-	module.exports = AuthPermit;
-
-/***/ },
-/* 246 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(247);
-	var UserApiUtil = __webpack_require__(251);
+	var AppDispatcher = __webpack_require__(246);
+	var UserApiUtil = __webpack_require__(250);
 	var hashHistory = __webpack_require__(186).hashHistory;
 	
 	var UserActions = {
@@ -27531,15 +27484,15 @@
 	window.UserActions = UserActions;
 
 /***/ },
-/* 247 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(248).Dispatcher;
+	var AppDispatcher = __webpack_require__(247).Dispatcher;
 	
 	module.exports = new AppDispatcher();
 
 /***/ },
-/* 248 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27551,11 +27504,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(249);
+	module.exports.Dispatcher = __webpack_require__(248);
 
 
 /***/ },
-/* 249 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27577,7 +27530,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(250);
+	var invariant = __webpack_require__(249);
 	
 	var _prefix = 'ID_';
 	
@@ -27792,7 +27745,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 250 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27847,10 +27800,10 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 251 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(247);
+	var AppDispatcher = __webpack_require__(246);
 	
 	var UserApiUtil = {
 	  fetchAllUsers: function (success, error) {
@@ -27892,10 +27845,58 @@
 	window.UserApiUtil = UserApiUtil;
 
 /***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var UserActions = __webpack_require__(245);
+	//stores
+	var UserStore = __webpack_require__(252);
+	//components
+	var Splash = __webpack_require__(270);
+	var BookIndex = __webpack_require__(271);
+	var Home = __webpack_require__(280);
+	
+	var AuthPermit = React.createClass({
+	  displayName: 'AuthPermit',
+	
+	  getInitialState: function () {
+	    return { currentUser: {} };
+	  },
+	  componentDidMount: function () {
+	    this.userListener = UserStore.addListener(this.getLoggedInUser);
+	    UserActions.fetchCurrentUser();
+	  },
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
+	  },
+	  getLoggedInUser: function () {
+	    this.setState({ currentUser: UserStore.currentUser() });
+	  },
+	  render: function () {
+	    if (UserStore.currentUser()) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(Home, null)
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(Splash, null)
+	      );
+	    }
+	  }
+	});
+	
+	module.exports = AuthPermit;
+
+/***/ },
 /* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(247);
+	var AppDispatcher = __webpack_require__(246);
 	var Store = __webpack_require__(253).Store;
 	
 	var UserStore = new Store(AppDispatcher);
@@ -28014,7 +28015,7 @@
 	
 	var FluxStoreGroup = __webpack_require__(255);
 	
-	var invariant = __webpack_require__(250);
+	var invariant = __webpack_require__(249);
 	var shallowEqual = __webpack_require__(256);
 	
 	var DEFAULT_OPTIONS = {
@@ -28192,7 +28193,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(250);
+	var invariant = __webpack_require__(249);
 	
 	/**
 	 * FluxStoreGroup allows you to execute a callback on every dispatch after
@@ -28333,7 +28334,7 @@
 	var FluxReduceStore = __webpack_require__(258);
 	var Immutable = __webpack_require__(268);
 	
-	var invariant = __webpack_require__(250);
+	var invariant = __webpack_require__(249);
 	
 	/**
 	 * This is a simple store. It allows caching key value pairs. An implementation
@@ -28483,7 +28484,7 @@
 	var FluxStore = __webpack_require__(259);
 	
 	var abstractMethod = __webpack_require__(267);
-	var invariant = __webpack_require__(250);
+	var invariant = __webpack_require__(249);
 	
 	var FluxReduceStore = (function (_FluxStore) {
 	  _inherits(FluxReduceStore, _FluxStore);
@@ -28589,7 +28590,7 @@
 	
 	var EventEmitter = _require.EventEmitter;
 	
-	var invariant = __webpack_require__(250);
+	var invariant = __webpack_require__(249);
 	
 	/**
 	 * This class should be extended by the stores in your application, like so:
@@ -29296,7 +29297,7 @@
 	
 	'use strict';
 	
-	var invariant = __webpack_require__(250);
+	var invariant = __webpack_require__(249);
 	
 	function abstractMethod(className, methodName) {
 	   true ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Subclasses of %s must override %s() with their own implementation.', className, methodName) : invariant(false) : undefined;
@@ -34309,7 +34310,7 @@
 	
 	var FluxStoreGroup = __webpack_require__(255);
 	
-	var invariant = __webpack_require__(250);
+	var invariant = __webpack_require__(249);
 	
 	/**
 	 * `FluxContainer` should be preferred over this mixin, but it requires using
@@ -34439,7 +34440,7 @@
 	var hashHistory = ReactRouter.hashHistory;
 	//actions
 	var ClientActions = __webpack_require__(272);
-	var UserActions = __webpack_require__(246);
+	var UserActions = __webpack_require__(245);
 	//stores
 	var UserStore = __webpack_require__(252);
 	//components
@@ -34607,7 +34608,7 @@
 /* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(247);
+	var AppDispatcher = __webpack_require__(246);
 	var ServerActions = __webpack_require__(274);
 	
 	var ApiUtil = {
@@ -34678,7 +34679,7 @@
 /* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(247);
+	var AppDispatcher = __webpack_require__(246);
 	var ApiUtil = __webpack_require__(273);
 	
 	var ServerActions = {
@@ -34776,7 +34777,7 @@
 /* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(247);
+	var AppDispatcher = __webpack_require__(246);
 	var Store = __webpack_require__(253).Store;
 	
 	var BookStore = new Store(AppDispatcher);
@@ -34938,7 +34939,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var UserStore = __webpack_require__(252);
-	var UserActions = __webpack_require__(246);
+	var UserActions = __webpack_require__(245);
 	
 	var CurrentUserState = {
 	  getInitialState: function () {
@@ -34976,7 +34977,7 @@
 	var Link = ReactRouter.Link;
 	//actions
 	var ClientActions = __webpack_require__(272);
-	var UserActions = __webpack_require__(246);
+	var UserActions = __webpack_require__(245);
 	//stores
 	var UserStore = __webpack_require__(252);
 	//components
@@ -35084,7 +35085,7 @@
 	var hashHistory = ReactRouter.hashHistory;
 	//actions
 	var ClientActions = __webpack_require__(272);
-	var UserActions = __webpack_require__(246);
+	var UserActions = __webpack_require__(245);
 	//stores
 	var UserStore = __webpack_require__(252);
 	//components
@@ -35126,7 +35127,7 @@
 	var hashHistory = ReactRouter.hashHistory;
 	//actions
 	var ClientActions = __webpack_require__(272);
-	var UserActions = __webpack_require__(246);
+	var UserActions = __webpack_require__(245);
 	//stores
 	var UserStore = __webpack_require__(252);
 	//components
@@ -35184,6 +35185,18 @@
 	
 	  getUserBooks: function () {
 	    this.setState({ books: BookStore.all() });
+	  },
+	
+	  displayForm: function () {
+	    if (UserStore.currentUser()) {
+	      return React.createElement(BookForm, null);
+	    } else {
+	      return React.createElement(
+	        'button',
+	        { className: 'bk-button', onClick: this.addBook },
+	        'Add a new book to my collection!'
+	      );
+	    }
 	  },
 	
 	  render: function () {
@@ -35283,8 +35296,6 @@
 	    return { disabled: false };
 	  },
 	  requestBook: function (event) {
-	    // event.target.disabled = true;
-	    // this.disabled = true;
 	    this.setState({ disabled: true });
 	    var borrow = {
 	      borrower_id: UserStore.currentUser().id,
@@ -35371,7 +35382,7 @@
 /* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(247);
+	var AppDispatcher = __webpack_require__(246);
 	var BorrowApiUtil = __webpack_require__(284);
 	var hashHistory = __webpack_require__(186).hashHistory;
 	
@@ -35403,13 +35414,13 @@
 	    });
 	  },
 	  receivedBorrowerBorrows: function (borrows) {
+	    console.log(borrows);
 	    AppDispatcher.dispatch({
-	      actionType: "BORROW_RECEIVED",
+	      actionType: "BORROW_REQUESTS_MADE_RECEIVED",
 	      borrows: borrows
 	    });
 	  },
 	  approvedBorrow: function (borrow) {
-	    console.log("Request approved!");
 	    //Remove the request from the store as it has been approvedBorrow
 	    //Send a notification to borrower that it has been accepted
 	    AppDispatcher.dispatch({
@@ -35446,7 +35457,7 @@
 /* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(247);
+	var AppDispatcher = __webpack_require__(246);
 	
 	var BorrowApiUtil = {
 	  requestBook: function (borrow, success, error) {
@@ -35483,15 +35494,16 @@
 	    $.ajax({
 	      url: '/api/borrowings/',
 	      type: 'GET',
+	      data: { asker: "owner" },
 	      success: success,
 	      error: error
 	    });
 	  },
-	  fetchBorrowsByBorrower: function (borrowerId, success, error) {
+	  fetchBorrowsByBorrower: function (success, error) {
 	    $.ajax({
 	      url: '/api/borrowings/',
 	      type: 'GET',
-	      data: { borrowerId: borrowerId }, //params
+	      data: { asker: "borrower" }, //params
 	      success: success,
 	      error: error
 	    });
@@ -35507,121 +35519,301 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var hashHistory = __webpack_require__(186).hashHistory;
+	//react router
+	var ReactRouter = __webpack_require__(186);
+	var hashHistory = ReactRouter.hashHistory;
 	//actions
 	var ClientActions = __webpack_require__(272);
-	//component
-	var BookIndex = __webpack_require__(271);
+	var UserActions = __webpack_require__(245);
+	var BorrowActions = __webpack_require__(283);
 	//stores
-	var BookStore = __webpack_require__(276);
-	//mixin
-	var CurrentUserState = __webpack_require__(278);
+	var BorrowStore = __webpack_require__(286);
+	var UserStore = __webpack_require__(252);
+	//mixins
+	var CurrentUserMixin = __webpack_require__(278);
 	
-	var BookDetail = React.createClass({
-	  displayName: 'BookDetail',
+	var UserBorrows = React.createClass({
+	  displayName: 'UserBorrows',
 	
-	  // mixins: [CurrentUserState],
+	  mixins: [CurrentUserMixin],
+	
 	  getInitialState: function () {
-	    return { book: BookStore.find(this.props.params.bookId) };
+	    return { borrows: [] };
 	  },
 	
-	  componentDidMount: function () {
-	    this.bookListener = BookStore.addListener(this._onChange);
-	    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
+	  componentWillMount: function () {
+	    this.borrowsListener = BorrowStore.addListener(this.setBorrows);
+	    BorrowActions.fetchBorrowsByOwner();
+	    // BorrowActions.fetchBorrowsByBorrower();
+	  },
+	
+	  componentWillUpdate: function () {
+	    if (!UserStore.currentUser()) {
+	      hashHistory.push("/");
+	    }
 	  },
 	
 	  componentWillUnmount: function () {
-	    this.bookListener.remove();
+	    this.borrowsListener.remove();
 	  },
 	
-	  componentWillReceiveProps: function (newProps) {
-	    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
+	  setBorrows: function () {
+	    this.setState({ borrows: BorrowStore.all() });
 	  },
 	
-	  _onChange: function () {
-	    this.setState(this.getStateFromStore);
+	  approveRequest: function (borrow) {
+	    var req = { id: borrow.id,
+	      owner_id: UserStore.currentUser(),
+	      borrower_id: borrow.borrower.borrower_id,
+	      request_status: 'borrowed',
+	      book_id: borrow.book.book_id };
+	    BorrowActions.approveRequest(req);
 	  },
 	
-	  getStateFromStore: function () {
-	    this.setState({ book: BookStore.find(this.props.params.bookId) });
+	  rejectRequest: function (borrow) {
+	    //Send a notification to the borrower
+	    BorrowActions.rejectRequest(borrow.id);
 	  },
 	
-	  editBook: function (event) {
-	    event.preventDefault();
-	    var url = "/api/books/" + this.props.params.bookId;
-	    hashHistory.push(url);
-	  },
-	
-	  deleteBook: function (event) {
-	    event.preventDefault();
-	    ClientActions.removeBook(this.props.params.bookId);
-	  },
 	  render: function () {
-	    var book = this.state.book;
-	    var self = this;
-	
-	    if (!book) {
+	    if (!this.state.borrows) {
 	      return React.createElement(
 	        'div',
 	        null,
 	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	        '); // ',
 	        React.createElement(
 	          'span',
 	          { 'class': 'sr-only' },
 	          'Loading...'
 	        )
 	      );
-	      // return <div>Loading...</div>;
 	    }
-	
-	    var display = function () {
+	    var self = this;
+	    if (BorrowStore.all().length === 0) {
 	      return React.createElement(
 	        'div',
 	        null,
-	        React.createElement(
-	          'button',
-	          { onClick: self.editBook },
-	          'Edit'
-	        ),
-	        React.createElement(
-	          'button',
-	          { onClick: self.deleteBook },
-	          'Delete'
-	        )
+	        'No pending borrow requests!'
 	      );
-	    };
-	
-	    //In the edit form add facility to let user upload an images
+	    }
 	    return React.createElement(
 	      'div',
-	      { className: 'book' },
+	      null,
 	      React.createElement(
-	        'h3',
+	        'h2',
 	        null,
-	        ' ',
-	        book.title,
-	        ' '
+	        'Your borrow requests'
 	      ),
-	      React.createElement(
-	        'h4',
-	        null,
-	        book.author
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        book.description ? book.description : ""
-	      ),
-	      display()
+	      this.state.borrows.map(function (borrow) {
+	        return React.createElement(
+	          'div',
+	          { key: borrow.id, className: 'borrow-item' },
+	          React.createElement('img', { src: borrow.book.image_url, alt: borrow.book.title }),
+	          borrow.borrower.username,
+	          ' ',
+	          borrow.book.title,
+	          ' ',
+	          borrow.book.author,
+	          ' ',
+	          React.createElement(
+	            'button',
+	            { onClick: self.approveRequest.bind(self, borrow) },
+	            'Approve'
+	          ),
+	          ' ',
+	          React.createElement(
+	            'button',
+	            { onClick: self.rejectRequest.bind(self, borrow) },
+	            'Reject'
+	          )
+	        );
+	      })
 	    );
-	  } //render
+	  }
 	});
 	
-	module.exports = BookDetail;
+	module.exports = UserBorrows;
 
 /***/ },
 /* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(246);
+	var Store = __webpack_require__(253).Store;
+	
+	var BorrowStore = new Store(AppDispatcher);
+	var _borrows = {};
+	var _madeBorrows = {};
+	
+	BorrowStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case "BORROWS_RECEIVED":
+	      receiveAllBorrows(payload.borrows);
+	      break;
+	    case "BORROW_RECEIVED":
+	      receiveSingleBorrow(payload.borrow);
+	      break;
+	    case "BORROW_REMOVED":
+	      removeBorrow(payload.borrow);
+	      break;
+	    case "BORROW_REQUESTS_MADE_RECEIVED":
+	      receiveRequestedBorrows(payload.borrows);
+	      break;
+	  }
+	  this.__emitChange();
+	};
+	
+	var receiveAllBorrows = function (borrows) {
+	  _borrows = {};
+	  borrows.forEach(function (borrow) {
+	    _borrows[borrow.id] = borrow;
+	  });
+	};
+	
+	var receiveRequestedBorrows = function (borrows) {
+	  _madeBorrows = {};
+	  borrows.forEach(function (borrow) {
+	    _madeBorrows[borrow.id] = borrow;
+	  });
+	  console.log(_madeBorrows);
+	};
+	
+	var receiveSingleBorrow = function (borrow) {
+	  _borrows[borrow.id] = borrow;
+	};
+	
+	var removeBorrow = function (borrow) {
+	  delete _borrows[borrow.id];
+	};
+	
+	BorrowStore.all = function () {
+	  var borrows = [];
+	  for (var id in _borrows) {
+	    borrows.push(_borrows[id]);
+	  }
+	  return borrows;
+	};
+	
+	BorrowStore.madeAll = function () {
+	  var borrows = [];
+	  for (var id in _madeBorrows) {
+	    borrows.push(_madeBorrows[id]);
+	  }
+	  return borrows;
+	};
+	
+	BorrowStore.find = function (id) {
+	  return _borrows[id];
+	};
+	
+	module.exports = BorrowStore;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	//react router
+	var ReactRouter = __webpack_require__(186);
+	var hashHistory = ReactRouter.hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(272);
+	var UserActions = __webpack_require__(245);
+	var BorrowActions = __webpack_require__(283);
+	//stores
+	var BorrowStore = __webpack_require__(286);
+	var UserStore = __webpack_require__(252);
+	//mixins
+	var CurrentUserMixin = __webpack_require__(278);
+	
+	var UserMadeBorrows = React.createClass({
+	  displayName: 'UserMadeBorrows',
+	
+	  mixins: [CurrentUserMixin],
+	
+	  getInitialState: function () {
+	    return { borrows: [] };
+	  },
+	
+	  componentWillMount: function () {
+	    this.borrowsListener = BorrowStore.addListener(this.setBorrows);
+	    BorrowActions.fetchBorrowsByBorrower();
+	  },
+	
+	  componentWillUpdate: function () {
+	    if (!UserStore.currentUser()) {
+	      hashHistory.push("/");
+	    }
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.borrowsListener.remove();
+	  },
+	
+	  setBorrows: function () {
+	    this.setState({ borrows: BorrowStore.madeAll() });
+	  },
+	
+	  // approveRequest: function(borrow){
+	  //   var req = {id: borrow.id,
+	  //     owner_id: UserStore.currentUser(),
+	  //     borrower_id: borrow.borrower.borrower_id,
+	  //     request_status: 'borrowed',
+	  //     book_id: borrow.book.book_id};
+	  //   BorrowActions.approveRequest(req);
+	  // },
+	  //
+	  // rejectRequest: function(borrow){
+	  //   //Send a notification to the borrower
+	  //   BorrowActions.rejectRequest(borrow.id);
+	  // },
+	
+	  // if(BorrowStore.all().length === 0){
+	  //   return (<div>No pending borrow requests!</div>);
+	  // }
+	  render: function () {
+	    if (!this.state.borrows) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	    }
+	    var self = this;
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Status of your requests'
+	      ),
+	      this.state.borrows.map(function (borrow) {
+	        return React.createElement(
+	          'div',
+	          { key: borrow.id, className: 'borrow-item' },
+	          React.createElement('img', { src: borrow.book.image_url, alt: borrow.book.title }),
+	          borrow.owner.username,
+	          ' ',
+	          borrow.book.title,
+	          ' ',
+	          borrow.book.author,
+	          ' '
+	        );
+	      })
+	    );
+	  }
+	});
+	
+	module.exports = UserMadeBorrows;
+
+/***/ },
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35739,7 +35931,125 @@
 	module.exports = BookDetail;
 
 /***/ },
-/* 287 */
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(186).hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(272);
+	//component
+	var BookIndex = __webpack_require__(271);
+	//stores
+	var BookStore = __webpack_require__(276);
+	//mixin
+	var CurrentUserState = __webpack_require__(278);
+	
+	var BookDetail = React.createClass({
+	  displayName: 'BookDetail',
+	
+	  // mixins: [CurrentUserState],
+	  getInitialState: function () {
+	    return { book: BookStore.find(this.props.params.bookId) };
+	  },
+	
+	  componentDidMount: function () {
+	    this.bookListener = BookStore.addListener(this._onChange);
+	    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.bookListener.remove();
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore);
+	  },
+	
+	  getStateFromStore: function () {
+	    this.setState({ book: BookStore.find(this.props.params.bookId) });
+	  },
+	
+	  editBook: function (event) {
+	    event.preventDefault();
+	    var url = "/api/books/" + this.props.params.bookId;
+	    hashHistory.push(url);
+	  },
+	
+	  deleteBook: function (event) {
+	    event.preventDefault();
+	    ClientActions.removeBook(this.props.params.bookId);
+	  },
+	  render: function () {
+	    var book = this.state.book;
+	    var self = this;
+	
+	    if (!book) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        '); // ',
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	      // return <div>Loading...</div>;
+	    }
+	
+	    var display = function () {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'button',
+	          { onClick: self.editBook },
+	          'Edit'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: self.deleteBook },
+	          'Delete'
+	        )
+	      );
+	    };
+	
+	    //In the edit form add facility to let user upload an images
+	    return React.createElement(
+	      'div',
+	      { className: 'book' },
+	      React.createElement(
+	        'h3',
+	        null,
+	        ' ',
+	        book.title,
+	        ' '
+	      ),
+	      React.createElement(
+	        'h4',
+	        null,
+	        book.author
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        book.description ? book.description : ""
+	      ),
+	      display()
+	    );
+	  } //render
+	});
+	
+	module.exports = BookDetail;
+
+/***/ },
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35859,7 +36169,7 @@
 	module.exports = BookForm;
 
 /***/ },
-/* 288 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//react
@@ -35868,7 +36178,7 @@
 	var hashHistory = ReactRouter.hashHistory;
 	
 	//actions
-	var UserActions = __webpack_require__(246);
+	var UserActions = __webpack_require__(245);
 	//mixin
 	var CurrentUserState = __webpack_require__(278);
 	//stores
@@ -36000,7 +36310,7 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 289 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React
@@ -36009,12 +36319,12 @@
 	var hashHistory = ReactRouter.hashHistory;
 	// var Modal = require('react-modal');
 	//Components
-	var LoginForm = __webpack_require__(288);
+	var LoginForm = __webpack_require__(291);
 	var CurrentUserState = __webpack_require__(278);
-	var NavBar = __webpack_require__(290);
-	var Footer = __webpack_require__(291);
+	var NavBar = __webpack_require__(293);
+	var Footer = __webpack_require__(294);
 	//actions
-	var UserActions = __webpack_require__(246);
+	var UserActions = __webpack_require__(245);
 	var modalStyle = {
 	  overlay: {
 	    position: 'fixed',
@@ -36073,7 +36383,7 @@
 	// <LoginForm/>
 
 /***/ },
-/* 290 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React
@@ -36082,10 +36392,10 @@
 	var hashHistory = ReactRouter.hashHistory;
 	var Link = __webpack_require__(186).Link;
 	//Components
-	var LoginForm = __webpack_require__(288);
+	var LoginForm = __webpack_require__(291);
 	var CurrentUserState = __webpack_require__(278);
 	//actions
-	var UserActions = __webpack_require__(246);
+	var UserActions = __webpack_require__(245);
 	
 	var NavBar = React.createClass({
 	  displayName: 'NavBar',
@@ -36125,6 +36435,15 @@
 	              'li',
 	              null,
 	              'Requests'
+	            )
+	          ),
+	          React.createElement(
+	            'a',
+	            { href: '#/request-status' },
+	            React.createElement(
+	              'li',
+	              null,
+	              'Requests Made'
 	            )
 	          ),
 	          React.createElement(
@@ -36198,7 +36517,7 @@
 	module.exports = NavBar;
 
 /***/ },
-/* 291 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React
@@ -36216,179 +36535,6 @@
 	  }
 	});
 	module.exports = Footer;
-
-/***/ },
-/* 292 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(247);
-	var Store = __webpack_require__(253).Store;
-	
-	var BorrowStore = new Store(AppDispatcher);
-	var _borrows = {};
-	
-	var receiveAllBorrows = function (borrows) {
-	  _borrows = {};
-	  borrows.forEach(function (borrow) {
-	    _borrows[borrow.id] = borrow;
-	  });
-	};
-	
-	BorrowStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case "BORROWS_RECEIVED":
-	      receiveAllBorrows(payload.borrows);
-	      break;
-	    case "BORROW_RECEIVED":
-	      receiveSingleBorrow(payload.borrow);
-	      break;
-	    case "BORROW_REMOVED":
-	      removeBorrow(payload.borrow);
-	      break;
-	  }
-	  this.__emitChange();
-	};
-	
-	var receiveSingleBorrow = function (borrow) {
-	  _borrows[borrow.id] = borrow;
-	};
-	
-	var removeBorrow = function (borrow) {
-	  delete _borrows[borrow.id];
-	};
-	
-	BorrowStore.all = function () {
-	  var borrows = [];
-	  for (var id in _borrows) {
-	    borrows.push(_borrows[id]);
-	  }
-	  return borrows;
-	};
-	
-	BorrowStore.find = function (id) {
-	  return _borrows[id];
-	};
-	
-	module.exports = BorrowStore;
-
-/***/ },
-/* 293 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	//react router
-	var ReactRouter = __webpack_require__(186);
-	var hashHistory = ReactRouter.hashHistory;
-	//actions
-	var ClientActions = __webpack_require__(272);
-	var UserActions = __webpack_require__(246);
-	var BorrowActions = __webpack_require__(283);
-	//stores
-	var BorrowStore = __webpack_require__(292);
-	var UserStore = __webpack_require__(252);
-	//mixins
-	var CurrentUserMixin = __webpack_require__(278);
-	
-	var UserBorrows = React.createClass({
-	  displayName: 'UserBorrows',
-	
-	  mixins: [CurrentUserMixin],
-	
-	  getInitialState: function () {
-	    return { borrows: [] };
-	  },
-	
-	  componentWillMount: function () {
-	    this.borrowsListener = BorrowStore.addListener(this.setBorrows);
-	    BorrowActions.fetchBorrowsByOwner();
-	  },
-	
-	  componentWillUpdate: function () {
-	    if (!UserStore.currentUser()) {
-	      hashHistory.push("/");
-	    }
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.borrowsListener.remove();
-	  },
-	
-	  setBorrows: function () {
-	    this.setState({ borrows: BorrowStore.all() });
-	  },
-	
-	  approveRequest: function (borrow) {
-	    var req = { id: borrow.id,
-	      owner_id: UserStore.currentUser(),
-	      borrower_id: borrow.borrower.borrower_id,
-	      request_status: 'borrowed',
-	      book_id: borrow.book.book_id };
-	    BorrowActions.approveRequest(req);
-	  },
-	
-	  rejectRequest: function (borrow) {
-	    //Send a notification to the borrower
-	    BorrowActions.rejectRequest(borrow.id);
-	  },
-	
-	  render: function () {
-	    if (!this.state.borrows) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	        React.createElement(
-	          'span',
-	          { 'class': 'sr-only' },
-	          'Loading...'
-	        )
-	      );
-	    }
-	    var self = this;
-	    if (BorrowStore.all().length === 0) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'No pending borrow requests!'
-	      );
-	    }
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h2',
-	        null,
-	        'Your borrow requests'
-	      ),
-	      this.state.borrows.map(function (borrow) {
-	        return React.createElement(
-	          'div',
-	          { key: borrow.id, className: 'borrow-item' },
-	          React.createElement('img', { src: borrow.book.image_url, alt: borrow.book.title }),
-	          borrow.borrower.username,
-	          ' ',
-	          borrow.book.title,
-	          ' ',
-	          borrow.book.author,
-	          ' ',
-	          React.createElement(
-	            'button',
-	            { onClick: self.approveRequest.bind(self, borrow) },
-	            'Approve'
-	          ),
-	          ' ',
-	          React.createElement(
-	            'button',
-	            { onClick: self.rejectRequest.bind(self, borrow) },
-	            'Reject'
-	          )
-	        );
-	      })
-	    );
-	  }
-	});
-	
-	module.exports = UserBorrows;
 
 /***/ }
 /******/ ]);
