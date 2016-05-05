@@ -35050,7 +35050,6 @@
 	          'Loading...'
 	        )
 	      );
-	      // return (<div>Loading users...</div>);
 	    }
 	
 	    var self = this;
@@ -35118,7 +35117,6 @@
 	    );
 	  }
 	});
-	
 	module.exports = Home;
 
 /***/ },
@@ -35546,7 +35544,6 @@
 	  componentWillMount: function () {
 	    this.borrowsListener = BorrowStore.addListener(this.setBorrows);
 	    BorrowActions.fetchBorrowsByOwner();
-	    // BorrowActions.fetchBorrowsByBorrower();
 	  },
 	
 	  componentWillUpdate: function () {
@@ -36373,10 +36370,14 @@
 	  render: function () {
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'app' },
 	      React.createElement(NavBar, null),
 	      this.props.children,
-	      React.createElement(Footer, null)
+	      React.createElement(
+	        'footer',
+	        null,
+	        React.createElement(Footer, null)
+	      )
 	    ); //return
 	  } //render
 	});

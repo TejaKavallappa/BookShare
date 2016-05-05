@@ -22,7 +22,6 @@ var UserBorrows = React.createClass({
   componentWillMount: function(){
     this.borrowsListener = BorrowStore.addListener(this.setBorrows);
     BorrowActions.fetchBorrowsByOwner();
-    // BorrowActions.fetchBorrowsByBorrower();
   },
 
   componentWillUpdate: function(){

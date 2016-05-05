@@ -46,10 +46,12 @@ var App = React.createClass({
   //   this.setState({ modalOpen: true });
   // },
   render: function(){
-    return (<div>
+    return (<div className="app">
         <NavBar/>
         {this.props.children}
+        <footer>
         <Footer/>
+        </footer>
       </div>);//return
   }//render
 });

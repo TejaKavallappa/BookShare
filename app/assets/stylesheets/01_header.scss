@@ -1,11 +1,6 @@
-// white: #EAA732;
-// $offwhite: #C3C2BE;
-// $offwhite: #F5EDE3;
-// $black: #000002;
 $offwhite: #F8F8F8;
 $grey: #7B868A;
 $teal: #36A9AD;
-
 
 .header{
   display: flex;
@@ -27,6 +22,7 @@ $teal: #36A9AD;
   align-items: center;
   font-weight: 900;
   padding: 20px;
+  font-size: 24px;
 }
 .header-logo:hover{
   background: $offwhite;
@@ -43,6 +39,7 @@ $teal: #36A9AD;
   padding:10px 20px;
   list-style: none;
   height: 100%;
+  font-size: 18px;
 }
 #login-form{
   display: flex;
@@ -72,8 +69,6 @@ img{
   width: 50%;
   height: auto;
 }
-
-
 .splash{
   background: image-url('splash-bg.jpg');
   -webkit-background-size: cover;
@@ -83,7 +78,17 @@ img{
   background-repeat: no-repeat;
   height: 600px;
 }
-.footer{
-    background-color: white;
+.app{
+  margin: 0 0 100px;
+}
+// footer
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: 0 auto;
     height: 50px;
+    width: 100%;
+    overflow: hidden;
+    background-color: white;
 }
