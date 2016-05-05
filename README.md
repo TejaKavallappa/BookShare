@@ -91,7 +91,6 @@ possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with ow
   - [x] Borrowings CRUD
   - [x] A current_user who is not the owner can request books
   - [x] The owner can approve or reject pending requests
-  - [ ] If request approved, owner can send book to requester(sets request_status to 3)
 - Use CSS to style new views [This will very likely take extra time]
 
 ### Phase 7: Populate database (1 day)

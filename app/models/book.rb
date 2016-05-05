@@ -11,7 +11,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
-require 'json'
+# require 'json'
 
 class Book < ActiveRecord::Base
   validates :title, :author, :image_url, :owner_id, presence: true
@@ -24,7 +24,8 @@ class Book < ActiveRecord::Base
   has_one :borrowing,
     class_name: "Borrowing",
     foreign_key: :book_id,
-    primary_key: :id
+    primary_key: :id,
+    dependent: :destroy
 
 def borrow_status
   borrowing.nil? ? 'with_owner' : borrowing.request_status

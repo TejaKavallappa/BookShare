@@ -21,16 +21,6 @@ class Api::BooksController < ApplicationController
       # requesting books belonging to another user, that have not been already requested or borrowed
       # @books = Book.where(owner_id: userId && 'owner_id NOT IN (SELECT owner_id FROM borrowings)')
       @books = Book.where(owner_id: userId).includes(:borrowing)
-      # ActiveRecord::Base.connection.execute(<<-SQL)
-      #   SELECT
-      #    books.*
-      #   FROM
-      #     books
-      #   LEFT JOIN
-      #     borrowings ON borrowings.book_id = books.id
-      #   WHERE
-      #     borrowings.book_id IS NULL AND books.owner_id = #{userId}
-      # SQL
       render :index
     end
 

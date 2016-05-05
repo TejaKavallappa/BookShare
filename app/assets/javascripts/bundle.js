@@ -35336,6 +35336,9 @@
 	        )
 	      );
 	    } else {
+	      if (book.borrow_status === "pending") {
+	        this.state.disabled = true;
+	      }
 	      return React.createElement(
 	        'div',
 	        null,
@@ -35441,6 +35444,7 @@
 	  },
 	
 	  handleError: function (error) {
+	
 	    AppDispatcher.dispatch({
 	      actionType: "ERROR",
 	      errors: error.responseJSON.errors
@@ -35577,7 +35581,7 @@
 	    if (!this.state.borrows) {
 	      return React.createElement(
 	        'div',
-	        null,
+	        { className: 'request-page' },
 	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
 	        React.createElement(
 	          'span',
@@ -35590,13 +35594,13 @@
 	    if (BorrowStore.all().length === 0) {
 	      return React.createElement(
 	        'div',
-	        null,
+	        { className: 'request-page' },
 	        'No pending borrow requests!'
 	      );
 	    }
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'request-page' },
 	      React.createElement(
 	        'h2',
 	        null,
@@ -36423,30 +36427,32 @@
 	          'ul',
 	          { className: 'header-list' },
 	          React.createElement(
-	            'a',
-	            { href: '#' },
+	            'li',
+	            null,
+	            ' ',
 	            React.createElement(
-	              'li',
-	              null,
+	              'a',
+	              { href: '#' },
 	              'Hi, ',
 	              self.state.currentUser.username
 	            )
 	          ),
 	          React.createElement(
-	            'a',
-	            { href: '#/requests' },
+	            'li',
+	            null,
+	            ' ',
 	            React.createElement(
-	              'li',
-	              null,
-	              'Requests'
+	              'a',
+	              { href: '#/requests' },
+	              ' Requests'
 	            )
 	          ),
 	          React.createElement(
-	            'a',
-	            { href: '#/request-status' },
+	            'li',
+	            null,
 	            React.createElement(
-	              'li',
-	              null,
+	              'a',
+	              { href: '#/request-status' },
 	              'Requests Made'
 	            )
 	          ),

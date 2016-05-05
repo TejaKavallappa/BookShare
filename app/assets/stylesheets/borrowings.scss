@@ -1,9 +1,13 @@
 // Place all the styles related to the borrowings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-$yellow: #EAA732;
+// $yellow: #EAA732;
+$offwhite: #F8F8F8;
+$grey: #7B868A;
+$teal: #36A9AD;
+
 .borrow-item{
-    border: thin solid $yellow;
+    border: thin solid $grey;
     // padding: 10px;
     list-style: none;
     margin: 5px;
@@ -17,7 +21,7 @@ $yellow: #EAA732;
     button{
       padding: 5px;
       border-radius: 10%;
-      border: $yellow solid 1px;
+      border: $grey solid 1px;
       transition: all .2s ease-in-out;
     }
     button:hover{

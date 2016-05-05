@@ -27,11 +27,14 @@ var NavBar = React.createClass({
       if (self.state.currentUser){
         return (
           <ul className="header-list">
-          <a href="#">
-            <li>Hi, {self.state.currentUser.username}</li>
-          </a>
-          <a href="#/requests"><li>Requests</li></a>
-          <a href="#/request-status"><li>Requests Made</li></a>
+
+            <li> <a href="#" >
+              Hi, {self.state.currentUser.username}
+            </a>
+            </li>
+
+          <li> <a href="#/requests"> Requests</a></li>
+          <li><a href="#/request-status">Requests Made</a></li>
           <li onClick={self.logout}>Sign Out</li>
           </ul>);
       }

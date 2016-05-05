@@ -7,11 +7,8 @@ class Api::UsersController < ApplicationController
     @users = User.all
   end
 
-  # GET /users/1
-  # GET /users/1.json
   def show
     @user = current_user;
-    # render :show
     token = session[:session_token]
     # @user = User.find_by(session_token: token);
     if @user

@@ -4,18 +4,17 @@ class Api::BorrowingsController < ApplicationController
   before_action :set_borrow, only: [:destroy, :update]
 
   def index
+
     if params[:asker] == "owner"
       # View borrowings where I am the owner
-      @borrowings = Borrowing.where(owner_id: current_user,
+      @borrowings = Borrowing.where(owner_id: current_user.id,
       request_status: 'pending').includes(:book).includes(:borrower)
-      render :index
-      return
     else
       # View borrowings where I am the requester
-      @borrowings = Borrowing.where(borrower_id: current_user,
+      @borrowings = Borrowing.where(borrower_id: current_user.id,
       request_status: 'pending').includes(:book).includes(:owner)
-      render :index
     end
+    render :index
 
   end
 

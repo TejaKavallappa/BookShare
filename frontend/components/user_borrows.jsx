@@ -55,15 +55,15 @@ var UserBorrows = React.createClass({
 
   render: function(){
     if (!this.state.borrows){
-      return (<div>
+      return (<div className='request-page'>
         <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
     <span class="sr-only">Loading...</span></div>);
     }
     var self = this;
     if(BorrowStore.all().length === 0){
-      return (<div>No pending borrow requests!</div>);
+      return (<div className='request-page'>No pending borrow requests!</div>);
     }
-    return (<div>
+    return (<div className='request-page'>
       <h2>Your borrow requests</h2>
       {this.state.borrows.map(function(borrow){
         return (<div key={borrow.id} className="borrow-item">

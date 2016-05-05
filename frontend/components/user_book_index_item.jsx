@@ -46,6 +46,9 @@ var UserBook = React.createClass({
       </button></div>);
     }
     else{
+      if (book.borrow_status === "pending"){
+        this.state.disabled = true;
+      }
       return(<div><button
         disabled={this.state.disabled}
         onClick={this.requestBook}

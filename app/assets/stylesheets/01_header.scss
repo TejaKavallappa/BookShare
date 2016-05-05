@@ -1,45 +1,55 @@
-$yellow: #EAA732;
-// $beige: #C3C2BE;
-$beige: #F5EDE3;
-$black: #000002;
-// gainsboro
+// white: #EAA732;
+// $offwhite: #C3C2BE;
+// $offwhite: #F5EDE3;
+// $black: #000002;
+$offwhite: #F8F8F8;
+$grey: #7B868A;
+$teal: #36A9AD;
+
 
 .header{
   display: flex;
   justify-content: space-between;
-  background-color: $yellow;
+  background-color: white;
+  height: 50px;
+  color: $teal;
 }
-.header a{
-  display: block;
-  padding: 10px 20px;
+
+.header-nav{
+  padding: 5px 0 5px 0;
 }
 .header ul {
   display: flex;
   justify-content: space-around;
 }
 .header-logo {
+  display: flex;
+  align-items: center;
   font-weight: 900;
+  padding: 20px;
 }
 .header-logo:hover{
-  background: $beige;
+  background: $offwhite;
 }
 .header-list{
   display: flex;
   justify-content: space-around;
 }
 .header-list > li:hover{
-  background: $beige;
+  background: $offwhite;
+  cursor: pointer;
 }
-li{
+.header ul li{
   padding:10px 20px;
   list-style: none;
+  height: 100%;
 }
 #login-form{
   display: flex;
   justify-content: center;
   height: 500px;
-  background: $beige;
-  background-color: $yellow;
+  background: $offwhite;
+  background-color: white;
   align-items: center;
 }
 .bk-button{
@@ -49,7 +59,7 @@ li{
   font-weight: bold;
 }
 .bk-button:hover{
-  background-color: $yellow;
+  background-color: white;
 }
 
 .books-index{
@@ -74,6 +84,6 @@ img{
   height: 600px;
 }
 .footer{
-    background-color: $yellow;
+    background-color: white;
     height: 50px;
 }

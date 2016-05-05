@@ -1,11 +1,19 @@
 // Place all the styles related to the Books controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-$yellow: #EAA732;
+$offwhite: #F8F8F8;
+$grey: #7B868A;
+$teal: #36A9AD;
+$greytext: #494E52;
+
+.book-index{
+  padding-left: 17px;
+}
+// $yellow: #EAA732;
 .book-detail-item{
   display: flex;
   align-items: baseline;
-  border: thin solid $yellow;
+  border: thin solid $grey;
   // padding: 10px;
   list-style: none;
   margin: 5px;
@@ -16,12 +24,18 @@ $yellow: #EAA732;
   button:disabled{
     background: #ccc;
   }
-  
+  color: $greytext;
+  padding: 10px;
 }
-
 .book-detail-item{
   transition: all .2s ease-in-out;
 }
 .book-detail-item:hover{
   transform: scale(1.1);
+}
+// user_book_detail.jsx
+.book{
+  padding: 5px;
+  display: block;
+  border: 1px solid $grey;
 }
