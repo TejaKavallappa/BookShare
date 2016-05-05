@@ -44,6 +44,7 @@ var receiveSingleBorrow = function(borrow){
 
 var removeBorrow = function(borrow){
   delete _borrows[borrow.id];
+  delete _madeBorrows[borrow.id];
 };
 
 BorrowStore.all = function(){

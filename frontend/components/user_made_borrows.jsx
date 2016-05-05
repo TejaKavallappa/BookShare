@@ -47,10 +47,10 @@ var UserMadeBorrows = React.createClass({
   //   BorrowActions.approveRequest(req);
   // },
   //
-  // rejectRequest: function(borrow){
-  //   //Send a notification to the borrower
-  //   BorrowActions.rejectRequest(borrow.id);
-  // },
+  cancelRequest: function(borrow){
+    //Send a notification to the borrower
+    BorrowActions.rejectRequest(borrow.id);
+  },
 
   // if(BorrowStore.all().length === 0){
   //   return (<div>No pending borrow requests!</div>);
@@ -72,6 +72,8 @@ var UserMadeBorrows = React.createClass({
           {borrow.owner.username}&nbsp;
           {borrow.book.title}&nbsp;
           {borrow.book.author}&nbsp;
+          <button onClick={self.cancelRequest.bind(self,borrow)}>
+            Cancel</button>&nbsp;
         </div>);
 
       })}

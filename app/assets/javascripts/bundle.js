@@ -35681,6 +35681,7 @@
 	
 	var removeBorrow = function (borrow) {
 	  delete _borrows[borrow.id];
+	  delete _madeBorrows[borrow.id];
 	};
 	
 	BorrowStore.all = function () {
@@ -35760,10 +35761,10 @@
 	  //   BorrowActions.approveRequest(req);
 	  // },
 	  //
-	  // rejectRequest: function(borrow){
-	  //   //Send a notification to the borrower
-	  //   BorrowActions.rejectRequest(borrow.id);
-	  // },
+	  cancelRequest: function (borrow) {
+	    //Send a notification to the borrower
+	    BorrowActions.rejectRequest(borrow.id);
+	  },
 	
 	  // if(BorrowStore.all().length === 0){
 	  //   return (<div>No pending borrow requests!</div>);
@@ -35800,6 +35801,12 @@
 	          borrow.book.title,
 	          ' ',
 	          borrow.book.author,
+	          ' ',
+	          React.createElement(
+	            'button',
+	            { onClick: self.cancelRequest.bind(self, borrow) },
+	            'Cancel'
+	          ),
 	          ' '
 	        );
 	      })
