@@ -85,7 +85,7 @@ var UserBooks = React.createClass({
       if (UserStore.findUser(self.state.displayUser)){
         var name = UserStore.findUser(self.state.displayUser).username;
         name = name.charAt(0).toUpperCase()+ name.slice(1);
-        return (<h2>{name + "'s books'"}</h2>);
+        return (<h2>{name + "'s books"}</h2>);
       }
       else {
 
@@ -100,8 +100,8 @@ var UserBooks = React.createClass({
 
 
     // {this.displayForm()}
-      return (<div className="home-page"><div className="book-index">
-
+      return (<div className="home-page">
+      <div className="book-index">
       {owner()}
       {this.props.children}
         <ul className="books-index">
@@ -117,7 +117,9 @@ var UserBooks = React.createClass({
           }
         </ul>
       </div>
-      <div className="users-list"><UsersIndex/></div></div>);
+      <div className="users-list"><UsersIndex/></div>
+
+      </div>);
   }
 });
 

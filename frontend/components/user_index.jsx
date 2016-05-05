@@ -33,7 +33,7 @@ var UsersIndex = React.createClass({
     var link = user.id === UserStore.currentUser().id ? "/" : "users/"+user.id;
 
     if (user.id === UserStore.currentUser().id){
-      return (<li key={user.id}>
+      return (<li key={user.id} className="user-item">
         <Link to={ "/"}>
           <h4>{ user.username.charAt(0).toUpperCase() +
               user.username.slice(1) }</h4>
@@ -41,7 +41,7 @@ var UsersIndex = React.createClass({
       </li>);
     }
     else {
-      return (<li key={user.id}>
+      return (<li key={user.id} className="user-item">
           <Link to={ "users/" + user.id }>
             <h4>{ user.username.charAt(0).toUpperCase() +
                 user.username.slice(1) }</h4>
@@ -60,15 +60,16 @@ var UsersIndex = React.createClass({
 
     var self = this;
 
-      return (<div className="users-page">
-      <p>USERS</p>
+      return (<div id="slideout-users">
+      <p>U</p>
+      <div id="slideout-inner">
         <ul className="users-index">
           {self.state.users.map(function(user){
               return self.displayUsers(user);
             })
           }
-
         </ul>
+        </div>
       </div>);
   }
 });//UsersIndex

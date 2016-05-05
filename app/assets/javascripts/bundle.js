@@ -35009,7 +35009,7 @@
 	    if (user.id === UserStore.currentUser().id) {
 	      return React.createElement(
 	        'li',
-	        { key: user.id },
+	        { key: user.id, className: 'user-item' },
 	        React.createElement(
 	          Link,
 	          { to: "/" },
@@ -35023,7 +35023,7 @@
 	    } else {
 	      return React.createElement(
 	        'li',
-	        { key: user.id },
+	        { key: user.id, className: 'user-item' },
 	        React.createElement(
 	          Link,
 	          { to: "users/" + user.id },
@@ -35057,18 +35057,22 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'users-page' },
+	      { id: 'slideout-users' },
 	      React.createElement(
 	        'p',
 	        null,
-	        'USERS'
+	        'U'
 	      ),
 	      React.createElement(
-	        'ul',
-	        { className: 'users-index' },
-	        self.state.users.map(function (user) {
-	          return self.displayUsers(user);
-	        })
+	        'div',
+	        { id: 'slideout-inner' },
+	        React.createElement(
+	          'ul',
+	          { className: 'users-index' },
+	          self.state.users.map(function (user) {
+	            return self.displayUsers(user);
+	          })
+	        )
 	      )
 	    );
 	  }
@@ -35218,7 +35222,7 @@
 	        return React.createElement(
 	          'h2',
 	          null,
-	          name + "'s books'"
+	          name + "'s books"
 	        );
 	      } else {
 	

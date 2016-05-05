@@ -8,6 +8,11 @@ $greytext: #494E52;
 
 .book-index{
   padding-left: 17px;
+  padding-top: 20px;
+  h2{
+    font-size: 24px;
+    font-weight: 600;
+  }
 }
 // $yellow: #EAA732;
 .book-detail-item{
@@ -29,6 +34,7 @@ $greytext: #494E52;
 }
 .book-detail-item{
   transition: all .2s ease-in-out;
+  border: 1px solid $teal;
 }
 .book-detail-item:hover{
   position: relative;
