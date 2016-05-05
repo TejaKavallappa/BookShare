@@ -36,7 +36,6 @@ var receiveRequestedBorrows = function(borrows){
   borrows.forEach(function(borrow){
     _madeBorrows[borrow.id] = borrow;
   });
-  console.log(_madeBorrows);
 };
 
 var receiveSingleBorrow = function(borrow){

@@ -35,7 +35,6 @@ var BorrowActions = {
     });
   },
   receivedBorrowerBorrows: function(borrows){
-    console.log(borrows);
     AppDispatcher.dispatch({
       actionType: "BORROW_REQUESTS_MADE_RECEIVED",
       borrows: borrows
@@ -50,7 +49,6 @@ var BorrowActions = {
     });
   },
   rejectedBorrow: function(borrow){
-    console.log("rejectedborrow");
     AppDispatcher.dispatch({
       actionType: "BORROW_REMOVED",
       borrow: borrow
