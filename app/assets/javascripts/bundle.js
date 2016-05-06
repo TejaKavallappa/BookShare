@@ -34713,26 +34713,23 @@
 /* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
-	//react
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(186).hashHistory;
 	var Link = __webpack_require__(186).Link;
-	//actions
+	
 	var ClientActions = __webpack_require__(272);
-	//stores
-	var BookStore = __webpack_require__(276);
-	//components
 	var BookIndex = __webpack_require__(271);
+	var BookStore = __webpack_require__(276);
 	
 	var Book = React.createClass({
 	  displayName: 'Book',
 	
 	
-	  // editBook: function(event){
-	  //   event.preventDefault();
-	  //   var url = "/books/"+this.props.book.id+"/edit";
-	  //   hashHistory.push(url);
-	  // },
+	  editBook: function (event) {
+	    event.preventDefault();
+	    var url = "/books/" + this.props.book.id + "/edit";
+	    hashHistory.push(url);
+	  },
 	
 	  deleteBook: function (event) {
 	    event.preventDefault();
@@ -34761,7 +34758,7 @@
 	        React.createElement(
 	          'button',
 	          {
-	            onClick: this.openEditModal,
+	            onClick: this.editBook,
 	            className: 'bk-button',
 	            bookId: book.id },
 	          'Edit'
@@ -35231,7 +35228,7 @@
 	  },
 	
 	  displayForm: function () {
-	    if (this.state.displayUser === UserStore.currentUser().id && this.state.books) {
+	    if (UserStore.currentUser() && this.state.displayUser === UserStore.currentUser().id && this.state.books) {
 	      return React.createElement(
 	        'div',
 	        null,
@@ -35250,7 +35247,7 @@
 	          React.createElement(
 	            'h2',
 	            null,
-	            'Add a new book to my collection!'
+	            'Add a new book to my collection'
 	          )
 	        )
 	      );
@@ -35481,10 +35478,8 @@
 	    ); //return
 	  }
 	});
-	// <Link to={ "/users/" + book.owner_id + "/" + book.id.toString() }>
 	
 	module.exports = UserBook;
-	// </Link>
 
 /***/ },
 /* 283 */
@@ -36700,6 +36695,7 @@
 	var EditForm = __webpack_require__(290);
 	//stores
 	var BookStore = __webpack_require__(276);
+	var UserStore = __webpack_require__(252);
 	//mixin
 	var CurrentUserState = __webpack_require__(278);
 	
@@ -36730,7 +36726,7 @@
 	var ViewBookDetail = React.createClass({
 	  displayName: 'ViewBookDetail',
 	
-	  // mixins: [CurrentUserState],
+	
 	  // getInitialState: function(){
 	  //   return {book: BookStore.find(this.props.bookId)};
 	  // },
@@ -36798,20 +36794,22 @@
 	    }
 	
 	    var display = function () {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'button',
-	          { onClick: self.openEditModal, bookId: book.id },
-	          'Edit'
-	        ),
-	        React.createElement(
-	          'button',
-	          { onClick: self.deleteBook },
-	          'Delete'
-	        )
-	      );
+	      if (UserStore.currentUser().id == book.owner_id) {
+	        return React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            'button',
+	            { onClick: self.openEditModal, bookId: book.id },
+	            'Edit'
+	          ),
+	          React.createElement(
+	            'button',
+	            { onClick: self.deleteBook },
+	            'Delete'
+	          )
+	        );
+	      }
 	    };
 	
 	    //In the edit form add facility to let user upload an images

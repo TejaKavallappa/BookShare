@@ -8,6 +8,7 @@ var BookIndex = require('./book_index');
 var EditForm = require('./book_edit');
 //stores
 var BookStore = require('../stores/book_store');
+var UserStore = require('../stores/user_store');
 //mixin
 var CurrentUserState = require('../mixins/current_user_state');
 
@@ -36,7 +37,7 @@ var modalStyle = {
 };
 
 var ViewBookDetail = React.createClass({
-  // mixins: [CurrentUserState],
+
   // getInitialState: function(){
   //   return {book: BookStore.find(this.props.bookId)};
   // },
@@ -97,11 +98,12 @@ var ViewBookDetail = React.createClass({
     }
 
     var display = function() {
+        if (UserStore.currentUser().id == book.owner_id){
         return (<div>
           <button onClick={self.openEditModal} bookId={book.id}>Edit</button>
         <button onClick={self.deleteBook}>Delete</button>
         </div>
-      );
+      );}
     };
 
     //In the edit form add facility to let user upload an images

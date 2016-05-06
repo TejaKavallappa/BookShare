@@ -2,7 +2,7 @@ $teal: #36A9AD;
 $grey: #7B868A;
 
 .book-index{
-  margin-left: 40px;
+  margin-left: 80px;
   -webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
   -o-transition-duration: 1s;
@@ -11,10 +11,12 @@ $grey: #7B868A;
 
 #slideout-users {
   position: fixed;
-  top: 50px;
+  top: 120px;
   left: -110px;
   height: 500px;
-  width: 150px;
+  width: 175px;
+  overflow: hidden;
+
   -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
@@ -30,6 +32,7 @@ $grey: #7B868A;
 }
 
 #slideout_inner {
+
   position: fixed;
   top: 50px;
   left: -250px;
@@ -59,13 +62,25 @@ $grey: #7B868A;
 .user-item{
   padding: 20px;
   font-size: 20px;
+  width: 50px;
+  overflow:hidden;
 }
 
 .user-item:hover{
-  background-color: yellow;
+  color: white;
 }
 
 .new-book{
   float:right;
-  margin-right: 54px;
+  margin-right: 20px;
+  border: 1px solid $grey;
+
+  padding: 4px;
+  border-radius: 3px;
+  background-color: $grey;
+  color: #020202;
+}
+.new-book:hover{
+  background-color: $teal;
+  color: white;
 }

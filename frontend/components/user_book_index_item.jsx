@@ -131,7 +131,6 @@ var UserBook = React.createClass({
   ); //return
   }
 });
-// <Link to={ "/users/" + book.owner_id + "/" + book.id.toString() }>
+
 
 module.exports = UserBook;
-// </Link>

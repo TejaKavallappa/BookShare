@@ -96,7 +96,8 @@ var UserBooks = React.createClass({
   },
 
   displayForm: function(){
-    if(this.state.displayUser === UserStore.currentUser().id &&
+    if(UserStore.currentUser() &&
+      this.state.displayUser === UserStore.currentUser().id &&
       this.state.books){
       return <div>
         <Modal
@@ -107,7 +108,7 @@ var UserBooks = React.createClass({
         </Modal>
         <button
           onClick={this.openCreateModal} className="new-book">
-          <h2>Add a new book to my collection!</h2>
+          <h2>Add a new book to my collection</h2>
         </button>
 
       </div>;
