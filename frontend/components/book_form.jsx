@@ -39,6 +39,7 @@ var BookForm = React.createClass({
       owner_id: ownerId
     };
     ClientActions.addBook(postData);
+    this.props.onSubmit();
     this.setState({
       author: "",
       title: "",

@@ -34884,6 +34884,7 @@
 	      owner_id: ownerId
 	    };
 	    ClientActions.addBook(postData);
+	    this.props.onSubmit();
 	    this.setState({
 	      author: "",
 	      title: "",
@@ -35131,6 +35132,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var Modal = __webpack_require__(166);
 	//react router
 	var ReactRouter = __webpack_require__(186);
 	var hashHistory = ReactRouter.hashHistory;
@@ -35148,17 +35150,49 @@
 	//mixins
 	var CurrentUserMixin = __webpack_require__(278);
 	
+	var modalStyle = {
+	  overlay: {
+	    position: 'fixed',
+	    top: 0,
+	    left: 0,
+	    right: 0,
+	    bottom: 0,
+	    backgroundColor: 'rgba(255, 255, 255, 0.75)'
+	  },
+	  content: {
+	    position: 'fixed',
+	    top: '50px',
+	    left: '150px',
+	    right: '150px',
+	    bottom: '100px',
+	    border: '1px solid #ccc',
+	    borderRadius: '20px',
+	    padding: '20px',
+	    height: '400px',
+	    width: '400px',
+	    margin: '0 auto'
+	  }
+	};
+	
 	var UserBooks = React.createClass({
 	  displayName: 'UserBooks',
 	
 	  mixins: [CurrentUserMixin],
+	
+	  closeCreateModal: function () {
+	    this.setState({ createModalOpen: false });
+	  },
+	
+	  openCreateModal: function () {
+	    this.setState({ createModalOpen: true });
+	  },
 	
 	  getInitialState: function () {
 	    var user = 0;
 	    if (this.props.params) {
 	      user = this.props.params.userId;
 	    }
-	    return { books: [], displayUser: user };
+	    return { books: [], displayUser: user, createModalOpen: false };
 	  },
 	
 	  componentWillMount: function () {
@@ -35196,16 +35230,55 @@
 	    this.setState({ books: BookStore.all() });
 	  },
 	
-	  // displayForm: function(){
-	  //   // if(UserStore.currentUser()){
-	  //   //   return <BookForm/>;
-	  //   // }
-	  //   // else{
-	  //     return (<button  className="bk-button" onClick={this.addBook}>
-	  //       Add a new book to my collection!
-	  //     </button>);
-	  //   // }
-	  // },
+	  displayForm: function () {
+	    if (this.state.displayUser === UserStore.currentUser().id && this.state.books) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          Modal,
+	          {
+	            isOpen: this.state.createModalOpen,
+	            onRequestClose: this.closeCreateModal,
+	            style: modalStyle },
+	          React.createElement(BookForm, { onSubmit: this.closeCreateModal })
+	        ),
+	        React.createElement(
+	          'button',
+	          {
+	            onClick: this.openCreateModal, className: 'new-book' },
+	          React.createElement(
+	            'h2',
+	            null,
+	            'Add a new book to my collection!'
+	          )
+	        )
+	      );
+	    } //if
+	  },
+	
+	  owner: function () {
+	    if (UserStore.findUser(this.state.displayUser)) {
+	      var name = UserStore.findUser(this.state.displayUser).username;
+	      name = name.charAt(0).toUpperCase() + name.slice(1);
+	      return React.createElement(
+	        'h2',
+	        null,
+	        name + "'s books"
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	    } //else
+	  }, //owner
 	
 	  render: function () {
 	
@@ -35216,37 +35289,7 @@
 	        'Loading'
 	      );
 	    }
-	
 	    var self = this;
-	
-	    var owner = function () {
-	      if (UserStore.findUser(self.state.displayUser)) {
-	        var name = UserStore.findUser(self.state.displayUser).username;
-	        name = name.charAt(0).toUpperCase() + name.slice(1);
-	        return React.createElement(
-	          'h2',
-	          null,
-	          name + "'s books"
-	        );
-	      } else {
-	
-	        return React.createElement(
-	          'div',
-	          null,
-	          React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	          React.createElement(
-	            'span',
-	            { 'class': 'sr-only' },
-	            'Loading...'
-	          )
-	        );
-	        // return (<h2>
-	        //   Fetching user..
-	        // </h2>);
-	      } //else
-	    }; //owner
-	
-	    // {this.displayForm()}
 	    return React.createElement(
 	      'div',
 	      { className: 'home-page' },
@@ -35254,7 +35297,8 @@
 	      React.createElement(
 	        'div',
 	        { className: 'book-index' },
-	        owner(),
+	        this.displayForm(),
+	        this.owner(),
 	        this.props.children,
 	        React.createElement(
 	          'ul',
