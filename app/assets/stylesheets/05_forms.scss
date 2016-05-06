@@ -1,0 +1,54 @@
+$offwhite: #F8F8F8;
+$grey: #7B868A;
+$teal: #36A9AD;
+$greytext: #494E52;
+$errorRed: #D76D68;
+
+#login-form{
+  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  margin: auto;
+  // width: 500px;
+  clear: both;
+  height: 150px;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 28px;
+  input[type=text], input[type="password"] {
+    padding:5px;
+    border:2px solid $teal;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 1px;
+}
+
+}
+.error{
+  font-size: 18px;
+  text-align: center;
+  color: $errorRed;
+}
+.book-form{
+  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  margin: auto;
+  width: 500px;
+  clear: both;
+
+  input[type=text] {
+    padding:5px;
+    border:2px solid $teal;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 1px;
+}
+textarea {
+    padding:5px;
+    border:2px solid $teal;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 1px;
+}
+}

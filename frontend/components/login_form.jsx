@@ -44,13 +44,14 @@ var LoginForm = React.createClass({
       return;
     }
     var err = this.state.userErrors;
-    return (
+    return (<div className="error">
       <ul>
         {Object.keys(err).map(function(key, i) {
           return (<li key={i}> {err[key]} </li>);
         })
       }
       </ul>
+      </div>
     );
   },
 
@@ -61,24 +62,21 @@ var LoginForm = React.createClass({
     }
     var self = this;
     var insertButton = function(){
-      // var loginAction = self.props.routes[1].path;
       var loginAction = self.props.authAction;
       if (loginAction === "login"){
-        return (<button value={loginAction} type="submit">
+        return (<button className="btn" value={loginAction} type="submit">
           Log In
         </button>);
       } else {
-        return (<button value={loginAction} type="submit">
+        return (<button className="btn" value={loginAction} type="submit">
           Sign Up
         </button>);
       }
     };
-    // this.props.location.pathname
+
     return (
       <div id="login-form">
       <form onSubmit={this.handleSubmit} >
-
-        <section >
 
           <label>Username&nbsp;
           <input type="text" onChange={this.usernameChange}></input><br/>
@@ -88,8 +86,6 @@ var LoginForm = React.createClass({
             Password&nbsp;
           <input type="password" onChange={this.passwordChange}></input><br/>
           </label>
-
-        </section>
 
         <br/>
           {insertButton()}
@@ -106,7 +102,7 @@ var LoginForm = React.createClass({
       }
     };
 
-    return (<div id='login-form'>
+    return (<div id='login-panel'>
     {this.form()}
     {this.errors()}
     {showBooks()}

@@ -6,8 +6,17 @@ $offwhite: #F8F8F8;
 $grey: #7B868A;
 $teal: #36A9AD;
 
+.requests-made h2{
+  margin-bottom: 20px;
+  margin-left: -1px;
+}
+.requests-made h3{
+  font-size: 20px;
+}
+
 .borrow-item{
-    border: thin solid $grey;
+    display: flex;
+    align-items: flex-start;
     // padding: 10px;
     list-style: none;
     margin: 5px;
@@ -16,15 +25,10 @@ $teal: #36A9AD;
     height: 100px;
     width: auto;
     img{
+      margin-left: 10px;
       width: 50px;
     }
-    button{
-      padding: 5px;
-      border-radius: 10%;
-      border: $grey solid 1px;
-      transition: all .2s ease-in-out;
-    }
-    button:hover{
-      transform: scale(1.1);
+    ul{
+      margin-left: 10px;
     }
 }

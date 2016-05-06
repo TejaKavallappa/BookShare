@@ -1,0 +1,57 @@
+$offwhite: #F8F8F8;
+$grey: #7B868A;
+$teal: #36A9AD;
+$greytext: #494E52;
+$errorRed: #D76D68;
+
+.request-page{
+  margin-left: 20px;
+
+}
+.request-page h2{
+  margin-bottom: 20px;
+  margin-left: -1px;
+}
+.request-page h3{
+  font-size: 20px;
+}
+.approveReject{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.approveReject > .btn{
+  margin-top: 10px;
+}
+.request-info{
+  display: flex;
+  align-items: flex-start;
+}
+.err {
+  background: #c6cccc;
+  background-image: -webkit-linear-gradient(top, #c6cccc, #5f6366);
+  background-image: -moz-linear-gradient(top, #c6cccc, #5f6366);
+  background-image: -ms-linear-gradient(top, #c6cccc, #5f6366);
+  background-image: -o-linear-gradient(top, #c6cccc, #5f6366);
+  background-image: linear-gradient(to bottom, #c6cccc, #5f6366);
+  -webkit-border-radius: 14;
+  -moz-border-radius: 14;
+  border-radius: 14px;
+  text-shadow: 1px 1px 3px #666666;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 16px;
+
+  padding: 5px 14px 5px 14px;
+  text-decoration: none;
+}
+
+.err:hover {
+  background: #d96a66 ;
+  background-image: -webkit-linear-gradient(top, #d96a66 , #cc6460);
+  background-image: -moz-linear-gradient(top, #d96a66 , #cc6460);
+  background-image: -ms-linear-gradient(top, #d96a66 , #cc6460);
+  background-image: -o-linear-gradient(top, #d96a66 , #cc6460);
+  background-image: linear-gradient(to bottom, #d96a66 , #cc6460);
+  text-decoration: none;
+}

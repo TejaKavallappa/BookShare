@@ -60,14 +60,14 @@
 	var AuthPermit = __webpack_require__(251);
 	// var BookIndex = require('./components/book_index');
 	var UserBooks = __webpack_require__(281);
-	var UserBorrows = __webpack_require__(285);
-	var UserMadeBorrows = __webpack_require__(287);
-	var UserBookDetail = __webpack_require__(288);
-	var BookDetail = __webpack_require__(289);
-	var BookEdit = __webpack_require__(290);
-	var LoginForm = __webpack_require__(291);
+	var UserBorrows = __webpack_require__(287);
+	var UserMadeBorrows = __webpack_require__(289);
+	var UserBookDetail = __webpack_require__(290);
+	var BookDetail = __webpack_require__(291);
+	var BookEdit = __webpack_require__(285);
+	var LoginForm = __webpack_require__(292);
 	var CurrentUserState = __webpack_require__(278);
-	var App = __webpack_require__(292);
+	var App = __webpack_require__(293);
 	
 	var Routerr = React.createElement(
 	  Router,
@@ -34713,23 +34713,26 @@
 /* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
+	//react
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(186).hashHistory;
 	var Link = __webpack_require__(186).Link;
-	
+	//actions
 	var ClientActions = __webpack_require__(272);
-	var BookIndex = __webpack_require__(271);
+	//stores
 	var BookStore = __webpack_require__(276);
+	//components
+	var BookIndex = __webpack_require__(271);
 	
 	var Book = React.createClass({
 	  displayName: 'Book',
 	
 	
-	  editBook: function (event) {
-	    event.preventDefault();
-	    var url = "/books/" + this.props.book.id + "/edit";
-	    hashHistory.push(url);
-	  },
+	  // editBook: function(event){
+	  //   event.preventDefault();
+	  //   var url = "/books/"+this.props.book.id+"/edit";
+	  //   hashHistory.push(url);
+	  // },
 	
 	  deleteBook: function (event) {
 	    event.preventDefault();
@@ -34758,7 +34761,7 @@
 	        React.createElement(
 	          'button',
 	          {
-	            onClick: this.editBook,
+	            onClick: this.openEditModal,
 	            className: 'bk-button',
 	            bookId: book.id },
 	          'Edit'
@@ -34895,43 +34898,38 @@
 	      'div',
 	      { className: 'book-form' },
 	      React.createElement(
-	        'h3',
-	        null,
-	        'New Book'
-	      ),
-	      React.createElement(
 	        'form',
 	        { onSubmit: this.handleSubmit },
 	        React.createElement(
 	          'label',
 	          null,
-	          'Title',
-	          React.createElement('input', {
-	            type: 'text',
-	            value: this.state.title,
-	            onChange: this.titleChange })
+	          'Title'
 	        ),
+	        React.createElement('input', {
+	          type: 'text',
+	          value: this.state.title,
+	          onChange: this.titleChange }),
 	        React.createElement('br', null),
 	        React.createElement(
 	          'label',
 	          null,
-	          'Author',
-	          React.createElement('input', {
-	            type: 'text',
-	            value: this.state.author,
-	            onChange: this.authorChange })
+	          'Author'
 	        ),
+	        React.createElement('input', {
+	          type: 'text',
+	          value: this.state.author,
+	          onChange: this.authorChange }),
 	        React.createElement('br', null),
 	        React.createElement(
 	          'label',
 	          null,
-	          'Description',
-	          React.createElement('textarea', {
-	            value: this.state.description,
-	            onChange: this.descriptionChange || "" })
+	          'Description'
 	        ),
+	        React.createElement('textarea', {
+	          value: this.state.description,
+	          onChange: this.descriptionChange || "" }),
 	        React.createElement('br', null),
-	        React.createElement('input', { type: 'submit', value: 'Add New Book!' })
+	        React.createElement('input', { type: 'submit', className: 'btn', value: 'Add New Book!' })
 	      )
 	    );
 	  }
@@ -35062,6 +35060,7 @@
 	    return React.createElement(
 	      'div',
 	      { id: 'slideout-users' },
+	      React.createElement('i', { className: 'hamburger' }),
 	      React.createElement(
 	        'p',
 	        null,
@@ -35244,11 +35243,7 @@
 	          'button',
 	          {
 	            onClick: this.openCreateModal, className: 'new-book' },
-	          React.createElement(
-	            'h2',
-	            null,
-	            'Add a new book to my collection'
-	          )
+	          'New Book'
 	        )
 	      );
 	    } //if
@@ -35331,8 +35326,8 @@
 	var BorrowActions = __webpack_require__(283);
 	//components
 	var BookIndex = __webpack_require__(271);
-	var EditForm = __webpack_require__(290);
-	var ViewBookDetail = __webpack_require__(295);
+	var EditForm = __webpack_require__(285);
+	var ViewBookDetail = __webpack_require__(286);
 	//stores
 	var BookStore = __webpack_require__(276);
 	var UserStore = __webpack_require__(252);
@@ -35463,11 +35458,11 @@
 	          style: modalStyle },
 	        React.createElement(ViewBookDetail, { book: book, onEditClick: this.closeViewModal })
 	      ),
+	      React.createElement('img', { src: book.image_url, alt: book.title, onClick: this.openViewModal,
+	        bookId: book.id }),
 	      React.createElement(
-	        'li',
-	        null,
-	        React.createElement('img', { src: book.image_url, alt: book.title, onClick: this.openViewModal,
-	          bookId: book.id }),
+	        'section',
+	        { className: 'caption' },
 	        React.createElement(
 	          'h3',
 	          null,
@@ -35621,561 +35616,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	//react router
-	var ReactRouter = __webpack_require__(186);
-	var hashHistory = ReactRouter.hashHistory;
-	//actions
-	var ClientActions = __webpack_require__(272);
-	var UserActions = __webpack_require__(245);
-	var BorrowActions = __webpack_require__(283);
-	//stores
-	var BorrowStore = __webpack_require__(286);
-	var UserStore = __webpack_require__(252);
-	//mixins
-	var CurrentUserMixin = __webpack_require__(278);
-	
-	var UserBorrows = React.createClass({
-	  displayName: 'UserBorrows',
-	
-	  mixins: [CurrentUserMixin],
-	
-	  getInitialState: function () {
-	    return { borrows: [] };
-	  },
-	
-	  componentWillMount: function () {
-	    this.borrowsListener = BorrowStore.addListener(this.setBorrows);
-	    BorrowActions.fetchBorrowsByOwner();
-	  },
-	
-	  componentWillUpdate: function () {
-	    if (!UserStore.currentUser()) {
-	      hashHistory.push("/");
-	    }
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.borrowsListener.remove();
-	  },
-	
-	  setBorrows: function () {
-	    this.setState({ borrows: BorrowStore.all() });
-	  },
-	
-	  approveRequest: function (borrow) {
-	    var req = { id: borrow.id,
-	      owner_id: UserStore.currentUser(),
-	      borrower_id: borrow.borrower.borrower_id,
-	      request_status: 'borrowed',
-	      book_id: borrow.book.book_id };
-	    BorrowActions.approveRequest(req);
-	  },
-	
-	  rejectRequest: function (borrow) {
-	    //Send a notification to the borrower
-	    BorrowActions.rejectRequest(borrow.id);
-	  },
-	
-	  render: function () {
-	    if (!this.state.borrows) {
-	      return React.createElement(
-	        'div',
-	        { className: 'request-page' },
-	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	        React.createElement(
-	          'span',
-	          { 'class': 'sr-only' },
-	          'Loading...'
-	        )
-	      );
-	    }
-	    var self = this;
-	    if (BorrowStore.all().length === 0) {
-	      return React.createElement(
-	        'div',
-	        { className: 'request-page' },
-	        React.createElement(
-	          'h2',
-	          null,
-	          'No pending borrow requests!'
-	        )
-	      );
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: 'request-page' },
-	      React.createElement(
-	        'h2',
-	        null,
-	        'Your borrow requests'
-	      ),
-	      this.state.borrows.map(function (borrow) {
-	        return React.createElement(
-	          'div',
-	          { key: borrow.id, className: 'borrow-item' },
-	          React.createElement('img', { src: borrow.book.image_url, alt: borrow.book.title }),
-	          borrow.borrower.username,
-	          ' ',
-	          borrow.book.title,
-	          ' ',
-	          borrow.book.author,
-	          ' ',
-	          React.createElement(
-	            'button',
-	            { onClick: self.approveRequest.bind(self, borrow) },
-	            'Approve'
-	          ),
-	          ' ',
-	          React.createElement(
-	            'button',
-	            { onClick: self.rejectRequest.bind(self, borrow) },
-	            'Reject'
-	          )
-	        );
-	      })
-	    );
-	  }
-	});
-	
-	module.exports = UserBorrows;
-
-/***/ },
-/* 286 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(246);
-	var Store = __webpack_require__(253).Store;
-	
-	var BorrowStore = new Store(AppDispatcher);
-	var _borrows = {};
-	var _madeBorrows = {};
-	
-	BorrowStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case "BORROWS_RECEIVED":
-	      receiveAllBorrows(payload.borrows);
-	      break;
-	    case "BORROW_RECEIVED":
-	      receiveSingleBorrow(payload.borrow);
-	      break;
-	    case "BORROW_REMOVED":
-	      removeBorrow(payload.borrow);
-	      break;
-	    case "BORROW_REQUESTS_MADE_RECEIVED":
-	      receiveRequestedBorrows(payload.borrows);
-	      break;
-	  }
-	  this.__emitChange();
-	};
-	
-	var receiveAllBorrows = function (borrows) {
-	  _borrows = {};
-	  borrows.forEach(function (borrow) {
-	    _borrows[borrow.id] = borrow;
-	  });
-	};
-	
-	var receiveRequestedBorrows = function (borrows) {
-	  _madeBorrows = {};
-	  borrows.forEach(function (borrow) {
-	    _madeBorrows[borrow.id] = borrow;
-	  });
-	};
-	
-	var receiveSingleBorrow = function (borrow) {
-	  _borrows[borrow.id] = borrow;
-	};
-	
-	var removeBorrow = function (borrow) {
-	  delete _borrows[borrow.id];
-	  delete _madeBorrows[borrow.id];
-	};
-	
-	BorrowStore.all = function () {
-	  var borrows = [];
-	  for (var id in _borrows) {
-	    borrows.push(_borrows[id]);
-	  }
-	  return borrows;
-	};
-	
-	BorrowStore.madeAll = function () {
-	  var borrows = [];
-	  for (var id in _madeBorrows) {
-	    borrows.push(_madeBorrows[id]);
-	  }
-	  return borrows;
-	};
-	
-	BorrowStore.find = function (id) {
-	  return _borrows[id];
-	};
-	
-	module.exports = BorrowStore;
-
-/***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	//react router
-	var ReactRouter = __webpack_require__(186);
-	var hashHistory = ReactRouter.hashHistory;
-	//actions
-	var ClientActions = __webpack_require__(272);
-	var UserActions = __webpack_require__(245);
-	var BorrowActions = __webpack_require__(283);
-	//stores
-	var BorrowStore = __webpack_require__(286);
-	var UserStore = __webpack_require__(252);
-	//mixins
-	var CurrentUserMixin = __webpack_require__(278);
-	
-	var UserMadeBorrows = React.createClass({
-	  displayName: 'UserMadeBorrows',
-	
-	  mixins: [CurrentUserMixin],
-	
-	  getInitialState: function () {
-	    return { borrows: [] };
-	  },
-	
-	  componentWillMount: function () {
-	    this.borrowsListener = BorrowStore.addListener(this.setBorrows);
-	    BorrowActions.fetchBorrowsByBorrower();
-	  },
-	
-	  componentWillUpdate: function () {
-	    if (!UserStore.currentUser()) {
-	      hashHistory.push("/");
-	    }
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.borrowsListener.remove();
-	  },
-	
-	  setBorrows: function () {
-	    this.setState({ borrows: BorrowStore.madeAll() });
-	  },
-	
-	  // approveRequest: function(borrow){
-	  //   var req = {id: borrow.id,
-	  //     owner_id: UserStore.currentUser(),
-	  //     borrower_id: borrow.borrower.borrower_id,
-	  //     request_status: 'borrowed',
-	  //     book_id: borrow.book.book_id};
-	  //   BorrowActions.approveRequest(req);
-	  // },
-	  //
-	  cancelRequest: function (borrow) {
-	    //Send a notification to the borrower
-	    BorrowActions.rejectRequest(borrow.id);
-	  },
-	
-	  // if(BorrowStore.all().length === 0){
-	  //   return (<div>No pending borrow requests!</div>);
-	  // }
-	  render: function () {
-	    if (!this.state.borrows) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	        React.createElement(
-	          'span',
-	          { 'class': 'sr-only' },
-	          'Loading...'
-	        )
-	      );
-	    }
-	    var self = this;
-	    return React.createElement(
-	      'div',
-	      { className: 'requests-made' },
-	      React.createElement(
-	        'h2',
-	        null,
-	        'Status of your requests'
-	      ),
-	      this.state.borrows.map(function (borrow) {
-	        return React.createElement(
-	          'div',
-	          { key: borrow.id, className: 'borrow-item' },
-	          React.createElement(
-	            'button',
-	            { onClick: self.cancelRequest.bind(self, borrow) },
-	            'Cancel'
-	          ),
-	          React.createElement('img', { src: borrow.book.image_url, alt: borrow.book.title }),
-	          React.createElement(
-	            'ul',
-	            null,
-	            React.createElement(
-	              'li',
-	              null,
-	              borrow.owner.username
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              borrow.book.title
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              borrow.book.author
-	            )
-	          )
-	        );
-	      })
-	    );
-	  }
-	});
-	
-	module.exports = UserMadeBorrows;
-
-/***/ },
-/* 288 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// DEPRECATED
-	var React = __webpack_require__(1);
-	var hashHistory = __webpack_require__(186).hashHistory;
-	//actions
-	var ClientActions = __webpack_require__(272);
-	//component
-	var BookIndex = __webpack_require__(271);
-	//stores
-	var BookStore = __webpack_require__(276);
-	//mixin
-	var CurrentUserState = __webpack_require__(278);
-	
-	var BookDetail = React.createClass({
-	  displayName: 'BookDetail',
-	
-	  // mixins: [CurrentUserState],
-	  getInitialState: function () {
-	    return { book: BookStore.find(this.props.bookId) };
-	  },
-	
-	  componentDidMount: function () {
-	    this.bookListener = BookStore.addListener(this._onChange);
-	    ClientActions.getSingleBook(parseInt(this.props.bookId));
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.bookListener.remove();
-	  },
-	
-	  componentWillReceiveProps: function (newProps) {
-	    ClientActions.getSingleBook(parseInt(newProps.bookId));
-	  },
-	
-	  _onChange: function () {
-	    this.setState(this.getStateFromStore);
-	  },
-	
-	  getStateFromStore: function () {
-	    this.setState({ book: BookStore.find(this.props.bookId) });
-	  },
-	
-	  editBook: function (event) {
-	    event.preventDefault();
-	    var url = "/api/books/" + this.props.bookId;
-	    hashHistory.push(url);
-	  },
-	
-	  deleteBook: function (event) {
-	    event.preventDefault();
-	    ClientActions.removeBook(this.props.bookId);
-	  },
-	  render: function () {
-	    var book = this.state.book;
-	    var self = this;
-	
-	    if (!book) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	        React.createElement(
-	          'span',
-	          { 'class': 'sr-only' },
-	          'Loading...'
-	        )
-	      );
-	      // return <div>Loading...</div>;
-	    }
-	
-	    var display = function () {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'button',
-	          { onClick: self.editBook },
-	          'Edit'
-	        ),
-	        React.createElement(
-	          'button',
-	          { onClick: self.deleteBook },
-	          'Delete'
-	        )
-	      );
-	    };
-	
-	    //In the edit form add facility to let user upload an images
-	    return React.createElement(
-	      'div',
-	      { className: 'book' },
-	      React.createElement(
-	        'h3',
-	        null,
-	        ' ',
-	        book.title,
-	        ' '
-	      ),
-	      React.createElement(
-	        'h4',
-	        null,
-	        book.author
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        book.description ? book.description : ""
-	      )
-	    );
-	  } //render
-	});
-	// {display()}
-	
-	module.exports = BookDetail;
-
-/***/ },
-/* 289 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var hashHistory = __webpack_require__(186).hashHistory;
-	//actions
-	var ClientActions = __webpack_require__(272);
-	//component
-	var BookIndex = __webpack_require__(271);
-	//stores
-	var BookStore = __webpack_require__(276);
-	//mixin
-	var CurrentUserState = __webpack_require__(278);
-	
-	var BookDetail = React.createClass({
-	  displayName: 'BookDetail',
-	
-	  // mixins: [CurrentUserState],
-	  getInitialState: function () {
-	    return { book: BookStore.find(this.props.params.bookId) };
-	  },
-	
-	  componentDidMount: function () {
-	    this.bookListener = BookStore.addListener(this._onChange);
-	    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.bookListener.remove();
-	  },
-	
-	  componentWillReceiveProps: function (newProps) {
-	    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
-	  },
-	
-	  _onChange: function () {
-	    this.setState(this.getStateFromStore);
-	  },
-	
-	  getStateFromStore: function () {
-	    this.setState({ book: BookStore.find(this.props.params.bookId) });
-	  },
-	
-	  editBook: function (event) {
-	    event.preventDefault();
-	    var url = "/api/books/" + this.props.params.bookId;
-	    hashHistory.push(url);
-	  },
-	
-	  deleteBook: function (event) {
-	    event.preventDefault();
-	    ClientActions.removeBook(this.props.params.bookId);
-	  },
-	  render: function () {
-	    var book = this.state.book;
-	    var self = this;
-	
-	    if (!book) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	        '); // ',
-	        React.createElement(
-	          'span',
-	          { 'class': 'sr-only' },
-	          'Loading...'
-	        )
-	      );
-	      // return <div>Loading...</div>;
-	    }
-	
-	    var display = function () {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'button',
-	          { onClick: self.editBook },
-	          'Edit'
-	        ),
-	        React.createElement(
-	          'button',
-	          { onClick: self.deleteBook },
-	          'Delete'
-	        )
-	      );
-	    };
-	
-	    //In the edit form add facility to let user upload an images
-	    return React.createElement(
-	      'div',
-	      { className: 'book' },
-	      React.createElement(
-	        'h3',
-	        null,
-	        ' ',
-	        book.title,
-	        ' '
-	      ),
-	      React.createElement(
-	        'h4',
-	        null,
-	        book.author
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        book.description ? book.description : ""
-	      ),
-	      display()
-	    );
-	  } //render
-	});
-	
-	module.exports = BookDetail;
-
-/***/ },
-/* 290 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(186).hashHistory;
 	//actions
 	var ClientActions = __webpack_require__(272);
@@ -36287,7 +35727,7 @@
 	            onChange: this.descriptionChange })
 	        ),
 	        React.createElement('br', null),
-	        React.createElement('input', { type: 'submit', value: 'Update Book!' })
+	        React.createElement('input', { className: 'btn', type: 'submit', value: 'Update Book!' })
 	      )
 	    );
 	  }
@@ -36296,7 +35736,754 @@
 	module.exports = BookForm;
 
 /***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(186).hashHistory;
+	var Modal = __webpack_require__(166);
+	//actions
+	var ClientActions = __webpack_require__(272);
+	//component
+	var BookIndex = __webpack_require__(271);
+	var EditForm = __webpack_require__(285);
+	//stores
+	var BookStore = __webpack_require__(276);
+	var UserStore = __webpack_require__(252);
+	//mixin
+	var CurrentUserState = __webpack_require__(278);
+	
+	var modalStyle = {
+	  overlay: {
+	    position: 'fixed',
+	    top: 0,
+	    left: 0,
+	    right: 0,
+	    bottom: 0,
+	    backgroundColor: 'rgba(255, 255, 255, 0.75)'
+	  },
+	  content: {
+	    position: 'fixed',
+	    top: '50px',
+	    left: '150px',
+	    right: '150px',
+	    bottom: '100px',
+	    border: '1px solid #ccc',
+	    borderRadius: '20px',
+	    padding: '20px',
+	    height: '400px',
+	    width: '400px',
+	    margin: '0 auto'
+	  }
+	};
+	
+	var ViewBookDetail = React.createClass({
+	  displayName: 'ViewBookDetail',
+	
+	
+	  // getInitialState: function(){
+	  //   return {book: BookStore.find(this.props.bookId)};
+	  // },
+	  //
+	  // componentDidMount: function(){
+	  //   this.bookListener = BookStore.addListener(this._onChange);
+	  //   ClientActions.getSingleBook(parseInt(this.props.bookId));
+	  // },
+	  //
+	  // componentWillUnmount: function(){
+	  //   this.bookListener.remove();
+	  // },
+	  //
+	  // componentWillReceiveProps: function(newProps){
+	  //   ClientActions.getSingleBook(parseInt(newProps.bookId));
+	  // },
+	  //
+	  // _onChange: function(){
+	  //   this.setState(this.getStateFromStore);
+	  // },
+	  //
+	  // getStateFromStore: function(){
+	  //   this.setState({book: BookStore.find(this.props.bookId)});
+	  // },
+	  //
+	  // editBook: function(event){
+	  //   event.preventDefault();
+	  //   var url = "/api/books/"+this.props.bookId;
+	  //   hashHistory.push(url);
+	  // },
+	
+	  getInitialState: function () {
+	    return { editModalOpen: false };
+	  },
+	
+	  closeEditModal: function () {
+	    this.props.onEditClick();
+	    this.setState({ editModalOpen: false });
+	  },
+	
+	  openEditModal: function () {
+	    this.setState({ editModalOpen: true });
+	  },
+	
+	  deleteBook: function (event) {
+	    event.preventDefault();
+	    ClientActions.removeBook(this.props.book.id);
+	  },
+	  render: function () {
+	    var book = this.props.book;
+	    var self = this;
+	
+	    if (!book) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	      // return <div>Loading...</div>;
+	    }
+	
+	    var display = function () {
+	      if (UserStore.currentUser().id == book.owner_id) {
+	        return React.createElement(
+	          'div',
+	          null,
+	          React.createElement(
+	            'button',
+	            { onClick: self.openEditModal, bookId: book.id },
+	            'Edit'
+	          ),
+	          React.createElement(
+	            'button',
+	            { onClick: self.deleteBook },
+	            'Delete'
+	          )
+	        );
+	      }
+	    };
+	
+	    //In the edit form add facility to let user upload an images
+	    return React.createElement(
+	      'div',
+	      { className: 'book' },
+	      React.createElement(
+	        Modal,
+	        {
+	          isOpen: this.state.editModalOpen,
+	          onRequestClose: this.closeEditModal,
+	          style: modalStyle },
+	        React.createElement(EditForm, { bookId: book.id, onSubmit: this.closeEditModal })
+	      ),
+	      React.createElement(
+	        'h3',
+	        null,
+	        ' ',
+	        book.title,
+	        ' '
+	      ),
+	      React.createElement(
+	        'h4',
+	        null,
+	        book.author
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        book.description ? book.description : ""
+	      ),
+	      display()
+	    );
+	  } //render
+	});
+	
+	module.exports = ViewBookDetail;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	//react router
+	var ReactRouter = __webpack_require__(186);
+	var hashHistory = ReactRouter.hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(272);
+	var UserActions = __webpack_require__(245);
+	var BorrowActions = __webpack_require__(283);
+	//stores
+	var BorrowStore = __webpack_require__(288);
+	var UserStore = __webpack_require__(252);
+	//mixins
+	var CurrentUserMixin = __webpack_require__(278);
+	
+	var UserBorrows = React.createClass({
+	  displayName: 'UserBorrows',
+	
+	  mixins: [CurrentUserMixin],
+	
+	  getInitialState: function () {
+	    return { borrows: [] };
+	  },
+	
+	  componentWillMount: function () {
+	    this.borrowsListener = BorrowStore.addListener(this.setBorrows);
+	    BorrowActions.fetchBorrowsByOwner();
+	  },
+	
+	  componentWillUpdate: function () {
+	    if (!UserStore.currentUser()) {
+	      hashHistory.push("/");
+	    }
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.borrowsListener.remove();
+	  },
+	
+	  setBorrows: function () {
+	    this.setState({ borrows: BorrowStore.all() });
+	  },
+	
+	  approveRequest: function (borrow) {
+	    var req = { id: borrow.id,
+	      owner_id: UserStore.currentUser(),
+	      borrower_id: borrow.borrower.borrower_id,
+	      request_status: 'borrowed',
+	      book_id: borrow.book.book_id };
+	    BorrowActions.approveRequest(req);
+	  },
+	
+	  rejectRequest: function (borrow) {
+	    //Send a notification to the borrower
+	    BorrowActions.rejectRequest(borrow.id);
+	  },
+	
+	  render: function () {
+	    if (!this.state.borrows) {
+	      return React.createElement(
+	        'div',
+	        { className: 'request-page' },
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	    }
+	    var self = this;
+	    if (BorrowStore.all().length === 0) {
+	      return React.createElement(
+	        'div',
+	        { className: 'request-page' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'No pending borrow requests!'
+	        )
+	      );
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'request-page' },
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Your borrow requests'
+	      ),
+	      this.state.borrows.map(function (borrow) {
+	        return React.createElement(
+	          'div',
+	          { key: borrow.id, className: 'borrow-item' },
+	          React.createElement(
+	            'div',
+	            { className: 'approveReject' },
+	            React.createElement(
+	              'button',
+	              { className: 'btn',
+	                onClick: self.approveRequest.bind(self, borrow) },
+	              'Approve'
+	            ),
+	            React.createElement(
+	              'button',
+	              { className: 'btn err',
+	                onClick: self.rejectRequest.bind(self, borrow) },
+	              'Reject'
+	            )
+	          ),
+	          React.createElement('img', { src: borrow.book.image_url, alt: borrow.book.title }),
+	          React.createElement(
+	            'ul',
+	            null,
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'h3',
+	                null,
+	                borrow.borrower.username
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              borrow.book.title
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              borrow.book.author
+	            )
+	          )
+	        );
+	      })
+	    );
+	  }
+	});
+	
+	module.exports = UserBorrows;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(246);
+	var Store = __webpack_require__(253).Store;
+	
+	var BorrowStore = new Store(AppDispatcher);
+	var _borrows = {};
+	var _madeBorrows = {};
+	
+	BorrowStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case "BORROWS_RECEIVED":
+	      receiveAllBorrows(payload.borrows);
+	      break;
+	    case "BORROW_RECEIVED":
+	      receiveSingleBorrow(payload.borrow);
+	      break;
+	    case "BORROW_REMOVED":
+	      removeBorrow(payload.borrow);
+	      break;
+	    case "BORROW_REQUESTS_MADE_RECEIVED":
+	      receiveRequestedBorrows(payload.borrows);
+	      break;
+	  }
+	  this.__emitChange();
+	};
+	
+	var receiveAllBorrows = function (borrows) {
+	  _borrows = {};
+	  borrows.forEach(function (borrow) {
+	    _borrows[borrow.id] = borrow;
+	  });
+	};
+	
+	var receiveRequestedBorrows = function (borrows) {
+	  _madeBorrows = {};
+	  borrows.forEach(function (borrow) {
+	    _madeBorrows[borrow.id] = borrow;
+	  });
+	};
+	
+	var receiveSingleBorrow = function (borrow) {
+	  _borrows[borrow.id] = borrow;
+	};
+	
+	var removeBorrow = function (borrow) {
+	  delete _borrows[borrow.id];
+	  delete _madeBorrows[borrow.id];
+	};
+	
+	BorrowStore.all = function () {
+	  var borrows = [];
+	  for (var id in _borrows) {
+	    borrows.push(_borrows[id]);
+	  }
+	  return borrows;
+	};
+	
+	BorrowStore.madeAll = function () {
+	  var borrows = [];
+	  for (var id in _madeBorrows) {
+	    borrows.push(_madeBorrows[id]);
+	  }
+	  return borrows;
+	};
+	
+	BorrowStore.find = function (id) {
+	  return _borrows[id];
+	};
+	
+	module.exports = BorrowStore;
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	//react router
+	var ReactRouter = __webpack_require__(186);
+	var hashHistory = ReactRouter.hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(272);
+	var UserActions = __webpack_require__(245);
+	var BorrowActions = __webpack_require__(283);
+	//stores
+	var BorrowStore = __webpack_require__(288);
+	var UserStore = __webpack_require__(252);
+	//mixins
+	var CurrentUserMixin = __webpack_require__(278);
+	
+	var UserMadeBorrows = React.createClass({
+	  displayName: 'UserMadeBorrows',
+	
+	  mixins: [CurrentUserMixin],
+	
+	  getInitialState: function () {
+	    return { borrows: [] };
+	  },
+	
+	  componentWillMount: function () {
+	    this.borrowsListener = BorrowStore.addListener(this.setBorrows);
+	    BorrowActions.fetchBorrowsByBorrower();
+	  },
+	
+	  componentWillUpdate: function () {
+	    if (!UserStore.currentUser()) {
+	      hashHistory.push("/");
+	    }
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.borrowsListener.remove();
+	  },
+	
+	  setBorrows: function () {
+	    this.setState({ borrows: BorrowStore.madeAll() });
+	  },
+	
+	  // approveRequest: function(borrow){
+	  //   var req = {id: borrow.id,
+	  //     owner_id: UserStore.currentUser(),
+	  //     borrower_id: borrow.borrower.borrower_id,
+	  //     request_status: 'borrowed',
+	  //     book_id: borrow.book.book_id};
+	  //   BorrowActions.approveRequest(req);
+	  // },
+	  //
+	  cancelRequest: function (borrow) {
+	    //Send a notification to the borrower
+	    BorrowActions.rejectRequest(borrow.id);
+	  },
+	
+	  // if(BorrowStore.all().length === 0){
+	  //   return (<div>No pending borrow requests!</div>);
+	  // }
+	  render: function () {
+	    if (!this.state.borrows) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	    }
+	    var self = this;
+	    return React.createElement(
+	      'div',
+	      { className: 'requests-made' },
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Status of your requests'
+	      ),
+	      this.state.borrows.map(function (borrow) {
+	        return React.createElement(
+	          'div',
+	          { key: borrow.id, className: 'borrow-item' },
+	          React.createElement(
+	            'button',
+	            { className: 'btn', onClick: self.cancelRequest.bind(self, borrow) },
+	            'Cancel'
+	          ),
+	          React.createElement('img', { src: borrow.book.image_url, alt: borrow.book.title }),
+	          React.createElement(
+	            'ul',
+	            null,
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'h3',
+	                null,
+	                borrow.owner.username
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              borrow.book.title
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              borrow.book.author
+	            )
+	          )
+	        );
+	      })
+	    );
+	  }
+	});
+	
+	module.exports = UserMadeBorrows;
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// DEPRECATED
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(186).hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(272);
+	//component
+	var BookIndex = __webpack_require__(271);
+	//stores
+	var BookStore = __webpack_require__(276);
+	//mixin
+	var CurrentUserState = __webpack_require__(278);
+	
+	var BookDetail = React.createClass({
+	  displayName: 'BookDetail',
+	
+	  // mixins: [CurrentUserState],
+	  getInitialState: function () {
+	    return { book: BookStore.find(this.props.bookId) };
+	  },
+	
+	  componentDidMount: function () {
+	    this.bookListener = BookStore.addListener(this._onChange);
+	    ClientActions.getSingleBook(parseInt(this.props.bookId));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.bookListener.remove();
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    ClientActions.getSingleBook(parseInt(newProps.bookId));
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore);
+	  },
+	
+	  getStateFromStore: function () {
+	    this.setState({ book: BookStore.find(this.props.bookId) });
+	  },
+	
+	  editBook: function (event) {
+	    event.preventDefault();
+	    var url = "/api/books/" + this.props.bookId;
+	    hashHistory.push(url);
+	  },
+	
+	  deleteBook: function (event) {
+	    event.preventDefault();
+	    ClientActions.removeBook(this.props.bookId);
+	  },
+	  render: function () {
+	    var book = this.state.book;
+	    var self = this;
+	
+	    if (!book) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	      // return <div>Loading...</div>;
+	    }
+	
+	    var display = function () {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'button',
+	          { className: 'btn', onClick: self.editBook },
+	          'Edit'
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'btn', onClick: self.deleteBook },
+	          'Delete'
+	        )
+	      );
+	    };
+	
+	    //In the edit form add facility to let user upload an images
+	    return React.createElement(
+	      'div',
+	      { className: 'book' },
+	      React.createElement(
+	        'h3',
+	        null,
+	        ' ',
+	        book.title,
+	        ' '
+	      ),
+	      React.createElement(
+	        'h4',
+	        null,
+	        book.author
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        book.description ? book.description : ""
+	      )
+	    );
+	  } //render
+	});
+	// {display()}
+	
+	module.exports = BookDetail;
+
+/***/ },
 /* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(186).hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(272);
+	//component
+	var BookIndex = __webpack_require__(271);
+	//stores
+	var BookStore = __webpack_require__(276);
+	//mixin
+	var CurrentUserState = __webpack_require__(278);
+	
+	var BookDetail = React.createClass({
+	  displayName: 'BookDetail',
+	
+	  // mixins: [CurrentUserState],
+	  getInitialState: function () {
+	    return { book: BookStore.find(this.props.params.bookId) };
+	  },
+	
+	  componentDidMount: function () {
+	    this.bookListener = BookStore.addListener(this._onChange);
+	    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.bookListener.remove();
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {
+	    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore);
+	  },
+	
+	  getStateFromStore: function () {
+	    this.setState({ book: BookStore.find(this.props.params.bookId) });
+	  },
+	
+	  editBook: function (event) {
+	    event.preventDefault();
+	    var url = "/api/books/" + this.props.params.bookId;
+	    hashHistory.push(url);
+	  },
+	
+	  deleteBook: function (event) {
+	    event.preventDefault();
+	    ClientActions.removeBook(this.props.params.bookId);
+	  },
+	  render: function () {
+	    var book = this.state.book;
+	    var self = this;
+	
+	    if (!book) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        ') ',
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	    }
+	
+	    var display = function () {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'button',
+	          { className: 'btn', onClick: self.editBook },
+	          'Edit'
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'btn', onClick: self.deleteBook },
+	          'Delete'
+	        )
+	      );
+	    };
+	
+	    //In the edit form add facility to let user upload an images
+	    return React.createElement(
+	      'div',
+	      { className: 'book' },
+	      React.createElement(
+	        'h3',
+	        null,
+	        ' ',
+	        book.title,
+	        ' '
+	      ),
+	      React.createElement(
+	        'h4',
+	        null,
+	        book.author
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        book.description ? book.description : ""
+	      ),
+	      display()
+	    );
+	  } //render
+	});
+	
+	module.exports = BookDetail;
+
+/***/ },
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//react
@@ -36348,17 +36535,21 @@
 	    }
 	    var err = this.state.userErrors;
 	    return React.createElement(
-	      'ul',
-	      null,
-	      Object.keys(err).map(function (key, i) {
-	        return React.createElement(
-	          'li',
-	          { key: i },
-	          ' ',
-	          err[key],
-	          ' '
-	        );
-	      })
+	      'div',
+	      { className: 'error' },
+	      React.createElement(
+	        'ul',
+	        null,
+	        Object.keys(err).map(function (key, i) {
+	          return React.createElement(
+	            'li',
+	            { key: i },
+	            ' ',
+	            err[key],
+	            ' '
+	          );
+	        })
+	      )
 	    );
 	  },
 	
@@ -36369,23 +36560,22 @@
 	    }
 	    var self = this;
 	    var insertButton = function () {
-	      // var loginAction = self.props.routes[1].path;
 	      var loginAction = self.props.authAction;
 	      if (loginAction === "login") {
 	        return React.createElement(
 	          'button',
-	          { value: loginAction, type: 'submit' },
+	          { className: 'btn', value: loginAction, type: 'submit' },
 	          'Log In'
 	        );
 	      } else {
 	        return React.createElement(
 	          'button',
-	          { value: loginAction, type: 'submit' },
+	          { className: 'btn', value: loginAction, type: 'submit' },
 	          'Sign Up'
 	        );
 	      }
 	    };
-	    // this.props.location.pathname
+	
 	    return React.createElement(
 	      'div',
 	      { id: 'login-form' },
@@ -36393,23 +36583,19 @@
 	        'form',
 	        { onSubmit: this.handleSubmit },
 	        React.createElement(
-	          'section',
+	          'label',
 	          null,
-	          React.createElement(
-	            'label',
-	            null,
-	            'Username ',
-	            React.createElement('input', { type: 'text', onChange: this.usernameChange }),
-	            React.createElement('br', null)
-	          ),
-	          React.createElement('br', null),
-	          React.createElement(
-	            'label',
-	            null,
-	            'Password ',
-	            React.createElement('input', { type: 'password', onChange: this.passwordChange }),
-	            React.createElement('br', null)
-	          )
+	          'Username ',
+	          React.createElement('input', { type: 'text', onChange: this.usernameChange }),
+	          React.createElement('br', null)
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Password ',
+	          React.createElement('input', { type: 'password', onChange: this.passwordChange }),
+	          React.createElement('br', null)
 	        ),
 	        React.createElement('br', null),
 	        insertButton()
@@ -36427,7 +36613,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      { id: 'login-form' },
+	      { id: 'login-panel' },
 	      this.form(),
 	      this.errors(),
 	      showBooks()
@@ -36438,7 +36624,7 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 292 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React
@@ -36447,10 +36633,10 @@
 	var hashHistory = ReactRouter.hashHistory;
 	
 	//Components
-	var LoginForm = __webpack_require__(291);
+	var LoginForm = __webpack_require__(292);
 	var CurrentUserState = __webpack_require__(278);
-	var NavBar = __webpack_require__(293);
-	var Footer = __webpack_require__(294);
+	var NavBar = __webpack_require__(294);
+	var Footer = __webpack_require__(295);
 	//actions
 	var UserActions = __webpack_require__(245);
 	
@@ -36472,7 +36658,7 @@
 	module.exports = App;
 
 /***/ },
-/* 293 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React
@@ -36482,7 +36668,7 @@
 	var Link = __webpack_require__(186).Link;
 	var Modal = __webpack_require__(166);
 	//Components
-	var LoginForm = __webpack_require__(291);
+	var LoginForm = __webpack_require__(292);
 	var CurrentUserState = __webpack_require__(278);
 	//actions
 	var UserActions = __webpack_require__(245);
@@ -36498,14 +36684,14 @@
 	  },
 	  content: {
 	    position: 'fixed',
-	    top: '50px',
+	    top: '150px',
 	    left: '150px',
 	    right: '150px',
 	    bottom: '100px',
 	    border: '1px solid #ccc',
 	    borderRadius: '20px',
 	    padding: '20px',
-	    height: '400px',
+	    height: '300px',
 	    width: '400px',
 	    margin: '0 auto'
 	  }
@@ -36662,7 +36848,7 @@
 	module.exports = NavBar;
 
 /***/ },
-/* 294 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React
@@ -36680,173 +36866,6 @@
 	  }
 	});
 	module.exports = Footer;
-
-/***/ },
-/* 295 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var hashHistory = __webpack_require__(186).hashHistory;
-	var Modal = __webpack_require__(166);
-	//actions
-	var ClientActions = __webpack_require__(272);
-	//component
-	var BookIndex = __webpack_require__(271);
-	var EditForm = __webpack_require__(290);
-	//stores
-	var BookStore = __webpack_require__(276);
-	var UserStore = __webpack_require__(252);
-	//mixin
-	var CurrentUserState = __webpack_require__(278);
-	
-	var modalStyle = {
-	  overlay: {
-	    position: 'fixed',
-	    top: 0,
-	    left: 0,
-	    right: 0,
-	    bottom: 0,
-	    backgroundColor: 'rgba(255, 255, 255, 0.75)'
-	  },
-	  content: {
-	    position: 'fixed',
-	    top: '50px',
-	    left: '150px',
-	    right: '150px',
-	    bottom: '100px',
-	    border: '1px solid #ccc',
-	    borderRadius: '20px',
-	    padding: '20px',
-	    height: '400px',
-	    width: '400px',
-	    margin: '0 auto'
-	  }
-	};
-	
-	var ViewBookDetail = React.createClass({
-	  displayName: 'ViewBookDetail',
-	
-	
-	  // getInitialState: function(){
-	  //   return {book: BookStore.find(this.props.bookId)};
-	  // },
-	  //
-	  // componentDidMount: function(){
-	  //   this.bookListener = BookStore.addListener(this._onChange);
-	  //   ClientActions.getSingleBook(parseInt(this.props.bookId));
-	  // },
-	  //
-	  // componentWillUnmount: function(){
-	  //   this.bookListener.remove();
-	  // },
-	  //
-	  // componentWillReceiveProps: function(newProps){
-	  //   ClientActions.getSingleBook(parseInt(newProps.bookId));
-	  // },
-	  //
-	  // _onChange: function(){
-	  //   this.setState(this.getStateFromStore);
-	  // },
-	  //
-	  // getStateFromStore: function(){
-	  //   this.setState({book: BookStore.find(this.props.bookId)});
-	  // },
-	  //
-	  // editBook: function(event){
-	  //   event.preventDefault();
-	  //   var url = "/api/books/"+this.props.bookId;
-	  //   hashHistory.push(url);
-	  // },
-	
-	  getInitialState: function () {
-	    return { editModalOpen: false };
-	  },
-	
-	  closeEditModal: function () {
-	    this.props.onEditClick();
-	    this.setState({ editModalOpen: false });
-	  },
-	
-	  openEditModal: function () {
-	    this.setState({ editModalOpen: true });
-	  },
-	
-	  deleteBook: function (event) {
-	    event.preventDefault();
-	    ClientActions.removeBook(this.props.book.id);
-	  },
-	  render: function () {
-	    var book = this.props.book;
-	    var self = this;
-	
-	    if (!book) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	        React.createElement(
-	          'span',
-	          { 'class': 'sr-only' },
-	          'Loading...'
-	        )
-	      );
-	      // return <div>Loading...</div>;
-	    }
-	
-	    var display = function () {
-	      if (UserStore.currentUser().id == book.owner_id) {
-	        return React.createElement(
-	          'div',
-	          null,
-	          React.createElement(
-	            'button',
-	            { onClick: self.openEditModal, bookId: book.id },
-	            'Edit'
-	          ),
-	          React.createElement(
-	            'button',
-	            { onClick: self.deleteBook },
-	            'Delete'
-	          )
-	        );
-	      }
-	    };
-	
-	    //In the edit form add facility to let user upload an images
-	    return React.createElement(
-	      'div',
-	      { className: 'book' },
-	      React.createElement(
-	        Modal,
-	        {
-	          isOpen: this.state.editModalOpen,
-	          onRequestClose: this.closeEditModal,
-	          style: modalStyle },
-	        React.createElement(EditForm, { bookId: book.id, onSubmit: this.closeEditModal })
-	      ),
-	      React.createElement(
-	        'h3',
-	        null,
-	        ' ',
-	        book.title,
-	        ' '
-	      ),
-	      React.createElement(
-	        'h4',
-	        null,
-	        book.author
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        book.description ? book.description : ""
-	      ),
-	      display()
-	    );
-	  } //render
-	});
-	
-	module.exports = ViewBookDetail;
 
 /***/ }
 /******/ ]);

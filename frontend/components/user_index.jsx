@@ -55,12 +55,13 @@ var UsersIndex = React.createClass({
     if (!this.state.users){
       return (<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
     <span class="sr-only">Loading...</span></div>);
-      
+
     }
 
     var self = this;
 
       return (<div id="slideout-users">
+      <i className="hamburger"></i>
       <p>Friends</p>
       <div id="slideout-inner">
         <ul className="users-index">

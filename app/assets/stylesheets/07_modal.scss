@@ -1,0 +1,28 @@
+$offwhite: #F8F8F8;
+$grey: #7B868A;
+$teal: #36A9AD;
+
+.modal-overlay {
+  display: flex;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $offwhite;
+  height: 300px;
+  border: 1px solid $teal;
+}
+// .happening-modal{
+//   width: 1000px;
+//   background-color: white;
+// }

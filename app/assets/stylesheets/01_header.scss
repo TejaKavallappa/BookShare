@@ -12,7 +12,7 @@ $teal: #36A9AD;
 
 .header-nav{
   padding: 5px 0 0 0;
-  
+
 }
 .header ul {
   display: flex;
@@ -58,7 +58,7 @@ $teal: #36A9AD;
   font-weight: bold;
 }
 .bk-button:hover{
-  background-color: white;
+  text-decoration: underline;
 }
 
 .books-index{
@@ -88,12 +88,12 @@ img{
   flex-direction: column;
   justify-content: flex-start;
 }
-// footer
-.footer {
-    margin: 0 auto;
-    height: 50px;
-    width: 100%;
-    overflow: hidden;
-    background-color: white;
-    align-self: flex-end;
-}
+// // footer
+// .footer {
+//     margin: 0 auto;
+//     height: 50px;
+//     width: 100%;
+//     overflow: hidden;
+//     background-color: white;
+//     align-self: flex-end;
+// }

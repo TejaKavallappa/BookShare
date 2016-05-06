@@ -60,8 +60,8 @@ var BookDetail = React.createClass({
 
     var display = function() {
         return (<div>
-          <button onClick={self.editBook}>Edit</button>
-        <button onClick={self.deleteBook}>Delete</button>
+          <button className="btn" onClick={self.editBook}>Edit</button>
+          <button className="btn" onClick={self.deleteBook}>Delete</button>
         </div>
       );
     };

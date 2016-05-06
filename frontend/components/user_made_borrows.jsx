@@ -68,11 +68,11 @@ var UserMadeBorrows = React.createClass({
 
       {this.state.borrows.map(function(borrow){
         return (<div key={borrow.id} className="borrow-item">
-        <button onClick={self.cancelRequest.bind(self,borrow)}>
+        <button className="btn" onClick={self.cancelRequest.bind(self,borrow)}>
           Cancel</button>
         <img src={borrow.book.image_url} alt={borrow.book.title} />
           <ul>
-          <li>{borrow.owner.username}</li>
+          <li><h3>{borrow.owner.username}</h3></li>
           <li>{borrow.book.title}</li>
           <li>{borrow.book.author}</li>
           </ul>

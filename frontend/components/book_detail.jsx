@@ -51,15 +51,15 @@ var BookDetail = React.createClass({
     var self = this;
 
     if (!book){
-      return (<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>);
-    // <span class="sr-only">Loading...</span></div>);
-      // return <div>Loading...</div>;
+      return (<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom">
+      </i>) <span class="sr-only">Loading...</span></div>);
+      
     }
 
     var display = function() {
         return (<div>
-          <button onClick={self.editBook}>Edit</button>
-        <button onClick={self.deleteBook}>Delete</button>
+          <button className="btn" onClick={self.editBook}>Edit</button>
+        <button className="btn" onClick={self.deleteBook}>Delete</button>
         </div>
       );
     };

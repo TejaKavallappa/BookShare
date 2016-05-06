@@ -108,7 +108,7 @@ var UserBooks = React.createClass({
         </Modal>
         <button
           onClick={this.openCreateModal} className="new-book">
-          <h2>Add a new book to my collection</h2>
+          New Book
         </button>
 
       </div>;
@@ -139,8 +139,8 @@ var UserBooks = React.createClass({
       <UsersIndex/>
       <div className="book-index">
         {this.displayForm()}
-      {this.owner()}
-      {this.props.children}
+        {this.owner()}
+        {this.props.children}
         <ul className="books-index">
           {
             self.state.books.map(function(book){

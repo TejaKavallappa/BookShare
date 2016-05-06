@@ -92,7 +92,7 @@ var BookForm = React.createClass({
           onChange={this.descriptionChange}/>
         </label>
         <br></br>
-        <input type="submit" value="Update Book!"/>
+        <input className="btn" type="submit" value="Update Book!"/>
       </form>
     </div>);
   },

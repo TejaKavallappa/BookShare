@@ -67,14 +67,20 @@ var UserBorrows = React.createClass({
       <h2>Your borrow requests</h2>
       {this.state.borrows.map(function(borrow){
         return (<div key={borrow.id} className="borrow-item">
-        <img src={borrow.book.image_url} alt={borrow.book.title} />
-          {borrow.borrower.username}&nbsp;
-          {borrow.book.title}&nbsp;
-          {borrow.book.author}&nbsp;
-          <button onClick={self.approveRequest.bind(self,borrow)}>
-            Approve</button>&nbsp;
-          <button onClick={self.rejectRequest.bind(self,borrow)}>
+        <div className='approveReject'>
+        <button className="btn"
+          onClick={self.approveRequest.bind(self,borrow)}>
+          Approve</button>
+        <button className="btn err"
+            onClick={self.rejectRequest.bind(self,borrow)}>
             Reject</button>
+          </div>
+        <img src={borrow.book.image_url} alt={borrow.book.title} />
+          <ul>
+            <li><h3>{borrow.borrower.username}</h3></li>
+            <li>{borrow.book.title}</li>
+            <li>{borrow.book.author}</li>
+          </ul>
         </div>);
 
       })}

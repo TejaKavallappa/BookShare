@@ -21,14 +21,14 @@ var modalStyle = {
   },
   content: {
     position        : 'fixed',
-    top             : '50px',
+    top             : '150px',
     left            : '150px',
     right           : '150px',
     bottom          : '100px',
     border          : '1px solid #ccc',
     borderRadius    : '20px',
     padding         : '20px',
-    height          : '400px',
+    height          : '300px',
     width           : '400px',
     margin          : '0 auto'
   }

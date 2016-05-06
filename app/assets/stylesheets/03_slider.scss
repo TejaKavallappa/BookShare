@@ -2,7 +2,7 @@ $teal: #36A9AD;
 $grey: #7B868A;
 
 .book-index{
-  margin-left: 80px;
+  margin: 0 auto;
   -webkit-transition-duration: 1s;
   -moz-transition-duration: 1s;
   -o-transition-duration: 1s;
@@ -21,7 +21,7 @@ $grey: #7B868A;
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
-  background-color: $grey;
+  background-color: $teal;
   border-radius: 3%;
 
   &:hover + .book-index{
@@ -44,6 +44,7 @@ $grey: #7B868A;
 }
 
 #slideout-users:hover {
+  cursor: pointer;
   left: 0px;
   p{
     text-align:center;
@@ -59,6 +60,21 @@ $grey: #7B868A;
   }
 
 }
+
+#slideout-users:hover .hamburger{
+  display: none;
+}
+
+.hamburger{
+    background: url(/assets/hamburger.svg);
+    width: 34px;
+    position: absolute;
+    height: 28px;
+    z-index: 100;
+    right: 16px;
+    top: 8px;
+}
+
 .user-item{
   padding: 20px;
   font-size: 20px;
@@ -77,7 +93,7 @@ $grey: #7B868A;
 
   padding: 4px;
   border-radius: 3px;
-  background-color: $grey;
+  background-color: $teal;
   color: #020202;
 }
 .new-book:hover{

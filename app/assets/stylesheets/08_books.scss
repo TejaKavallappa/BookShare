@@ -6,13 +6,20 @@ $grey: #7B868A;
 $teal: #36A9AD;
 $greytext: #494E52;
 
+// books ul
+.books-index{
+  margin-left: 60px;
+}
 .book-index{
   padding-left: 17px;
   padding-top: 20px;
   h2{
     font-size: 24px;
     // font-weight: 600;
-    margin-left: 4px;
+    margin-left: 15px;
+  }
+  button{
+    font-size: 24px;
   }
 }
 // $yellow: #EAA732;
@@ -22,7 +29,7 @@ $greytext: #494E52;
   border: thin solid $grey;
   // padding: 10px;
   list-style: none;
-  margin: 5px;
+  margin: 15px;
   border-radius: 5px;
   background: white;
   width: 200px;
@@ -31,14 +38,22 @@ $greytext: #494E52;
     background: #ccc;
   }
   color: $greytext;
-  padding: 10px;
+
 }
 .book-detail-item{
+  overflow: hidden;
+  position: relative;
   transition: all .2s ease-in-out;
   border: 1px solid $teal;
+  height: 240px;
+  display: flex;
+  align-items: center;
+}
+.book-detail-item img{
+  width: 100%;
 }
 .book-detail-item:hover{
-  position: relative;
+  cursor: pointer;
   box-shadow: -6px 5px 5px 0px rgba(118, 124, 121, 0.92);
 }
 // user_book_detail.jsx
@@ -46,4 +61,25 @@ $greytext: #494E52;
   padding: 5px;
   display: block;
   border: 1px solid $grey;
+}
+
+.caption{
+  top: 190px;
+  left: 0px;
+  position: absolute;
+  background: rgba(0,0,0, 0.5);
+  color: white;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .3s ease;
+
+}
+.book-detail-item:hover .caption{
+  opacity: 1;
+  visibility: visible;
+  transition: all .3s ease;
+
 }
