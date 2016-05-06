@@ -2,19 +2,56 @@
 var React = require('react');
 var hashHistory = require('react-router').hashHistory;
 var Link = require('react-router').Link;
+var Modal = require('react-modal');
 //actions
 var ClientActions = require('../actions/client_actions');
 var BorrowActions = require('../actions/borrow_actions');
 //components
 var BookIndex = require('./book_index');
+var EditForm = require('./book_edit');
 //stores
 var BookStore = require('../stores/book_store');
 var UserStore = require('../stores/user_store');
 
-var UserBook = React.createClass({
-  getInitialState: function(){
-    return ({disabled: false});
+var modalStyle = {
+  overlay: {
+    position        : 'fixed',
+    top             : 0,
+    left            : 0,
+    right           : 0,
+    bottom          : 0,
+    backgroundColor : 'rgba(255, 255, 255, 0.75)'
   },
+  content: {
+    position        : 'fixed',
+    top             : '50px',
+    left            : '150px',
+    right           : '150px',
+    bottom          : '100px',
+    border          : '1px solid #ccc',
+    borderRadius    : '20px',
+    padding         : '20px',
+    height          : '400px',
+    width           : '400px',
+    margin          : '0 auto'
+  }
+};
+
+
+var UserBook = React.createClass({
+
+  getInitialState: function(){
+    return ({disabled: false, editModalOpen: false});
+  },
+
+  closeEditModal: function(){
+    this.setState({ editModalOpen: false });
+  },
+
+  openEditModal: function(){
+    this.setState({ editModalOpen: true });
+  },
+
   requestBook: function(event){
     this.setState({disabled: true});
     var borrow = {
@@ -25,19 +62,25 @@ var UserBook = React.createClass({
     };
     BorrowActions.requestBook(borrow);
   },
-  editBook: function(event){
-    event.preventDefault();
-    var url = "/books/"+this.props.book.id+"/edit";
-    hashHistory.push(url);
-  },
+
   deleteBook: function(event){
     event.preventDefault();
     ClientActions.removeBook(this.props.book.id);
   },
+
   displayButton: function(book){
     if (UserStore.currentUser().id == book.owner_id){
-      return (<div><button
-        onClick={this.editBook}
+      return (<div>
+
+        <Modal
+          isOpen={this.state.editModalOpen}
+          onRequestClose={this.closeEditModal}
+          style={modalStyle}>
+          <EditForm bookId={book.id} onSubmit={this.closeEditModal}/>
+        </Modal>
+
+        <button
+        onClick={this.openEditModal}
         className="bk-button"
         bookId={book.id}>Edit</button>
       <button

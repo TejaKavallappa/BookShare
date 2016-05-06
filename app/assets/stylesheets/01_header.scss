@@ -11,7 +11,7 @@ $teal: #36A9AD;
 }
 
 .header-nav{
-  padding: 5px 0 5px 0;
+  padding: 5px 0 0 0;
 }
 .header ul {
   display: flex;
@@ -30,6 +30,8 @@ $teal: #36A9AD;
 .header-list{
   display: flex;
   justify-content: space-around;
+  position: relative;
+  top: 1px; //Change
 }
 .header-list > li:hover{
   background: $offwhite;
@@ -51,7 +53,6 @@ $teal: #36A9AD;
 }
 .bk-button{
   padding: 2px;
-  // margin: 5px;
   border: 50%;
   font-weight: bold;
 }
@@ -79,16 +80,19 @@ img{
   height: 600px;
 }
 .app{
-  margin: 0 0 100px;
+
+  background: $offwhite;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 // footer
-footer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+.footer {
     margin: 0 auto;
     height: 50px;
     width: 100%;
     overflow: hidden;
     background-color: white;
+    align-self: flex-end;
 }

@@ -20,6 +20,7 @@ $grey: #7B868A;
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
   background-color: $grey;
+  border-radius: 3%;
 
   &:hover + .book-index{
     margin-left: 160px;
@@ -43,8 +44,8 @@ $grey: #7B868A;
   left: 0px;
   p{
     text-align:center;
-    font-size:20px;
-    border: 1px solid $grey
+    font-size: 22px;
+    font-weight: bold;
   }
   background-color: $teal;
   display: flex;
@@ -53,8 +54,13 @@ $grey: #7B868A;
   #slideout_inner {
     left: 0;
   }
+
 }
 .user-item{
   padding: 20px;
   font-size: 20px;
+}
+
+.user-item:hover{
+  background-color: yellow;
 }

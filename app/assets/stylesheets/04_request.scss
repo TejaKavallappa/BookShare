@@ -1,3 +1,26 @@
 .request-page{
-  margin-top: 40px;
+  margin-top: 30px;
+  margin-left: 40px;
+
+  h2{
+    font-size: 24px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+}
+
+.requests-made{
+  margin-top: 30px;
+  margin-left: 40px;
+
+  h2{
+    font-size: 24px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  .borrow-item{
+    display: flex;
+    align-items: column;
+  }
 }

@@ -27,8 +27,8 @@ var Routerr = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={AuthPermit}/>
-        <Route path="login" component={LoginForm}/>
-        <Route path="signup" component={LoginForm}/>
+        // <Route path="login" component={LoginForm}/>
+        // <Route path="signup" component={LoginForm}/>
 
         <Route path="requests" component={UserBorrows}/>
         <Route path="request-status" component={UserMadeBorrows}/>
@@ -39,7 +39,7 @@ var Routerr = (
 
         <Route path="books" component={UserBooks}>
           <Route path=":bookId" component={BookDetail}/>
-          <Route path=":bookId/edit" component={BookEdit}/>
+          // <Route path=":bookId/edit" component={BookEdit}/>
         </Route>
 
 
@@ -49,5 +49,6 @@ var Routerr = (
 
 document.addEventListener('DOMContentLoaded', function(){
   var root = document.getElementById('root');
+  Modal.setAppElement(document.body);
   ReactDOM.render(Routerr, root);
 });

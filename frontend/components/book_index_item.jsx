@@ -1,18 +1,24 @@
+//react
 var React = require('react');
 var hashHistory = require('react-router').hashHistory;
 var Link = require('react-router').Link;
-
+//actions
 var ClientActions = require('../actions/client_actions');
-var BookIndex = require('./book_index');
+//stores
 var BookStore = require('../stores/book_store');
+//components
+var BookIndex = require('./book_index');
+
+
 
 var Book = React.createClass({
 
-  editBook: function(event){
-    event.preventDefault();
-    var url = "/books/"+this.props.book.id+"/edit";
-    hashHistory.push(url);
-  },
+
+  // editBook: function(event){
+  //   event.preventDefault();
+  //   var url = "/books/"+this.props.book.id+"/edit";
+  //   hashHistory.push(url);
+  // },
 
   deleteBook: function(event){
     event.preventDefault();
@@ -31,8 +37,9 @@ var Book = React.createClass({
 
            <h3>{book.title}</h3>
 
+
           <button
-            onClick={this.editBook}
+            onClick={this.openEditModal}
             className="bk-button"
             bookId={book.id}>Edit</button>
           <button

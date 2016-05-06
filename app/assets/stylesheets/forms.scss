@@ -1,9 +1,12 @@
-$yellow: #EAA732;
+$offwhite: #F8F8F8;
+$grey: #7B868A;
+$teal: #36A9AD;
+$greytext: #494E52;
 
 .book-form{
   display: flex;
   align-items: flex-start;;
-  border: solid 1px $yellow;
+  border: solid 1px $teal;
   margin: auto;
 
   input[type=submit] {
@@ -17,14 +20,14 @@ $yellow: #EAA732;
 
   input[type=text] {
     padding:5px;
-    border:2px solid $yellow;
+    border:2px solid $teal;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     margin: 1px;
 }
 textarea {
     padding:5px;
-    border:2px solid $yellow;
+    border:2px solid $teal;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     margin: 1px;

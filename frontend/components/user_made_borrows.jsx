@@ -62,18 +62,20 @@ var UserMadeBorrows = React.createClass({
     <span class="sr-only">Loading...</span></div>);
     }
     var self = this;
-    return (<div>
+    return (<div className="requests-made">
 
       <h2>Status of your requests</h2>
 
       {this.state.borrows.map(function(borrow){
         return (<div key={borrow.id} className="borrow-item">
+        <button onClick={self.cancelRequest.bind(self,borrow)}>
+          Cancel</button>
         <img src={borrow.book.image_url} alt={borrow.book.title} />
-          {borrow.owner.username}&nbsp;
-          {borrow.book.title}&nbsp;
-          {borrow.book.author}&nbsp;
-          <button onClick={self.cancelRequest.bind(self,borrow)}>
-            Cancel</button>&nbsp;
+          <ul>
+          <li>{borrow.owner.username}</li>
+          <li>{borrow.book.title}</li>
+          <li>{borrow.book.author}</li>
+          </ul>
         </div>);
 
       })}

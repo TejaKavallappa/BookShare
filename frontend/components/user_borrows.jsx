@@ -60,7 +60,8 @@ var UserBorrows = React.createClass({
     }
     var self = this;
     if(BorrowStore.all().length === 0){
-      return (<div className='request-page'>No pending borrow requests!</div>);
+      return (<div className='request-page'>
+      <h2>No pending borrow requests!</h2></div>);
     }
     return (<div className='request-page'>
       <h2>Your borrow requests</h2>

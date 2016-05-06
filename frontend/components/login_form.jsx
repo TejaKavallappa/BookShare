@@ -17,7 +17,7 @@ var LoginForm = React.createClass({
 
   handleSubmit: function(event){
     event.preventDefault();
-    UserActions[this.props.routes[1].path]({
+    UserActions[this.props.authAction]({
       username: this.state.username,
       password: this.state.password
     });
@@ -61,7 +61,8 @@ var LoginForm = React.createClass({
     }
     var self = this;
     var insertButton = function(){
-      var loginAction = self.props.routes[1].path;
+      // var loginAction = self.props.routes[1].path;
+      var loginAction = self.props.authAction;
       if (loginAction === "login"){
         return (<button value={loginAction} type="submit">
           Log In
