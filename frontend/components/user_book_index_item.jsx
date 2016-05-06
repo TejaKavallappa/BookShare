@@ -9,6 +9,7 @@ var BorrowActions = require('../actions/borrow_actions');
 //components
 var BookIndex = require('./book_index');
 var EditForm = require('./book_edit');
+var ViewBookDetail = require('./view_book_detail');
 //stores
 var BookStore = require('../stores/book_store');
 var UserStore = require('../stores/user_store');
@@ -41,7 +42,7 @@ var modalStyle = {
 var UserBook = React.createClass({
 
   getInitialState: function(){
-    return ({disabled: false, editModalOpen: false});
+    return ({disabled: false, editModalOpen: false, viewModalOpen: false});
   },
 
   closeEditModal: function(){
@@ -50,6 +51,14 @@ var UserBook = React.createClass({
 
   openEditModal: function(){
     this.setState({ editModalOpen: true });
+  },
+
+  closeViewModal: function(){
+    this.setState({ viewModalOpen: false });
+  },
+
+  openViewModal: function(){
+    this.setState({ viewModalOpen: true });
   },
 
   requestBook: function(event){
@@ -83,10 +92,10 @@ var UserBook = React.createClass({
         onClick={this.openEditModal}
         className="bk-button"
         bookId={book.id}>Edit</button>
-      <button
+        <button
         onClick={this.deleteBook}
         className="bk-button">Delete
-      </button></div>);
+        </button></div>);
     }
     else{
       if (book.borrow_status === "pending"){
@@ -105,19 +114,24 @@ var UserBook = React.createClass({
     var book = this.props.book;
     return (
       <div className='book-detail-item'>
+        <Modal
+          isOpen={this.state.viewModalOpen}
+          onRequestClose={this.closeViewModal}
+          style={modalStyle}>
+          <ViewBookDetail book={book} onEditClick={this.closeViewModal}/>
+        </Modal>
+
       <li>
-
-      <Link to={ "/users/" + book.owner_id + "/" + book.id.toString() }>
-       <img src={book.image_url} alt={book.title} />
-      </Link>
-
+       <img src={book.image_url} alt={book.title} onClick={this.openViewModal}
+         bookId={book.id}/>
        <h3>{book.title}</h3>
-
        {this.displayButton(book)}
     </li>
     </div>
   ); //return
   }
 });
+// <Link to={ "/users/" + book.owner_id + "/" + book.id.toString() }>
 
 module.exports = UserBook;
+// </Link>

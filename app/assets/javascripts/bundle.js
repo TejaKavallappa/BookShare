@@ -35335,6 +35335,7 @@
 	//components
 	var BookIndex = __webpack_require__(271);
 	var EditForm = __webpack_require__(290);
+	var ViewBookDetail = __webpack_require__(295);
 	//stores
 	var BookStore = __webpack_require__(276);
 	var UserStore = __webpack_require__(252);
@@ -35368,7 +35369,7 @@
 	
 	
 	  getInitialState: function () {
-	    return { disabled: false, editModalOpen: false };
+	    return { disabled: false, editModalOpen: false, viewModalOpen: false };
 	  },
 	
 	  closeEditModal: function () {
@@ -35377,6 +35378,14 @@
 	
 	  openEditModal: function () {
 	    this.setState({ editModalOpen: true });
+	  },
+	
+	  closeViewModal: function () {
+	    this.setState({ viewModalOpen: false });
+	  },
+	
+	  openViewModal: function () {
+	    this.setState({ viewModalOpen: true });
 	  },
 	
 	  requestBook: function (event) {
@@ -35450,13 +35459,18 @@
 	      'div',
 	      { className: 'book-detail-item' },
 	      React.createElement(
+	        Modal,
+	        {
+	          isOpen: this.state.viewModalOpen,
+	          onRequestClose: this.closeViewModal,
+	          style: modalStyle },
+	        React.createElement(ViewBookDetail, { book: book, onEditClick: this.closeViewModal })
+	      ),
+	      React.createElement(
 	        'li',
 	        null,
-	        React.createElement(
-	          Link,
-	          { to: "/users/" + book.owner_id + "/" + book.id.toString() },
-	          React.createElement('img', { src: book.image_url, alt: book.title })
-	        ),
+	        React.createElement('img', { src: book.image_url, alt: book.title, onClick: this.openViewModal,
+	          bookId: book.id }),
 	        React.createElement(
 	          'h3',
 	          null,
@@ -35467,8 +35481,10 @@
 	    ); //return
 	  }
 	});
+	// <Link to={ "/users/" + book.owner_id + "/" + book.id.toString() }>
 	
 	module.exports = UserBook;
+	// </Link>
 
 /***/ },
 /* 283 */
@@ -35928,6 +35944,7 @@
 /* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// DEPRECATED
 	var React = __webpack_require__(1);
 	var hashHistory = __webpack_require__(186).hashHistory;
 	//actions
@@ -35944,12 +35961,12 @@
 	
 	  // mixins: [CurrentUserState],
 	  getInitialState: function () {
-	    return { book: BookStore.find(this.props.params.bookId) };
+	    return { book: BookStore.find(this.props.bookId) };
 	  },
 	
 	  componentDidMount: function () {
 	    this.bookListener = BookStore.addListener(this._onChange);
-	    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
+	    ClientActions.getSingleBook(parseInt(this.props.bookId));
 	  },
 	
 	  componentWillUnmount: function () {
@@ -35957,7 +35974,7 @@
 	  },
 	
 	  componentWillReceiveProps: function (newProps) {
-	    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
+	    ClientActions.getSingleBook(parseInt(newProps.bookId));
 	  },
 	
 	  _onChange: function () {
@@ -35965,18 +35982,18 @@
 	  },
 	
 	  getStateFromStore: function () {
-	    this.setState({ book: BookStore.find(this.props.params.bookId) });
+	    this.setState({ book: BookStore.find(this.props.bookId) });
 	  },
 	
 	  editBook: function (event) {
 	    event.preventDefault();
-	    var url = "/api/books/" + this.props.params.bookId;
+	    var url = "/api/books/" + this.props.bookId;
 	    hashHistory.push(url);
 	  },
 	
 	  deleteBook: function (event) {
 	    event.preventDefault();
-	    ClientActions.removeBook(this.props.params.bookId);
+	    ClientActions.removeBook(this.props.bookId);
 	  },
 	  render: function () {
 	    var book = this.state.book;
@@ -35987,7 +36004,6 @@
 	        'div',
 	        null,
 	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	        '); // ',
 	        React.createElement(
 	          'span',
 	          { 'class': 'sr-only' },
@@ -36669,6 +36685,170 @@
 	  }
 	});
 	module.exports = Footer;
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(186).hashHistory;
+	var Modal = __webpack_require__(166);
+	//actions
+	var ClientActions = __webpack_require__(272);
+	//component
+	var BookIndex = __webpack_require__(271);
+	var EditForm = __webpack_require__(290);
+	//stores
+	var BookStore = __webpack_require__(276);
+	//mixin
+	var CurrentUserState = __webpack_require__(278);
+	
+	var modalStyle = {
+	  overlay: {
+	    position: 'fixed',
+	    top: 0,
+	    left: 0,
+	    right: 0,
+	    bottom: 0,
+	    backgroundColor: 'rgba(255, 255, 255, 0.75)'
+	  },
+	  content: {
+	    position: 'fixed',
+	    top: '50px',
+	    left: '150px',
+	    right: '150px',
+	    bottom: '100px',
+	    border: '1px solid #ccc',
+	    borderRadius: '20px',
+	    padding: '20px',
+	    height: '400px',
+	    width: '400px',
+	    margin: '0 auto'
+	  }
+	};
+	
+	var ViewBookDetail = React.createClass({
+	  displayName: 'ViewBookDetail',
+	
+	  // mixins: [CurrentUserState],
+	  // getInitialState: function(){
+	  //   return {book: BookStore.find(this.props.bookId)};
+	  // },
+	  //
+	  // componentDidMount: function(){
+	  //   this.bookListener = BookStore.addListener(this._onChange);
+	  //   ClientActions.getSingleBook(parseInt(this.props.bookId));
+	  // },
+	  //
+	  // componentWillUnmount: function(){
+	  //   this.bookListener.remove();
+	  // },
+	  //
+	  // componentWillReceiveProps: function(newProps){
+	  //   ClientActions.getSingleBook(parseInt(newProps.bookId));
+	  // },
+	  //
+	  // _onChange: function(){
+	  //   this.setState(this.getStateFromStore);
+	  // },
+	  //
+	  // getStateFromStore: function(){
+	  //   this.setState({book: BookStore.find(this.props.bookId)});
+	  // },
+	  //
+	  // editBook: function(event){
+	  //   event.preventDefault();
+	  //   var url = "/api/books/"+this.props.bookId;
+	  //   hashHistory.push(url);
+	  // },
+	
+	  getInitialState: function () {
+	    return { editModalOpen: false };
+	  },
+	
+	  closeEditModal: function () {
+	    this.props.onEditClick();
+	    this.setState({ editModalOpen: false });
+	  },
+	
+	  openEditModal: function () {
+	    this.setState({ editModalOpen: true });
+	  },
+	
+	  deleteBook: function (event) {
+	    event.preventDefault();
+	    ClientActions.removeBook(this.props.book.id);
+	  },
+	  render: function () {
+	    var book = this.props.book;
+	    var self = this;
+	
+	    if (!book) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	      // return <div>Loading...</div>;
+	    }
+	
+	    var display = function () {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'button',
+	          { onClick: self.openEditModal, bookId: book.id },
+	          'Edit'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: self.deleteBook },
+	          'Delete'
+	        )
+	      );
+	    };
+	
+	    //In the edit form add facility to let user upload an images
+	    return React.createElement(
+	      'div',
+	      { className: 'book' },
+	      React.createElement(
+	        Modal,
+	        {
+	          isOpen: this.state.editModalOpen,
+	          onRequestClose: this.closeEditModal,
+	          style: modalStyle },
+	        React.createElement(EditForm, { bookId: book.id, onSubmit: this.closeEditModal })
+	      ),
+	      React.createElement(
+	        'h3',
+	        null,
+	        ' ',
+	        book.title,
+	        ' '
+	      ),
+	      React.createElement(
+	        'h4',
+	        null,
+	        book.author
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        book.description ? book.description : ""
+	      ),
+	      display()
+	    );
+	  } //render
+	});
+	
+	module.exports = ViewBookDetail;
 
 /***/ }
 /******/ ]);

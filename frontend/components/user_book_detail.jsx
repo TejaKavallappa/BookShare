@@ -1,3 +1,4 @@
+// DEPRECATED
 var React = require('react');
 var hashHistory = require('react-router').hashHistory;
 //actions
@@ -12,12 +13,12 @@ var CurrentUserState = require('../mixins/current_user_state');
 var BookDetail = React.createClass({
   // mixins: [CurrentUserState],
   getInitialState: function(){
-    return {book: BookStore.find(this.props.params.bookId)};
+    return {book: BookStore.find(this.props.bookId)};
   },
 
   componentDidMount: function(){
     this.bookListener = BookStore.addListener(this._onChange);
-    ClientActions.getSingleBook(parseInt(this.props.params.bookId));
+    ClientActions.getSingleBook(parseInt(this.props.bookId));
   },
 
   componentWillUnmount: function(){
@@ -25,7 +26,7 @@ var BookDetail = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps){
-    ClientActions.getSingleBook(parseInt(newProps.params.bookId));
+    ClientActions.getSingleBook(parseInt(newProps.bookId));
   },
 
   _onChange: function(){
@@ -33,26 +34,27 @@ var BookDetail = React.createClass({
   },
 
   getStateFromStore: function(){
-    this.setState({book: BookStore.find(this.props.params.bookId)});
+    this.setState({book: BookStore.find(this.props.bookId)});
   },
 
   editBook: function(event){
     event.preventDefault();
-    var url = "/api/books/"+this.props.params.bookId;
+    var url = "/api/books/"+this.props.bookId;
     hashHistory.push(url);
   },
 
   deleteBook: function(event){
     event.preventDefault();
-    ClientActions.removeBook(this.props.params.bookId);
+    ClientActions.removeBook(this.props.bookId);
   },
   render: function(){
     var book = this.state.book;
     var self = this;
 
     if (!book){
-      return (<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>);
-    // <span class="sr-only">Loading...</span></div>);
+      return (<div>
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+    <span class="sr-only">Loading...</span></div>);
       // return <div>Loading...</div>;
     }
 
