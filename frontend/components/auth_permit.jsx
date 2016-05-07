@@ -23,10 +23,11 @@ var AuthPermit = React.createClass({
   },
   render: function(){
     if(UserStore.currentUser()){
-      return (<div><Home/></div>);
+      return <Home/>;
     }
     else{
-    return(<div><Splash/></div>);}
+      return<Splash/>;
+    }
   }
 });
 

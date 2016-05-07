@@ -26,3 +26,12 @@
   background-image: linear-gradient(to bottom, #1eced1, #0a868a);
   text-decoration: none;
 }
+
+.btn:disabled{
+  background: #c6cccc;
+  background-image: -webkit-linear-gradient(top, #c6cccc, #5f6366);
+  background-image: -moz-linear-gradient(top, #c6cccc, #5f6366);
+  background-image: -ms-linear-gradient(top, #c6cccc, #5f6366);
+  background-image: -o-linear-gradient(top, #c6cccc, #5f6366);
+  background-image: linear-gradient(to bottom, #c6cccc, #5f6366);
+}

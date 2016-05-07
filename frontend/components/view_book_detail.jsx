@@ -62,7 +62,7 @@ var ViewBookDetail = React.createClass({
       return (<div>
         <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
     <span class="sr-only">Loading...</span></div>);
-    
+
     }
 
     var display = function() {
@@ -70,9 +70,28 @@ var ViewBookDetail = React.createClass({
         return (<div>
           <button className="btn" onClick={self.openEditModal}
             bookId={book.id}>Edit</button>
-        <button className="btn" onClick={self.deleteBook}>Delete</button>
-        </div>
-      );}
+          <button className="btn" onClick={self.deleteBook}>Delete</button>
+        </div>);
+      }
+        else{
+          // if book has been borrowed, disable the button and change text
+          if(self.props.borrowDisabled){
+            return(<div><button
+              className="btn"
+              disabled={self.props.borrowDisabled}
+              bookId={book.id}>Borrowed
+            </button></div>);
+          }
+          else
+          {
+          return(<div><button
+            className="btn"
+            onClick={self.props.onBorrowClick()}
+            disabled={self.props.borrowDisabled}
+            bookId={book.id}>Borrow
+          </button></div>);
+        }
+      }
     };
 
     //In the edit form add facility to let user upload an images
@@ -87,9 +106,10 @@ var ViewBookDetail = React.createClass({
            </Modal>
 
             <h3> {book.title} </h3>
-            <h4>{book.author}</h4>
+            <h4>by {book.author}</h4>
             <p>{book.description ? book.description : ""}</p>
             {display()}
+
           </div>
       );
   }//render

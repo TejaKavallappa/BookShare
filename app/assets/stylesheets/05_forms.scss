@@ -5,11 +5,15 @@ $greytext: #494E52;
 $errorRed: #D76D68;
 
 #login-form{
+  position: absolute;
+  top: 80px;
+  left: 60px;
+  background: $offwhite;
+  background-color: white;
   text-align: center;
   display: flex;
   align-items: flex-start;
   margin: auto;
-  // width: 500px;
   clear: both;
   height: 150px;
   padding: 10px;
@@ -30,25 +34,28 @@ $errorRed: #D76D68;
   color: $errorRed;
 }
 .book-form{
+  label{
+    font-weight: bold;
+  }
+  position: absolute;
+  top: 45px;
+  left: 101px;
   text-align: center;
   display: flex;
   align-items: flex-start;
   margin: auto;
-  width: 500px;
+  width: auto;
   clear: both;
+  height: 150px;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 28px;
 
-  input[type=text] {
+  input[type=text], textarea {
     padding:5px;
     border:2px solid $teal;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     margin: 1px;
-}
-textarea {
-    padding:5px;
-    border:2px solid $teal;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    margin: 1px;
-}
+  }
 }

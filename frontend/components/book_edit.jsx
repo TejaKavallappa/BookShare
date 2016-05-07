@@ -66,29 +66,35 @@ var BookForm = React.createClass({
 
   render: function(){
     return (<div className="book-form">
-      <h3>Edit Book</h3>
+
       <form onSubmit={this.handleSubmit}>
 
         <label>Title
+        <br></br>
+        </label>
         <input
           type="text"
           value={this.state.title}
           onChange={this.titleChange}/>
-        </label>
         <br></br>
+
         <label>Author
+        <br></br>
+        </label>
         <input
           type="text"
           value={this.state.author}
           onChange={this.authorChange}/>
-        </label>
         <br></br>
+
         <label>Description
+        <br></br>
+        </label>
         <textarea
           value={this.state.description}
           onChange={this.descriptionChange}/>
-        </label>
         <br></br>
+
         <input className="btn" type="submit" value="Update Book!"/>
       </form>
     </div>);

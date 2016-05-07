@@ -37,4 +37,3 @@ var UserApiUtil = {
 };
 
 module.exports = UserApiUtil;
-window.UserApiUtil = UserApiUtil;

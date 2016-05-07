@@ -62,7 +62,7 @@ var BorrowActions = {
   },
 
   handleError: function(error){
-    
+
     AppDispatcher.dispatch({
       actionType: "ERROR",
       errors: error.responseJSON.errors
@@ -71,4 +71,3 @@ var BorrowActions = {
 };
 
 module.exports = BorrowActions;
-window.BorrowActions = BorrowActions;

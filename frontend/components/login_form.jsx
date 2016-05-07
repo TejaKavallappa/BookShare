@@ -92,12 +92,12 @@ var LoginForm = React.createClass({
       </div>
     );//return
   },//form
-  
+
   render: function(){
     return (<div id='login-panel'>
-    {this.form()}
-    {this.errors()}
-  </div>);
+      {this.form()}
+      {this.errors()}
+    </div>);
 
   }
 });

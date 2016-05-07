@@ -18,8 +18,8 @@ var Home = React.createClass({
     var self = this;
 
       return (<div>
-        <div className="books-list"><UserBooks/></div>
-        {this.props.children}
+          <div className="books-list"><UserBooks/></div>
+          {this.props.children}
         </div>);
   }
 });

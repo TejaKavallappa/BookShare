@@ -53,4 +53,3 @@ var BorrowApiUtil = {
 };
 
 module.exports = BorrowApiUtil;
-window.BorrowApiUtil = BorrowApiUtil;

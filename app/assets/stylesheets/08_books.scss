@@ -58,9 +58,19 @@ $greytext: #494E52;
 }
 
 .book{
+  background: $offwhite;
+  background-color: white;
   padding: 5px;
   display: block;
-  border: 1px solid $grey;
+  overflow: scroll;
+  height: 290px;
+  h3{
+    font-size: 22px;
+    font-weight: bold;
+  }
+  h4{
+    font-weight: bold;
+  }
 }
 
 .caption{

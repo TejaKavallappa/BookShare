@@ -69,5 +69,4 @@ UserStore.findUser = function(id){
   }
 };
 
-window.us = UserStore;
 module.exports = UserStore;

@@ -27464,7 +27464,6 @@
 	};
 	
 	module.exports = UserActions;
-	window.UserActions = UserActions;
 
 /***/ },
 /* 246 */
@@ -27825,7 +27824,6 @@
 	};
 	
 	module.exports = UserApiUtil;
-	window.UserApiUtil = UserApiUtil;
 
 /***/ },
 /* 251 */
@@ -27857,17 +27855,9 @@
 	  },
 	  render: function () {
 	    if (UserStore.currentUser()) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(Home, null)
-	      );
+	      return React.createElement(Home, null);
 	    } else {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(Splash, null)
-	      );
+	      return React.createElement(Splash, null);
 	    }
 	  }
 	});
@@ -27949,7 +27939,6 @@
 	  }
 	};
 	
-	window.us = UserStore;
 	module.exports = UserStore;
 
 /***/ },
@@ -34671,7 +34660,8 @@
 	        React.createElement(
 	          'label',
 	          null,
-	          'Title'
+	          'Title ',
+	          React.createElement('br', null)
 	        ),
 	        React.createElement('input', {
 	          type: 'text',
@@ -34681,7 +34671,8 @@
 	        React.createElement(
 	          'label',
 	          null,
-	          'Author'
+	          'Author ',
+	          React.createElement('br', null)
 	        ),
 	        React.createElement('input', {
 	          type: 'text',
@@ -34691,13 +34682,15 @@
 	        React.createElement(
 	          'label',
 	          null,
-	          'Description'
+	          'Description ',
+	          React.createElement('br', null)
 	        ),
 	        React.createElement('textarea', {
 	          value: this.state.description,
 	          onChange: this.descriptionChange || "" }),
 	        React.createElement('br', null),
-	        React.createElement('input', { type: 'submit', className: 'btn', value: 'Add New Book!' })
+	        React.createElement('input', { type: 'submit', className: 'btn', value: 'Add New Book!' }),
+	        React.createElement('br', null)
 	      )
 	    );
 	  }
@@ -34929,7 +34922,7 @@
 	    border: '1px solid #ccc',
 	    borderRadius: '20px',
 	    padding: '20px',
-	    height: '400px',
+	    height: '300px',
 	    width: '400px',
 	    margin: '0 auto'
 	  }
@@ -35114,7 +35107,7 @@
 	    border: '1px solid #ccc',
 	    borderRadius: '20px',
 	    padding: '20px',
-	    height: '400px',
+	    height: '300px',
 	    width: '400px',
 	    margin: '0 auto'
 	  }
@@ -35221,7 +35214,10 @@
 	          onRequestClose: this.closeViewModal,
 	          style: modalStyle
 	        },
-	        React.createElement(ViewBookDetail, { book: book, onEditClick: this.closeViewModal })
+	        React.createElement(ViewBookDetail, { book: book,
+	          onEditClick: this.closeViewModal,
+	          borrowDisabled: this.state.disabled,
+	          onBorrowClick: this.requestBook })
 	      ),
 	      React.createElement('img', { src: book.image_url, alt: book.title, onClick: this.openViewModal,
 	        bookId: book.id }),
@@ -35313,7 +35309,6 @@
 	};
 	
 	module.exports = BorrowActions;
-	window.BorrowActions = BorrowActions;
 
 /***/ },
 /* 284 */
@@ -35374,7 +35369,6 @@
 	};
 	
 	module.exports = BorrowApiUtil;
-	window.BorrowApiUtil = BorrowApiUtil;
 
 /***/ },
 /* 285 */
@@ -35453,41 +35447,39 @@
 	      'div',
 	      { className: 'book-form' },
 	      React.createElement(
-	        'h3',
-	        null,
-	        'Edit Book'
-	      ),
-	      React.createElement(
 	        'form',
 	        { onSubmit: this.handleSubmit },
 	        React.createElement(
 	          'label',
 	          null,
 	          'Title',
-	          React.createElement('input', {
-	            type: 'text',
-	            value: this.state.title,
-	            onChange: this.titleChange })
+	          React.createElement('br', null)
 	        ),
+	        React.createElement('input', {
+	          type: 'text',
+	          value: this.state.title,
+	          onChange: this.titleChange }),
 	        React.createElement('br', null),
 	        React.createElement(
 	          'label',
 	          null,
 	          'Author',
-	          React.createElement('input', {
-	            type: 'text',
-	            value: this.state.author,
-	            onChange: this.authorChange })
+	          React.createElement('br', null)
 	        ),
+	        React.createElement('input', {
+	          type: 'text',
+	          value: this.state.author,
+	          onChange: this.authorChange }),
 	        React.createElement('br', null),
 	        React.createElement(
 	          'label',
 	          null,
 	          'Description',
-	          React.createElement('textarea', {
-	            value: this.state.description,
-	            onChange: this.descriptionChange })
+	          React.createElement('br', null)
 	        ),
+	        React.createElement('textarea', {
+	          value: this.state.description,
+	          onChange: this.descriptionChange }),
 	        React.createElement('br', null),
 	        React.createElement('input', { className: 'btn', type: 'submit', value: 'Update Book!' })
 	      )
@@ -35593,6 +35585,36 @@
 	            'Delete'
 	          )
 	        );
+	      } else {
+	        // if book has been borrowed, disable the button and change text
+	        if (self.props.borrowDisabled) {
+	          return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	              'button',
+	              {
+	                className: 'btn',
+	                disabled: self.props.borrowDisabled,
+	                bookId: book.id },
+	              'Borrowed'
+	            )
+	          );
+	        } else {
+	          return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	              'button',
+	              {
+	                className: 'btn',
+	                onClick: self.props.onBorrowClick(),
+	                disabled: self.props.borrowDisabled,
+	                bookId: book.id },
+	              'Borrow'
+	            )
+	          );
+	        }
 	      }
 	    };
 	
@@ -35618,6 +35640,7 @@
 	      React.createElement(
 	        'h4',
 	        null,
+	        'by ',
 	        book.author
 	      ),
 	      React.createElement(

@@ -66,4 +66,3 @@ var UserActions = {
 };
 
 module.exports = UserActions;
-window.UserActions = UserActions;

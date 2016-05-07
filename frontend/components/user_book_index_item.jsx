@@ -31,7 +31,7 @@ var modalStyle = {
     border          : '1px solid #ccc',
     borderRadius    : '20px',
     padding         : '20px',
-    height          : '400px',
+    height          : '300px',
     width           : '400px',
     margin          : '0 auto'
   }
@@ -113,12 +113,16 @@ var UserBook = React.createClass({
     var book = this.props.book;
     return (
       <div className='book-detail-item'>
+
         <Modal
           isOpen={this.state.viewModalOpen}
           onRequestClose={this.closeViewModal}
           style={modalStyle}
           >
-          <ViewBookDetail book={book} onEditClick={this.closeViewModal}/>
+          <ViewBookDetail book={book}
+            onEditClick={this.closeViewModal}
+            borrowDisabled={this.state.disabled}
+            onBorrowClick={this.requestBook}/>
         </Modal>
 
 
