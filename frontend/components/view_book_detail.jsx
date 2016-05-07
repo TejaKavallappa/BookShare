@@ -37,37 +37,6 @@ var modalStyle = {
 
 var ViewBookDetail = React.createClass({
 
-  // getInitialState: function(){
-  //   return {book: BookStore.find(this.props.bookId)};
-  // },
-  //
-  // componentDidMount: function(){
-  //   this.bookListener = BookStore.addListener(this._onChange);
-  //   ClientActions.getSingleBook(parseInt(this.props.bookId));
-  // },
-  //
-  // componentWillUnmount: function(){
-  //   this.bookListener.remove();
-  // },
-  //
-  // componentWillReceiveProps: function(newProps){
-  //   ClientActions.getSingleBook(parseInt(newProps.bookId));
-  // },
-  //
-  // _onChange: function(){
-  //   this.setState(this.getStateFromStore);
-  // },
-  //
-  // getStateFromStore: function(){
-  //   this.setState({book: BookStore.find(this.props.bookId)});
-  // },
-  //
-  // editBook: function(event){
-  //   event.preventDefault();
-  //   var url = "/api/books/"+this.props.bookId;
-  //   hashHistory.push(url);
-  // },
-
   getInitialState: function(){
     return ({editModalOpen: false});
   },
@@ -93,7 +62,7 @@ var ViewBookDetail = React.createClass({
       return (<div>
         <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
     <span class="sr-only">Loading...</span></div>);
-      // return <div>Loading...</div>;
+    
     }
 
     var display = function() {

@@ -9,7 +9,7 @@ var BookStore = require('../stores/book_store');
 var CurrentUserState = require('../mixins/current_user_state');
 
 var BookDetail = React.createClass({
-  // mixins: [CurrentUserState],
+
   getInitialState: function(){
     return {book: BookStore.find(this.props.bookId)};
   },
@@ -53,7 +53,7 @@ var BookDetail = React.createClass({
       return (<div>
         <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
     <span class="sr-only">Loading...</span></div>);
-      // return <div>Loading...</div>;
+
     }
 
     var display = function() {

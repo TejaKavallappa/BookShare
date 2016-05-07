@@ -9,7 +9,6 @@ var UserActions = require('../actions/user_actions');
 //stores
 var UserStore = require('../stores/user_store');
 //components
-// var BookIndexItem = require('./book_index_item');
 var UserBookIndexItem = require('./user_book_index_item');
 var BookStore = require('../stores/book_store');
 var BookForm = require('./book_form');

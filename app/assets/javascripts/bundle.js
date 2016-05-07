@@ -34904,7 +34904,6 @@
 	//stores
 	var UserStore = __webpack_require__(252);
 	//components
-	// var BookIndexItem = require('./book_index_item');
 	var UserBookIndexItem = __webpack_require__(282);
 	var BookStore = __webpack_require__(276);
 	var BookForm = __webpack_require__(277);
@@ -35395,7 +35394,7 @@
 	  mixins: [CurrentUserState],
 	
 	  getInitialState: function () {
-	    // var bookToEdit = BookStore.find(this.props.params.bookId);
+	
 	    var bookToEdit = BookStore.find(this.props.bookId);
 	    if (bookToEdit) {
 	      return { author: bookToEdit.author,
@@ -35408,14 +35407,12 @@
 	
 	  componentDidMount: function () {
 	    this.bookListener = BookStore.addListener(this.handleChange);
-	    // ClientActions.getSingleBook(this.props.params.bookId);
 	    ClientActions.getSingleBook(this.props.bookId);
 	  },
 	  componentWillUnmount: function () {
 	    this.bookListener.remove();
 	  },
 	  handleChange: function () {
-	    // var bookToEdit = BookStore.find(this.props.params.bookId);
 	    var bookToEdit = BookStore.find(this.props.bookId);
 	    if (bookToEdit) {
 	      this.setState({ author: bookToEdit.author,
@@ -35449,7 +35446,6 @@
 	    };
 	    ClientActions.updateBook(postData);
 	    this.props.onSubmit();
-	    // hashHistory.push("/");
 	  },
 	
 	  render: function () {
@@ -35546,37 +35542,6 @@
 	  displayName: 'ViewBookDetail',
 	
 	
-	  // getInitialState: function(){
-	  //   return {book: BookStore.find(this.props.bookId)};
-	  // },
-	  //
-	  // componentDidMount: function(){
-	  //   this.bookListener = BookStore.addListener(this._onChange);
-	  //   ClientActions.getSingleBook(parseInt(this.props.bookId));
-	  // },
-	  //
-	  // componentWillUnmount: function(){
-	  //   this.bookListener.remove();
-	  // },
-	  //
-	  // componentWillReceiveProps: function(newProps){
-	  //   ClientActions.getSingleBook(parseInt(newProps.bookId));
-	  // },
-	  //
-	  // _onChange: function(){
-	  //   this.setState(this.getStateFromStore);
-	  // },
-	  //
-	  // getStateFromStore: function(){
-	  //   this.setState({book: BookStore.find(this.props.bookId)});
-	  // },
-	  //
-	  // editBook: function(event){
-	  //   event.preventDefault();
-	  //   var url = "/api/books/"+this.props.bookId;
-	  //   hashHistory.push(url);
-	  // },
-	
 	  getInitialState: function () {
 	    return { editModalOpen: false };
 	  },
@@ -35609,7 +35574,6 @@
 	          'Loading...'
 	        )
 	      );
-	      // return <div>Loading...</div>;
 	    }
 	
 	    var display = function () {
@@ -35933,23 +35897,11 @@
 	    this.setState({ borrows: BorrowStore.madeAll() });
 	  },
 	
-	  // approveRequest: function(borrow){
-	  //   var req = {id: borrow.id,
-	  //     owner_id: UserStore.currentUser(),
-	  //     borrower_id: borrow.borrower.borrower_id,
-	  //     request_status: 'borrowed',
-	  //     book_id: borrow.book.book_id};
-	  //   BorrowActions.approveRequest(req);
-	  // },
-	  //
 	  cancelRequest: function (borrow) {
 	    //Send a notification to the borrower
 	    BorrowActions.rejectRequest(borrow.id);
 	  },
 	
-	  // if(BorrowStore.all().length === 0){
-	  //   return (<div>No pending borrow requests!</div>);
-	  // }
 	  render: function () {
 	    if (!this.state.borrows) {
 	      return React.createElement(
@@ -36134,15 +36086,8 @@
 	      )
 	    ); //return
 	  }, //form
+	
 	  render: function () {
-	
-	    var self = this;
-	    // var showBooks = function() {
-	    //   if (self.state.currentUser){
-	    //     return <BookIndex/>;
-	    //   }
-	    // };
-	
 	    return React.createElement(
 	      'div',
 	      { id: 'login-panel' },
@@ -36151,7 +36096,6 @@
 	    );
 	  }
 	});
-	// {showBooks()}
 	
 	module.exports = LoginForm;
 

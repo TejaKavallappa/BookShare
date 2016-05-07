@@ -38,23 +38,11 @@ var UserMadeBorrows = React.createClass({
     this.setState({borrows: BorrowStore.madeAll()});
   },
 
-  // approveRequest: function(borrow){
-  //   var req = {id: borrow.id,
-  //     owner_id: UserStore.currentUser(),
-  //     borrower_id: borrow.borrower.borrower_id,
-  //     request_status: 'borrowed',
-  //     book_id: borrow.book.book_id};
-  //   BorrowActions.approveRequest(req);
-  // },
-  //
   cancelRequest: function(borrow){
     //Send a notification to the borrower
     BorrowActions.rejectRequest(borrow.id);
   },
 
-  // if(BorrowStore.all().length === 0){
-  //   return (<div>No pending borrow requests!</div>);
-  // }
   render: function(){
     if (!this.state.borrows){
       return (<div>
@@ -82,7 +70,5 @@ var UserMadeBorrows = React.createClass({
     </div>);
   }
 });
-
-
 
 module.exports = UserMadeBorrows;

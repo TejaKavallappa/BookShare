@@ -92,15 +92,8 @@ var LoginForm = React.createClass({
       </div>
     );//return
   },//form
+  
   render: function(){
-
-    var self = this;
-    // var showBooks = function() {
-    //   if (self.state.currentUser){
-    //     return <BookIndex/>;
-    //   }
-    // };
-
     return (<div id='login-panel'>
     {this.form()}
     {this.errors()}
@@ -108,6 +101,6 @@ var LoginForm = React.createClass({
 
   }
 });
-// {showBooks()}
+
 
 module.exports = LoginForm;

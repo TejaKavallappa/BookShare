@@ -10,7 +10,7 @@ var BookForm = React.createClass({
   mixins: [CurrentUserState],
 
   getInitialState: function(){
-    // var bookToEdit = BookStore.find(this.props.params.bookId);
+
     var bookToEdit = BookStore.find(this.props.bookId);
     if (bookToEdit){
      return({author: bookToEdit.author,
@@ -23,14 +23,12 @@ var BookForm = React.createClass({
 
   componentDidMount: function(){
     this.bookListener = BookStore.addListener(this.handleChange);
-    // ClientActions.getSingleBook(this.props.params.bookId);
     ClientActions.getSingleBook(this.props.bookId);
   },
   componentWillUnmount: function(){
     this.bookListener.remove();
   },
   handleChange: function(){
-    // var bookToEdit = BookStore.find(this.props.params.bookId);
     var bookToEdit = BookStore.find(this.props.bookId);
     if (bookToEdit){
      this.setState({author: bookToEdit.author,
@@ -64,7 +62,6 @@ var BookForm = React.createClass({
     };
     ClientActions.updateBook(postData);
     this.props.onSubmit();
-    // hashHistory.push("/");
   },
 
   render: function(){
