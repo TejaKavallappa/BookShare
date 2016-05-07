@@ -1,143 +1,64 @@
 # BookShare
 
-[BookShare][heroku]
+BookShare is a web application inspired by GoodReads built using Ruby on Rails and React.js. Users can get seed money for new restaurant ideas.
 
-[heroku]: https://bookshares.herokuapp.com
+Explore at [https://bookshares.herokuapp.com/][live]
 
-## Minimum Viable Product
+[live]: https://bookshares.herokuapp.com/
 
-BookSpace/BookShare is a web application inspired by Goodreads, and built using Ruby on Rails and React.js.
-BookShare allows users to lend/borrow books to/from other users. BookSpace/BookShare has the following features:
 
-- [x] Create new user account
-- [x] Log in/ Log out, 1 - 2 guest/demo logins
-- [x] Create read, edit, and delete books
-- [x] View user's shelf and request to borrow user's book(s)
-- [x] Approve or reject borrow requests
+## Welcome View:
 
-## Design Docs
-* [View Wireframes][views]
-* [React Components][components]
-* [Flux Cycles][flux-cycles]
-* [API endpoints][api-endpoints]
-* [DB schema][schema]
+[![home-page](./docs/images/home-page.png)](https://bookshares.herokuapp.com/)
 
-[views]: ./docs/views.md
-[components]: ./docs/components.md
-[flux-cycles]: ./docs/flux-cycles.md
-[api-endpoints]: ./docs/api-endpoints.md
-[schema]: ./docs/schema.md
+[home-page]: docs/images/home-page.png
 
-## Implementation Timeline
+## Project Page:
 
-### Phase 1: Backend setup and User Authentication (0.5 day)
+[![landing-page](docs/images/landing-page1.png)]
 
-**Objective:** Functioning rails project with Authentication
+[landing-page]: docs/images/landing-page1.png
 
-- [x] create new project
-- [x] create `User` model
-- [x] authentication
-- [x] user signup/log in pages
-- [x] blank landing page after log in
+## Technical Details:
 
-### Phase 2: Books Model, API, and basic APIUtil (0.5 day)
+- BookShare allows users to put up books they own, and allows them to view and request other        users' books. Users can approve or cancel requests made to borrow their books.
+Users are able to create, edit and delete books they own, and also make borrow requests on other users' books.
+Users are able to view other users on the site, and request their books.
+The book information is stored in a table and so is the borrowing information. The borrowings table stores information about the book, it's owner, the borrower, and the status of the request.
+When a user chooses to view books they have requested, a SQL query is made to the data base that selects books by the borrower. When a user chooses to view requests made by other users to borrow their books, another SQL query is made to the database that filters books by the request-status of 'pending', and where the owner of the requested books is the currently logged in user.
 
-**Objective:** Books can be created, read, edited and destroyed through
-the API.
+```
+def index
+  if params[:asker] == "owner"
+    # View borrowings where I am the owner
+    @borrowings = Borrowing.where(owner_id: current_user.id,
+    request_status: 'pending').includes(:book).includes(:borrower)
+  else
+    # View borrowings where I am the requester
+    @borrowings = Borrowing.where(borrower_id: current_user.id,
+    request_status: 'pending').includes(:book).includes(:owner)
+  end
+  render :index
+end
+```
 
-- [x] create `Book` model
-- [x] seed the database with a small amount of test data
-- [x] CRUD API for books (`BooksController`)
-- [x] jBuilder views for books
-- [x] setup Webpack & Flux scaffold
-- [x] setup `APIUtil` to interact with the API
-- [x] test out API interaction in the console.
+## Features:
 
-### Phase 3: Flux Architecture and Router (1 day)
+- Log in or Sign Up with email
+- Guest login to allow users to explore the site
+- View logged in users' books on home page
+- Create edit and delete self's books
+- View other users and their bookshelves
+- Make borrow requests on other users' books
+- View and approve or deny requests made on their books
+- View requests that they have made on other users's books
+- Disable borrow if a book has already been requested or borrowed
+- Viewing images of book covers
 
-**Objective:** Books can be created, read, edited and destroyed with the
-user interface.
 
-- [x] setup the flux loop with skeleton files
-- [x] setup React Router
-- implement each book component, building out the flux loop as needed.
-  - [x] `BooksIndex`
-  - [x] `BookIndexItem`
-  - [x] `BookForm`
+##To-do:
 
-### Phase 4: Start Styling (1 day)
-
-**Objective:** Existing pages (including signup/log in) will look good.
-
-- [x] create a basic style guide
-- [x] position elements on the page
-- [x] add basic colors & styles
-
-### Phase 5: Set up navbar and footer(0.5 day)
-
-**Objective:** Set up navbar and footer
-
-- [x] Create navbar comprising Log in/Log out and a homepage button
-- [x] Create footer
-
-### Phase 6: Borrowings (1 day)
-
-**Objective:** Borrowings is the join table linking books, their owner_id,
-the borrower_id (maybe null), and the request status which has one of four
-possible values [1: pending_request, 2: approved_request, 3: borrowed, 4:with owner]
-
-- [x] create `Borrowings` model
-- build out API, Flux loop, and components for:
-  - [x] Borrowings CRUD
-  - [x] A current_user who is not the owner can request books
-  - [x] The owner can approve or reject pending requests
-- Use CSS to style new views [This will very likely take extra time]
-
-### Phase 7: Populate database (1 day)
-
-**Objective:** Make API requests to https://openlibrary.org/ to obtain seed data for the web application
-
-- [ ] Obtain API key
-- [ ] Configure web API requests to obtain book data[covers, descriptions, etc]
-
-### Phase 8: Following  (1 day)
-
-**objective:** Enable users to follow other users. Following is a join table that links two user id's
-
-- [ ] Followings CRUD
-- [ ] A current_user can follow other users
-- [ ] A user can view followed users' books, and request to borrow them.
-
-### Phase 9: Allow Complex Styling (1.5 days)
-
-**objective:** Enable complex styling of BookShare.
-
-- [ ] Use Rails helpers to sanitize HTML before rendering.
-- [x] Add favicon
-- [ ] Add modals to login/signup and edit/view forms
-
-### Phase 10: Styling Cleanup and Seeding (1 day)
-
-**objective:** Make the site feel more cohesive and awesome.
-
-- [ ] Get feedback on my UI from others
-- [ ] Refactor HTML classes & CSS rules
-- [ ] Add modals, transitions, and other styling flourishes.
-- [ ] Ensure quick page-loads and seamless navigation
-
-### Bonus Features (TBD)
-- [ ] Add tags to books, make books searchable by tags
-- [ ] List users books by borrowed, lent, and currently held books
-- [ ] Rate popularity of books based on requests and borrows
-- [ ] Custom 404 page
-- [ ] Add friends
-- [ ] Allow users to view multiple requests for the same book(if any)
-- [ ] Search through friends' shelves for books
-- [ ] Pagination / infinite scroll for Books Index
-- [ ] View friends/users within a geographic radius[maps]
-
-[phase-one]: ./docs/phases/phase1.md
-[phase-two]: ./docs/phases/phase2.md
-<!-- [phase-three]: ./docs/phases/phase3.md -->
-[phase-four]: ./docs/phases/phase4.md
-[phase-five]: ./docs/phases/phase5.md
+- [ ] Users have friends, and can only view their books
+- [ ] Enable each book to have multiple requests. User can approve or deny them.
+- [ ] Search for books and users
+- [ ] View friends or users within a certain geographical radius

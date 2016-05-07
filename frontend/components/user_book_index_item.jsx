@@ -117,18 +117,19 @@ var UserBook = React.createClass({
         <Modal
           isOpen={this.state.viewModalOpen}
           onRequestClose={this.closeViewModal}
-          style={modalStyle}>
+          style={modalStyle}
+          >
           <ViewBookDetail book={book} onEditClick={this.closeViewModal}/>
         </Modal>
 
-      
+
        <img src={book.image_url} alt={book.title} onClick={this.openViewModal}
          bookId={book.id}/>
        <section className="caption">
          <h3>{book.title}</h3>
          {this.displayButton(book)}
        </section>
-  
+
     </div>
   ); //return
   }

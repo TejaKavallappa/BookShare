@@ -35455,7 +35455,8 @@
 	        {
 	          isOpen: this.state.viewModalOpen,
 	          onRequestClose: this.closeViewModal,
-	          style: modalStyle },
+	          style: modalStyle
+	        },
 	        React.createElement(ViewBookDetail, { book: book, onEditClick: this.closeViewModal })
 	      ),
 	      React.createElement('img', { src: book.image_url, alt: book.title, onClick: this.openViewModal,
@@ -35854,12 +35855,13 @@
 	          null,
 	          React.createElement(
 	            'button',
-	            { onClick: self.openEditModal, bookId: book.id },
+	            { className: 'btn', onClick: self.openEditModal,
+	              bookId: book.id },
 	            'Edit'
 	          ),
 	          React.createElement(
 	            'button',
-	            { onClick: self.deleteBook },
+	            { className: 'btn', onClick: self.deleteBook },
 	            'Delete'
 	          )
 	        );

@@ -100,8 +100,9 @@ var ViewBookDetail = React.createClass({
     var display = function() {
         if (UserStore.currentUser().id == book.owner_id){
         return (<div>
-          <button onClick={self.openEditModal} bookId={book.id}>Edit</button>
-        <button onClick={self.deleteBook}>Delete</button>
+          <button className="btn" onClick={self.openEditModal}
+            bookId={book.id}>Edit</button>
+        <button className="btn" onClick={self.deleteBook}>Delete</button>
         </div>
       );}
     };
