@@ -4,7 +4,6 @@ var Modal = require('react-modal');
 //actions
 var ClientActions = require('../actions/client_actions');
 //component
-var BookIndex = require('./book_index');
 var EditForm = require('./book_edit');
 //stores
 var BookStore = require('../stores/book_store');

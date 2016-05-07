@@ -62,3 +62,4 @@ end
 - [ ] Enable each book to have multiple requests. User can approve or deny them.
 - [ ] Search for books and users
 - [ ] View friends or users within a certain geographical radius
+- [ ] Enable book borrow requests to be made for a certain time duration

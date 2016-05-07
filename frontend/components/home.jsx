@@ -8,8 +8,6 @@ var UserActions = require('../actions/user_actions');
 //stores
 var UserStore = require('../stores/user_store');
 //components
-var BookIndexItem = require('./book_index_item');
-var BookIndex = require('./book_index');
 var BookStore = require('../stores/book_store');
 var BookForm = require('./book_form');
 var UsersIndex = require('./user_index');

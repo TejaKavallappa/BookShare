@@ -10,7 +10,6 @@ var CurrentUserState = require('../mixins/current_user_state');
 //stores
 var UserStore = require('../stores/user_store');
 
-var BookIndex = require('./book_index');
 var LoginForm = React.createClass({
 
   mixins: [CurrentUserState],
@@ -96,19 +95,19 @@ var LoginForm = React.createClass({
   render: function(){
 
     var self = this;
-    var showBooks = function() {
-      if (self.state.currentUser){
-        return <BookIndex/>;
-      }
-    };
+    // var showBooks = function() {
+    //   if (self.state.currentUser){
+    //     return <BookIndex/>;
+    //   }
+    // };
 
     return (<div id='login-panel'>
     {this.form()}
     {this.errors()}
-    {showBooks()}
   </div>);
 
   }
 });
+// {showBooks()}
 
 module.exports = LoginForm;

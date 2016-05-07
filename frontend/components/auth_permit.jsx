@@ -4,7 +4,6 @@ var UserActions = require('../actions/user_actions');
 var UserStore = require('../stores/user_store');
 //components
 var Splash = require('./splash');
-var BookIndex = require('./book_index');
 var Home = require('./home');
 
 

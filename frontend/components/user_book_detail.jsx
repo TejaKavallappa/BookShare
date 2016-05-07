@@ -3,8 +3,6 @@ var React = require('react');
 var hashHistory = require('react-router').hashHistory;
 //actions
 var ClientActions = require('../actions/client_actions');
-//component
-var BookIndex = require('./book_index');
 //stores
 var BookStore = require('../stores/book_store');
 //mixin

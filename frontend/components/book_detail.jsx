@@ -3,7 +3,6 @@ var hashHistory = require('react-router').hashHistory;
 //actions
 var ClientActions = require('../actions/client_actions');
 //component
-var BookIndex = require('./book_index');
 //stores
 var BookStore = require('../stores/book_store');
 //mixin
@@ -53,7 +52,7 @@ var BookDetail = React.createClass({
     if (!book){
       return (<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom">
       </i>) <span class="sr-only">Loading...</span></div>);
-      
+
     }
 
     var display = function() {
