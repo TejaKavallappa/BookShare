@@ -58,10 +58,10 @@
 	var UserActions = __webpack_require__(245);
 	//Components
 	var AuthPermit = __webpack_require__(251);
-	var UserBooks = __webpack_require__(281);
-	var UserBorrows = __webpack_require__(287);
-	var UserMadeBorrows = __webpack_require__(289);
-	var App = __webpack_require__(293);
+	var UserBooks = __webpack_require__(279);
+	var UserBorrows = __webpack_require__(285);
+	var UserMadeBorrows = __webpack_require__(287);
+	var App = __webpack_require__(288);
 	
 	var Routerr = React.createElement(
 	  Router,
@@ -27835,7 +27835,7 @@
 	var UserStore = __webpack_require__(252);
 	//components
 	var Splash = __webpack_require__(270);
-	var Home = __webpack_require__(280);
+	var Home = __webpack_require__(271);
 	
 	var AuthPermit = React.createClass({
 	  displayName: 'AuthPermit',
@@ -34402,7 +34402,44 @@
 	module.exports = Splash;
 
 /***/ },
-/* 271 */,
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	//react router
+	var ReactRouter = __webpack_require__(186);
+	var hashHistory = ReactRouter.hashHistory;
+	//actions
+	var ClientActions = __webpack_require__(272);
+	var UserActions = __webpack_require__(245);
+	//stores
+	var UserStore = __webpack_require__(252);
+	//components
+	var BookStore = __webpack_require__(275);
+	var BookForm = __webpack_require__(276);
+	var UsersIndex = __webpack_require__(278);
+	var UserBooks = __webpack_require__(279);
+	
+	var Home = React.createClass({
+	  displayName: 'Home',
+	
+	  render: function () {
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'books-list' },
+	        React.createElement(UserBooks, null)
+	      ),
+	      this.props.children
+	    );
+	  }
+	});
+	module.exports = Home;
+
+/***/ },
 /* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34537,8 +34574,7 @@
 	module.exports = ServerActions;
 
 /***/ },
-/* 275 */,
-/* 276 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(246);
@@ -34595,14 +34631,14 @@
 	module.exports = BookStore;
 
 /***/ },
-/* 277 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	//actions
 	var ClientActions = __webpack_require__(272);
 	//mixin
-	var CurrentUserState = __webpack_require__(278);
+	var CurrentUserState = __webpack_require__(277);
 	
 	var BookForm = React.createClass({
 	  displayName: 'BookForm',
@@ -34699,7 +34735,7 @@
 	module.exports = BookForm;
 
 /***/ },
-/* 278 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var UserStore = __webpack_require__(252);
@@ -34731,7 +34767,7 @@
 	module.exports = CurrentUserState;
 
 /***/ },
-/* 279 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -34844,45 +34880,7 @@
 	module.exports = UsersIndex;
 
 /***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	//react router
-	var ReactRouter = __webpack_require__(186);
-	var hashHistory = ReactRouter.hashHistory;
-	//actions
-	var ClientActions = __webpack_require__(272);
-	var UserActions = __webpack_require__(245);
-	//stores
-	var UserStore = __webpack_require__(252);
-	//components
-	var BookStore = __webpack_require__(276);
-	var BookForm = __webpack_require__(277);
-	var UsersIndex = __webpack_require__(279);
-	var UserBooks = __webpack_require__(281);
-	
-	var Home = React.createClass({
-	  displayName: 'Home',
-	
-	  render: function () {
-	
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'books-list' },
-	        React.createElement(UserBooks, null)
-	      ),
-	      this.props.children
-	    );
-	  }
-	});
-	module.exports = Home;
-
-/***/ },
-/* 281 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -34896,12 +34894,12 @@
 	//stores
 	var UserStore = __webpack_require__(252);
 	//components
-	var UserBookIndexItem = __webpack_require__(282);
-	var BookStore = __webpack_require__(276);
-	var BookForm = __webpack_require__(277);
-	var UsersIndex = __webpack_require__(279);
+	var UserBookIndexItem = __webpack_require__(280);
+	var BookStore = __webpack_require__(275);
+	var BookForm = __webpack_require__(276);
+	var UsersIndex = __webpack_require__(278);
 	//mixins
-	var CurrentUserMixin = __webpack_require__(278);
+	var CurrentUserMixin = __webpack_require__(277);
 	
 	var modalStyle = {
 	  overlay: {
@@ -35070,7 +35068,7 @@
 	module.exports = UserBooks;
 
 /***/ },
-/* 282 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//react
@@ -35080,12 +35078,12 @@
 	var Modal = __webpack_require__(166);
 	//actions
 	var ClientActions = __webpack_require__(272);
-	var BorrowActions = __webpack_require__(283);
+	var BorrowActions = __webpack_require__(281);
 	//components
-	var EditForm = __webpack_require__(285);
-	var ViewBookDetail = __webpack_require__(286);
+	var EditForm = __webpack_require__(283);
+	var ViewBookDetail = __webpack_require__(284);
 	//stores
-	var BookStore = __webpack_require__(276);
+	var BookStore = __webpack_require__(275);
 	var UserStore = __webpack_require__(252);
 	
 	var modalStyle = {
@@ -35237,11 +35235,11 @@
 	module.exports = UserBook;
 
 /***/ },
-/* 283 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(246);
-	var BorrowApiUtil = __webpack_require__(284);
+	var BorrowApiUtil = __webpack_require__(282);
 	var hashHistory = __webpack_require__(186).hashHistory;
 	
 	var BorrowActions = {
@@ -35310,7 +35308,7 @@
 	module.exports = BorrowActions;
 
 /***/ },
-/* 284 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(246);
@@ -35370,7 +35368,7 @@
 	module.exports = BorrowApiUtil;
 
 /***/ },
-/* 285 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35378,9 +35376,9 @@
 	//actions
 	var ClientActions = __webpack_require__(272);
 	//mixin
-	var CurrentUserState = __webpack_require__(278);
+	var CurrentUserState = __webpack_require__(277);
 	//stores
-	var BookStore = __webpack_require__(276);
+	var BookStore = __webpack_require__(275);
 	var BookForm = React.createClass({
 	  displayName: 'BookForm',
 	
@@ -35489,7 +35487,7 @@
 	module.exports = BookForm;
 
 /***/ },
-/* 286 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35498,12 +35496,12 @@
 	//actions
 	var ClientActions = __webpack_require__(272);
 	//component
-	var EditForm = __webpack_require__(285);
+	var EditForm = __webpack_require__(283);
 	//stores
-	var BookStore = __webpack_require__(276);
+	var BookStore = __webpack_require__(275);
 	var UserStore = __webpack_require__(252);
 	//mixin
-	var CurrentUserState = __webpack_require__(278);
+	var CurrentUserState = __webpack_require__(277);
 	
 	var modalStyle = {
 	  overlay: {
@@ -35655,7 +35653,7 @@
 	module.exports = ViewBookDetail;
 
 /***/ },
-/* 287 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35665,12 +35663,12 @@
 	//actions
 	var ClientActions = __webpack_require__(272);
 	var UserActions = __webpack_require__(245);
-	var BorrowActions = __webpack_require__(283);
+	var BorrowActions = __webpack_require__(281);
 	//stores
-	var BorrowStore = __webpack_require__(288);
+	var BorrowStore = __webpack_require__(286);
 	var UserStore = __webpack_require__(252);
 	//mixins
-	var CurrentUserMixin = __webpack_require__(278);
+	var CurrentUserMixin = __webpack_require__(277);
 	
 	var UserBorrows = React.createClass({
 	  displayName: 'UserBorrows',
@@ -35800,7 +35798,7 @@
 	module.exports = UserBorrows;
 
 /***/ },
-/* 288 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(246);
@@ -35874,7 +35872,7 @@
 	module.exports = BorrowStore;
 
 /***/ },
-/* 289 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35884,12 +35882,12 @@
 	//actions
 	var ClientActions = __webpack_require__(272);
 	var UserActions = __webpack_require__(245);
-	var BorrowActions = __webpack_require__(283);
+	var BorrowActions = __webpack_require__(281);
 	//stores
-	var BorrowStore = __webpack_require__(288);
+	var BorrowStore = __webpack_require__(286);
 	var UserStore = __webpack_require__(252);
 	//mixins
-	var CurrentUserMixin = __webpack_require__(278);
+	var CurrentUserMixin = __webpack_require__(277);
 	
 	var UserMadeBorrows = React.createClass({
 	  displayName: 'UserMadeBorrows',
@@ -35938,6 +35936,13 @@
 	      );
 	    }
 	    var self = this;
+	    var buttonVal = function (borrow) {
+	      if (borrow.borrowing_status === 'pending') {
+	        return 'Cancel';
+	      } else {
+	        return 'Return';
+	      }
+	    };
 	    return React.createElement(
 	      'div',
 	      { className: 'requests-made' },
@@ -35953,7 +35958,7 @@
 	          React.createElement(
 	            'button',
 	            { className: 'btn', onClick: self.cancelRequest.bind(self, borrow) },
-	            'Cancel'
+	            buttonVal(borrow)
 	          ),
 	          React.createElement('img', { src: borrow.book.image_url, alt: borrow.book.title }),
 	          React.createElement(
@@ -35977,6 +35982,16 @@
 	              'li',
 	              null,
 	              borrow.book.author
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'b',
+	                null,
+	                'Request status: '
+	              ),
+	              borrow.borrowing_status.charAt(0).toUpperCase() + borrow.borrowing_status.slice(1)
 	            )
 	          )
 	        );
@@ -35988,9 +36003,41 @@
 	module.exports = UserMadeBorrows;
 
 /***/ },
-/* 290 */,
-/* 291 */,
-/* 292 */
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//React
+	var React = __webpack_require__(1);
+	var ReactRouter = __webpack_require__(186);
+	var hashHistory = ReactRouter.hashHistory;
+	
+	//Components
+	var LoginForm = __webpack_require__(289);
+	var CurrentUserState = __webpack_require__(277);
+	var NavBar = __webpack_require__(290);
+	var Footer = __webpack_require__(291);
+	//actions
+	var UserActions = __webpack_require__(245);
+	
+	var App = React.createClass({
+	  displayName: 'App',
+	
+	  mixins: [CurrentUserState],
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'app' },
+	      React.createElement(NavBar, null),
+	      this.props.children,
+	      React.createElement(Footer, null)
+	    ); //return
+	  } //render
+	});
+	module.exports = App;
+
+/***/ },
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//react
@@ -36001,7 +36048,7 @@
 	//actions
 	var UserActions = __webpack_require__(245);
 	//mixin
-	var CurrentUserState = __webpack_require__(278);
+	var CurrentUserState = __webpack_require__(277);
 	//stores
 	var UserStore = __webpack_require__(252);
 	
@@ -36122,41 +36169,7 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 293 */
-/***/ function(module, exports, __webpack_require__) {
-
-	//React
-	var React = __webpack_require__(1);
-	var ReactRouter = __webpack_require__(186);
-	var hashHistory = ReactRouter.hashHistory;
-	
-	//Components
-	var LoginForm = __webpack_require__(292);
-	var CurrentUserState = __webpack_require__(278);
-	var NavBar = __webpack_require__(294);
-	var Footer = __webpack_require__(295);
-	//actions
-	var UserActions = __webpack_require__(245);
-	
-	var App = React.createClass({
-	  displayName: 'App',
-	
-	  mixins: [CurrentUserState],
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'app' },
-	      React.createElement(NavBar, null),
-	      this.props.children,
-	      React.createElement(Footer, null)
-	    ); //return
-	  } //render
-	});
-	module.exports = App;
-
-/***/ },
-/* 294 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React
@@ -36166,8 +36179,8 @@
 	var Link = __webpack_require__(186).Link;
 	var Modal = __webpack_require__(166);
 	//Components
-	var LoginForm = __webpack_require__(292);
-	var CurrentUserState = __webpack_require__(278);
+	var LoginForm = __webpack_require__(289);
+	var CurrentUserState = __webpack_require__(277);
 	//actions
 	var UserActions = __webpack_require__(245);
 	
@@ -36346,7 +36359,7 @@
 	module.exports = NavBar;
 
 /***/ },
-/* 295 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//React

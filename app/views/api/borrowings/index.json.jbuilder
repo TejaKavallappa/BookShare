@@ -1,5 +1,6 @@
 json.array!(@borrowings) do |borrowing|
     json.id borrowing.id
+    json.borrowing_status borrowing.request_status
     json.book borrowing.book
     json.borrower borrowing.borrower, :username, :id
     json.owner borrowing.owner, :username, :id

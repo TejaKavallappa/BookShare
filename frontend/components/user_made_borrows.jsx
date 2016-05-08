@@ -50,6 +50,14 @@ var UserMadeBorrows = React.createClass({
     <span class="sr-only">Loading...</span></div>);
     }
     var self = this;
+    var buttonVal = function(borrow){
+      if (borrow.borrowing_status === 'pending'){
+        return 'Cancel';
+      }
+      else{
+        return 'Return';
+      }
+    };
     return (<div className="requests-made">
 
       <h2>Status of your requests</h2>
@@ -57,12 +65,15 @@ var UserMadeBorrows = React.createClass({
       {this.state.borrows.map(function(borrow){
         return (<div key={borrow.id} className="borrow-item">
         <button className="btn" onClick={self.cancelRequest.bind(self,borrow)}>
-          Cancel</button>
+          {buttonVal(borrow)}</button>
         <img src={borrow.book.image_url} alt={borrow.book.title} />
           <ul>
           <li><h3>{borrow.owner.username}</h3></li>
           <li>{borrow.book.title}</li>
           <li>{borrow.book.author}</li>
+          <li><b>Request status: </b>
+          {borrow.borrowing_status.charAt(0).toUpperCase() +
+              borrow.borrowing_status.slice(1)}</li>
           </ul>
         </div>);
 

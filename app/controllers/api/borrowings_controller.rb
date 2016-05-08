@@ -9,11 +9,11 @@ class Api::BorrowingsController < ApplicationController
       # View borrowings where I am the owner
       @borrowings = Borrowing.where(owner_id: current_user.id,
       request_status: 'pending').includes(:book).includes(:borrower)
-      
+
     else
       # View borrowings where I am the requester
       @borrowings = Borrowing.where(borrower_id: current_user.id,
-      request_status: 'pending').includes(:book).includes(:owner)
+      request_status: ['pending', 'borrowed']).includes(:book).includes(:owner)
     end
     render :index
 
