@@ -59,11 +59,11 @@ $teal: #36A9AD;
   flex-flow: wrap row;
   margin-top: 30px;
 }
-img{
-  display: block;
-  width: 50%;
-  height: auto;
-}
+// img{
+//   display: block;
+//   width: 50%;
+//   height: auto;
+// }
 .splash{
   background: image-url('splash-bg.jpg');
   -webkit-background-size: cover;
@@ -74,19 +74,30 @@ img{
   height: 600px;
 }
 .app{
-
   background: $offwhite;
-  min-height: 100vh;
+  min-height: 96vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding: 0 0 40px;
+  position: relative;
 }
-// // footer
-// .footer {
-//     margin: 0 auto;
-//     height: 50px;
-//     width: 100%;
-//     overflow: hidden;
-//     background-color: white;
-//     align-self: flex-end;
-// }
+footer {
+    bottom: 0;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    background-color: white;
+}
+.github-icon{
+  background: url(GitHub-Mark-32px.png);
+  background-repeat: no-repeat;
+  width: 34px;
+  position: absolute;
+  height: 28px;
+  z-index: 100;
+  right: 5px;
+  top: 2px;
+  margin-right: 20px;
+}

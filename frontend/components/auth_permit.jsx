@@ -6,7 +6,6 @@ var UserStore = require('../stores/user_store');
 var Splash = require('./splash');
 var Home = require('./home');
 
-
 var AuthPermit = React.createClass({
   getInitialState: function(){
     return ({currentUser: {}});

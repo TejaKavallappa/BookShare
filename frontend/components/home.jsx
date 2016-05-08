@@ -15,7 +15,6 @@ var UserBooks = require('./user_book_index');
 
 var Home = React.createClass({
   render: function(){
-    var self = this;
 
       return (<div>
           <div className="books-list"><UserBooks/></div>

@@ -19,9 +19,7 @@ var App = React.createClass({
     return (<div className="app">
         <NavBar/>
         {this.props.children}
-
-          <Footer/>
-
+        <Footer/>
       </div>);//return
   }//render
 });

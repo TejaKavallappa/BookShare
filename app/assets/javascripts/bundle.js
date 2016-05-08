@@ -34866,7 +34866,6 @@
 	  displayName: 'Home',
 	
 	  render: function () {
-	    var self = this;
 	
 	    return React.createElement(
 	      'div',
@@ -36358,9 +36357,17 @@
 	
 	  render: function () {
 	    return React.createElement(
-	      "div",
-	      { className: "footer" },
-	      " "
+	      "footer",
+	      null,
+	      React.createElement(
+	        "a",
+	        { href: "https://github.com/TejaKavallappa/BookShare", target: "_blank" },
+	        React.createElement(
+	          "i",
+	          { className: "github-icon" },
+	          " "
+	        )
+	      )
 	    );
 	  }
 	});
