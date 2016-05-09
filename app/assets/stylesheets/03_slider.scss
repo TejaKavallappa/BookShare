@@ -3,10 +3,6 @@ $grey: #7B868A;
 
 .book-index{
   margin: 0 auto;
-  // -webkit-transition: padding 2s;
-  // -webkit-transition: all 3s ease;
-  // -moz-transition: all 3s ease;
-  // -o-transition: all 3s ease;
   transition: all 0.5s ease;
 
   padding-left: 20px;
@@ -27,6 +23,7 @@ $grey: #7B868A;
   height: 500px;
   width: 175px;
   overflow: hidden;
+  z-index: 10;
 
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
@@ -36,7 +33,7 @@ $grey: #7B868A;
   border-radius: 3%;
 
   &:hover + .book-index{
-    margin-left: 160px;
+    transform: translateX(160px);
   }
 
 }
