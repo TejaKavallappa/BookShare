@@ -34397,7 +34397,7 @@
 	    return React.createElement(
 	      "div",
 	      { className: "splash" },
-	      "Welcome to BookShare! A community to share books."
+	      "Welcome to BookShare! A community to share books with other users."
 	    );
 	  }
 	
@@ -36256,8 +36256,11 @@
 	    hashHistory.push("/");
 	  },
 	
-	  guestLogin: function () {
+	  guestLogin1: function () {
 	    UserActions.login({ username: "alice", password: "bookshares" });
+	  },
+	  guestLogin2: function () {
+	    UserActions.login({ username: "frodo", password: "bookspace" });
 	  },
 	
 	  render: function () {
@@ -36285,8 +36288,8 @@
 	            ' ',
 	            React.createElement(
 	              'a',
-	              { href: '#/requests' },
-	              ' Requests'
+	              { href: '#/requests', alt: 'View requests for my books' },
+	              'Requests'
 	            )
 	          ),
 	          React.createElement(
@@ -36294,7 +36297,7 @@
 	            null,
 	            React.createElement(
 	              'a',
-	              { href: '#/request-status' },
+	              { href: '#/request-status', alt: 'View requests I have made' },
 	              'Requests Made'
 	            )
 	          ),
@@ -36335,12 +36338,34 @@
 	            'Sign Up'
 	          ),
 	          React.createElement(
-	            'li',
-	            null,
+	            'div',
+	            { className: 'dropdown' },
 	            React.createElement(
-	              'a',
-	              { href: '#', onClick: self.guestLogin },
-	              'Demo User'
+	              'li',
+	              null,
+	              ' Guest User '
+	            ),
+	            React.createElement(
+	              'ul',
+	              { className: 'dropdown-content' },
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#', onClick: self.guestLogin1 },
+	                  'Alice'
+	                )
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                  'a',
+	                  { href: '#', onClick: self.guestLogin2 },
+	                  'Frodo'
+	                )
+	              )
 	            )
 	          )
 	        );
@@ -36357,7 +36382,7 @@
 	          { className: 'header-logo' },
 	          React.createElement(
 	            Link,
-	            { to: "/" },
+	            { to: "/", alt: 'Back to Home Page' },
 	            React.createElement(
 	              'h1',
 	              null,
@@ -36392,7 +36417,8 @@
 	      null,
 	      React.createElement(
 	        "a",
-	        { href: "https://github.com/TejaKavallappa/BookShare", target: "_blank" },
+	        { href: "https://github.com/TejaKavallappa/BookShare",
+	          target: "_blank", alt: "Link to Teja's github" },
 	        React.createElement(
 	          "i",
 	          { className: "github-icon" },

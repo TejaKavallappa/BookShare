@@ -59,11 +59,25 @@ $teal: #36A9AD;
   flex-flow: wrap row;
   margin-top: 30px;
 }
-// img{
-//   display: block;
-//   width: 50%;
-//   height: auto;
-// }
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown .dropdown-content {
+    position: absolute;
+    top: 100%;
+    display: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+    text-align: center;
+    background: $offwhite;
+    border-radius: 3px;
+}
 .splash{
   background: image-url('splash-bg.jpg');
   -webkit-background-size: cover;
@@ -76,10 +90,9 @@ $teal: #36A9AD;
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: $grey;
   font-size: 52px;
   color: $offwhite;
+  text-align: center;
 }
 .app{
   background: $offwhite;

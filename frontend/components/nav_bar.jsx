@@ -62,8 +62,11 @@ var NavBar = React.createClass({
     hashHistory.push("/");
   },
 
-  guestLogin: function(){
+  guestLogin1: function(){
     UserActions.login({username: "alice", password: "bookshares"});
+  },
+  guestLogin2: function(){
+    UserActions.login({username: "frodo", password: "bookspace"});
   },
 
   render: function(){
@@ -79,8 +82,10 @@ var NavBar = React.createClass({
             </a>
             </li>
 
-          <li> <a href="#/requests"> Requests</a></li>
-          <li><a href="#/request-status">Requests Made</a></li>
+          <li> <a href="#/requests" alt="View requests for my books">
+            Requests</a></li>
+          <li><a href="#/request-status" alt="View requests I have made">
+            Requests Made</a></li>
           <li onClick={self.logout}>Sign Out</li>
           </ul>);
       }
@@ -103,7 +108,15 @@ var NavBar = React.createClass({
 
           <li onClick={self.openLoginModal}>Log In</li>
           <li onClick={self.openSignupModal}>Sign Up</li>
-          <li><a href="#" onClick={self.guestLogin}>Demo User</a></li>
+
+          <div className="dropdown">
+          <li> Guest User </li>
+            <ul className="dropdown-content">
+              <li><a href="#" onClick={self.guestLogin1}>Alice</a></li>
+              <li><a href="#" onClick={self.guestLogin2}>Frodo</a></li>
+            </ul>
+          </div>
+
         </ul>);
       }
     };
@@ -111,7 +124,7 @@ var NavBar = React.createClass({
       <div>
         <header className="header">
           <div className="header-logo">
-            <Link to={ "/" }>
+            <Link to={ "/" } alt="Back to Home Page">
              <h1>BookShare</h1>
             </Link>
             </div>
