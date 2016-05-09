@@ -3,11 +3,13 @@ $grey: #7B868A;
 
 .book-index{
   margin: 0 auto;
-  -webkit-transition: all 3s ease;
-  -moz-transition: all 3s ease;
-  -o-transition: all 3s ease;
-  transition: all 3s ease;
-  padding-left: 17px;
+  // -webkit-transition: padding 2s;
+  // -webkit-transition: all 3s ease;
+  // -moz-transition: all 3s ease;
+  // -o-transition: all 3s ease;
+  transition: all 0.5s ease;
+
+  padding-left: 20px;
   padding-top: 20px;
   h2{
     font-size: 24px;
@@ -35,7 +37,6 @@ $grey: #7B868A;
 
   &:hover + .book-index{
     margin-left: 160px;
-    transition: s;
   }
 
 }

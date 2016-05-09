@@ -34397,7 +34397,9 @@
 	    return React.createElement(
 	      "div",
 	      { className: "splash" },
-	      "Welcome to BookShare! A community to share books with other users."
+	      "Welcome to BookShare!",
+	      React.createElement("br", null),
+	      "A community for users to share books"
 	    );
 	  }
 	
@@ -36419,6 +36421,15 @@
 	    return React.createElement(
 	      "footer",
 	      null,
+	      React.createElement(
+	        "address",
+	        null,
+	        React.createElement(
+	          "a",
+	          { href: "mailto:tejakavallappa@gmail.com" },
+	          "Teja Kavallappa"
+	        )
+	      ),
 	      React.createElement(
 	        "a",
 	        { href: "https://github.com/TejaKavallappa/BookShare",

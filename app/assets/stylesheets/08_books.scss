@@ -74,10 +74,6 @@ $greytext: #494E52;
   visibility: hidden;
   opacity: 0;
   transition: all .3s ease;
-  h3{
-    text-overflow: ellipsis;
-  }
-
 }
 .book-detail-item:hover .caption{
   opacity: 1;

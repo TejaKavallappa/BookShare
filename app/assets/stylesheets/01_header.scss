@@ -111,6 +111,15 @@ footer {
     width: 100%;
     background-color: white;
 }
+footer address{
+  position: absolute;
+  height: 28px;
+  z-index: 100;
+  right: 5px;
+  top: 6px;
+  margin-right: 65px;
+  font-style: normal;
+}
 .github-icon{
   background: image-url("GitHub-Mark-32px.png");
   background-repeat: no-repeat;
