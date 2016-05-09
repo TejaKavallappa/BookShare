@@ -35211,6 +35211,10 @@
 	
 	  render: function () {
 	    var book = this.props.book;
+	    var title = book.title;
+	    if (book.title.length > 25) {
+	      title = title.substring(0, 22) + "...";
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'book-detail-item' },
@@ -35231,7 +35235,7 @@
 	        React.createElement(
 	          'h3',
 	          null,
-	          book.title
+	          title
 	        ),
 	        this.displayButton(book)
 	      )

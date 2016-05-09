@@ -111,6 +111,10 @@ var UserBook = React.createClass({
 
   render: function(){
     var book = this.props.book;
+    var title = book.title;
+    if (book.title.length > 25){
+      title = title.substring(0,22) + "...";
+    }
     return (
       <div className='book-detail-item'>
 
@@ -126,7 +130,7 @@ var UserBook = React.createClass({
        <img src={book.image_url} alt={book.title} onClick={this.openViewModal}
          bookId={book.id}/>
        <section className="caption">
-         <h3>{book.title}</h3>
+         <h3>{title}</h3>
          {this.displayButton(book)}
        </section>
 
