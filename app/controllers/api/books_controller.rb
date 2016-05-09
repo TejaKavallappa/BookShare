@@ -20,7 +20,7 @@ class Api::BooksController < ApplicationController
     else
       # requesting books belonging to another user, that have not been already requested or borrowed
       # @books = Book.where(owner_id: userId && 'owner_id NOT IN (SELECT owner_id FROM borrowings)')
-      @books = Book.where(owner_id: userId).includes(:borrowing)
+      @books = Book.where(owner_id: userId).includes(:borrowing).sort_by(&:borrow_status).reverse()
       render :index
     end
 
