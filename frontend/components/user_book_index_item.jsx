@@ -117,12 +117,9 @@ var UserBook = React.createClass({
         <Modal
           isOpen={this.state.viewModalOpen}
           onRequestClose={this.closeViewModal}
-          style={modalStyle}
-          >
+          style={modalStyle}>
           <ViewBookDetail book={book}
-            onEditClick={this.closeViewModal}
-            borrowDisabled={this.state.disabled}
-            onBorrowClick={this.requestBook}/>
+            onEditClick={this.closeViewModal}/>
         </Modal>
 
 

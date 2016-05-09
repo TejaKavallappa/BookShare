@@ -35,3 +35,6 @@
   background-image: -o-linear-gradient(top, #c6cccc, #5f6366);
   background-image: linear-gradient(to bottom, #c6cccc, #5f6366);
 }
+.btn:disabled:hover{
+  cursor: auto;
+}

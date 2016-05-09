@@ -34394,7 +34394,11 @@
 	  displayName: "Splash",
 	
 	  render: function () {
-	    return React.createElement("div", { className: "splash" });
+	    return React.createElement(
+	      "div",
+	      { className: "splash" },
+	      "Welcome to BookShare! A community to share books."
+	    );
 	  }
 	
 	});
@@ -34626,6 +34630,12 @@
 	
 	BookStore.find = function (id) {
 	  return _books[id];
+	};
+	
+	BookStore.tempBorrow = function (id) {
+	  // When a user borrows a book from a modal-view
+	  // the database gets updated but not the bookstore.
+	  _books[id].borrow_status = "pending";
 	};
 	
 	module.exports = BookStore;
@@ -35209,12 +35219,9 @@
 	        {
 	          isOpen: this.state.viewModalOpen,
 	          onRequestClose: this.closeViewModal,
-	          style: modalStyle
-	        },
+	          style: modalStyle },
 	        React.createElement(ViewBookDetail, { book: book,
-	          onEditClick: this.closeViewModal,
-	          borrowDisabled: this.state.disabled,
-	          onBorrowClick: this.requestBook })
+	          onEditClick: this.closeViewModal })
 	      ),
 	      React.createElement('img', { src: book.image_url, alt: book.title, onClick: this.openViewModal,
 	        bookId: book.id }),
@@ -35495,6 +35502,7 @@
 	var Modal = __webpack_require__(166);
 	//actions
 	var ClientActions = __webpack_require__(272);
+	var BorrowActions = __webpack_require__(281);
 	//component
 	var EditForm = __webpack_require__(283);
 	//stores
@@ -35532,7 +35540,7 @@
 	
 	
 	  getInitialState: function () {
-	    return { editModalOpen: false };
+	    return { editModalOpen: false, disabled: false };
 	  },
 	
 	  closeEditModal: function () {
@@ -35548,6 +35556,20 @@
 	    event.preventDefault();
 	    ClientActions.removeBook(this.props.book.id);
 	  },
+	
+	  requestBook: function (event) {
+	
+	    var borrow = {
+	      borrower_id: UserStore.currentUser().id,
+	      owner_id: this.props.book.owner_id,
+	      book_id: this.props.book.id,
+	      request_status: "pending"
+	    };
+	    BorrowActions.requestBook(borrow);
+	    BookStore.tempBorrow(this.props.book.id);
+	    this.setState({ disabled: true });
+	  },
+	
 	  render: function () {
 	    var book = this.props.book;
 	    var self = this;
@@ -35566,6 +35588,7 @@
 	    }
 	
 	    var display = function () {
+	      // If viewer is the owner then allow to edit/delete book
 	      if (UserStore.currentUser().id == book.owner_id) {
 	        return React.createElement(
 	          'div',
@@ -35583,19 +35606,15 @@
 	          )
 	        );
 	      } else {
-	        // if book has been borrowed, disable the button and change text
-	        if (self.props.borrowDisabled) {
+	        // if book has been borrowed, disable the button and change text\
+	        if (self.props.book.borrow_status === 'pending' || self.props.book.borrow_status === 'borrowed') {
 	          return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	              'button',
-	              {
-	                className: 'btn',
-	                disabled: self.props.borrowDisabled,
-	                bookId: book.id },
-	              'Borrowed'
-	            )
+	            'button',
+	            {
+	              className: 'btn',
+	              disabled: true,
+	              bookId: book.id },
+	            'Borrowed'
 	          );
 	        } else {
 	          return React.createElement(
@@ -35605,9 +35624,8 @@
 	              'button',
 	              {
 	                className: 'btn',
-	                onClick: self.props.onBorrowClick(),
-	                disabled: self.props.borrowDisabled,
-	                bookId: book.id },
+	                disabled: self.state.disabled,
+	                onClick: self.requestBook },
 	              'Borrow'
 	            )
 	          );

@@ -3,6 +3,7 @@ var hashHistory = require('react-router').hashHistory;
 var Modal = require('react-modal');
 //actions
 var ClientActions = require('../actions/client_actions');
+var BorrowActions = require('../actions/borrow_actions');
 //component
 var EditForm = require('./book_edit');
 //stores
@@ -38,7 +39,7 @@ var modalStyle = {
 var ViewBookDetail = React.createClass({
 
   getInitialState: function(){
-    return ({editModalOpen: false});
+    return ({editModalOpen: false, disabled: false});
   },
 
   closeEditModal: function(){
@@ -54,6 +55,21 @@ var ViewBookDetail = React.createClass({
     event.preventDefault();
     ClientActions.removeBook(this.props.book.id);
   },
+
+  requestBook: function(event){
+
+    var borrow = {
+      borrower_id: UserStore.currentUser().id,
+      owner_id: this.props.book.owner_id,
+      book_id: this.props.book.id,
+      request_status: "pending"
+    };
+    BorrowActions.requestBook(borrow);
+    BookStore.tempBorrow(this.props.book.id);
+    this.setState({disabled: true});
+  },
+
+
   render: function(){
     var book = this.props.book;
     var self = this;
@@ -66,6 +82,7 @@ var ViewBookDetail = React.createClass({
     }
 
     var display = function() {
+      // If viewer is the owner then allow to edit/delete book
         if (UserStore.currentUser().id == book.owner_id){
         return (<div>
           <button className="btn" onClick={self.openEditModal}
@@ -74,21 +91,23 @@ var ViewBookDetail = React.createClass({
         </div>);
       }
         else{
-          // if book has been borrowed, disable the button and change text
-          if(self.props.borrowDisabled){
-            return(<div><button
+          // if book has been borrowed, disable the button and change text\
+          if(self.props.book.borrow_status === 'pending' ||
+            self.props.book.borrow_status === 'borrowed'){
+            return(<button
               className="btn"
-              disabled={self.props.borrowDisabled}
-              bookId={book.id}>Borrowed
-            </button></div>);
+              disabled={true}
+              bookId={book.id}>
+              Borrowed
+            </button>);
           }
           else
           {
           return(<div><button
             className="btn"
-            onClick={self.props.onBorrowClick()}
-            disabled={self.props.borrowDisabled}
-            bookId={book.id}>Borrow
+            disabled={self.state.disabled}
+            onClick={self.requestBook}>
+            Borrow
           </button></div>);
         }
       }
@@ -109,7 +128,6 @@ var ViewBookDetail = React.createClass({
             <h4>by {book.author}</h4>
             <p>{book.description ? book.description : ""}</p>
             {display()}
-
           </div>
       );
   }//render

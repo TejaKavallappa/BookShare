@@ -72,6 +72,14 @@ $teal: #36A9AD;
   background-size: 100% auto;
   background-repeat: no-repeat;
   height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: $grey;
+  font-size: 52px;
+  color: $offwhite;
 }
 .app{
   background: $offwhite;

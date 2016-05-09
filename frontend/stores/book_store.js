@@ -49,4 +49,10 @@ BookStore.find = function(id){
   return _books[id];
 };
 
+BookStore.tempBorrow = function(id){
+  // When a user borrows a book from a modal-view
+  // the database gets updated but not the bookstore.
+  _books[id].borrow_status = "pending";
+};
+
 module.exports = BookStore;
