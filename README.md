@@ -15,7 +15,7 @@ Explore at [https://bookshares.herokuapp.com/][live]
 
 ## Project Page:
 
-[![landing-page](./docs/images/landing_page1.png)]
+![landing-page](./docs/images/landing_page1.png)
 
 [landing-page]: docs/images/landing_page1.png
 
