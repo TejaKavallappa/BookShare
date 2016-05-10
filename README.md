@@ -1,6 +1,6 @@
 # BookShare
 
-BookShare is a web application inspired by GoodReads built using Ruby on Rails and React.js. Users can get seed money for new restaurant ideas.
+BookShare is a web application inspired by GoodReads built using Ruby on Rails and React.js. Users can view other users' book collections and request to borrow other users' books or approve or reject requests to borrow books.
 
 Explore at [https://bookshares.herokuapp.com/][live]
 
