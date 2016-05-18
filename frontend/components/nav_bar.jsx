@@ -28,7 +28,7 @@ var modalStyle = {
     border          : '1px solid #ccc',
     borderRadius    : '20px',
     padding         : '20px',
-    height          : '300px',
+    height          : '310px',
     width           : '400px',
     margin          : '0 auto'
   }
