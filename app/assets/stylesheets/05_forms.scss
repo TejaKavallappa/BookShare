@@ -3,17 +3,17 @@ $grey: #7B868A;
 $teal: #36A9AD;
 $greytext: #494E52;
 $errorRed: #D76D68;
-
-#login-form{
+#login-panel{
   position: absolute;
-  top: 80px;
-  left: 60px;
+  top: 10px;
+  // left: 100px;
   background: $offwhite;
   background-color: white;
   text-align: center;
   display: flex;
   align-items: flex-start;
-  margin: auto;
+  flex-direction: column;
+  margin: 0 70px;
   clear: both;
   height: 150px;
   padding: 10px;
@@ -24,15 +24,27 @@ $errorRed: #D76D68;
     border:2px solid $teal;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    margin: 1px;
+    margin: 15px;
 }
-}//#login-form
-
+h1{
+  font-weight: 900;
+  padding: 20px;
+  font-size: 40px;
+  color: $teal;
+  margin: 0 auto 0 auto;
+  }
+.btn{
+  margin-top: 20px;
+}
 .error{
   font-size: 18px;
   text-align: center;
   color: $errorRed;
+  margin: 10px
 }
+}//.login-form
+
+
 
 .book-form{
   position: absolute;

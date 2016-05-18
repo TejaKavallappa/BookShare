@@ -34425,9 +34425,6 @@
 	//stores
 	var UserStore = __webpack_require__(252);
 	//components
-	var BookStore = __webpack_require__(275);
-	var BookForm = __webpack_require__(276);
-	var UsersIndex = __webpack_require__(278);
 	var UserBooks = __webpack_require__(279);
 	
 	var Home = React.createClass({
@@ -34746,7 +34743,8 @@
 	  getInitialState: function () {
 	    return {
 	      currentUser: UserStore.currentUser(),
-	      userErrors: UserStore.errors() };
+	      userErrors: {}
+	    };
 	  },
 	  componentWillMount: function () {
 	    this.userListener = UserStore.addListener(this.updateUser);
@@ -36132,25 +36130,24 @@
 	
 	    return React.createElement(
 	      'div',
-	      { id: 'login-form' },
+	      { className: 'login-form' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'BookShare'
+	      ),
 	      React.createElement(
 	        'form',
 	        { onSubmit: this.handleSubmit },
-	        React.createElement(
-	          'label',
-	          null,
-	          'Username ',
-	          React.createElement('input', { type: 'text', onChange: this.usernameChange }),
-	          React.createElement('br', null)
-	        ),
+	        React.createElement('input', {
+	          placeholder: 'Username',
+	          type: 'text',
+	          onChange: this.usernameChange }),
 	        React.createElement('br', null),
-	        React.createElement(
-	          'label',
-	          null,
-	          'Password ',
-	          React.createElement('input', { type: 'password', onChange: this.passwordChange }),
-	          React.createElement('br', null)
-	        ),
+	        React.createElement('input', {
+	          placeholder: 'Password',
+	          type: 'password',
+	          onChange: this.passwordChange }),
 	        React.createElement('br', null),
 	        insertButton()
 	      )
@@ -36192,7 +36189,7 @@
 	    left: 0,
 	    right: 0,
 	    bottom: 0,
-	    backgroundColor: 'rgba(255, 255, 255, 0.75)'
+	    backgroundColor: 'rgba(255, 255, 255, 0.4)'
 	  },
 	  content: {
 	    position: 'fixed',

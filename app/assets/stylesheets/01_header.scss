@@ -51,7 +51,13 @@ $teal: #36A9AD;
   font-weight: bold;
 }
 .bk-button:hover{
-  text-decoration: underline;
+  background-color: $offwhite;
+  color: $grey;
+  border-radius: 3px;
+  // text-decoration: underline;
+}
+.bk-button:hover:disabled{
+  cursor: auto;
 }
 
 .books-index{

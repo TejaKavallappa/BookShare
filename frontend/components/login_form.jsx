@@ -74,19 +74,23 @@ var LoginForm = React.createClass({
     };
 
     return (
-      <div id="login-form">
-      <form onSubmit={this.handleSubmit} >
-
-          <label>Username&nbsp;
-          <input type="text" onChange={this.usernameChange}></input><br/>
-          </label>
+      <div className="login-form">
+        <h1>BookShare</h1>
+        <form onSubmit={this.handleSubmit} >
+          <input
+            placeholder="Username"
+            type="text"
+            onChange={this.usernameChange}>
+          </input>
           <br/>
-          <label>
-            Password&nbsp;
-          <input type="password" onChange={this.passwordChange}></input><br/>
-          </label>
 
-        <br/>
+          <input
+            placeholder="Password"
+            type="password"
+            onChange={this.passwordChange}>
+          </input>
+          <br/>
+
           {insertButton()}
       </form>
       </div>

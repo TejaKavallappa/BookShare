@@ -68,9 +68,18 @@ $grey: #7B868A;
 
 }
 
+
 #slideout-users:hover .hamburger{
   display: none;
 }
+
+.users-index li{
+  text-decoration: underline;
+}
+
+// .users-index li:nth-child(odd){
+//   text-decoration: underline;
+// }
 
 .hamburger{
     background: image-url("hamburger.svg");

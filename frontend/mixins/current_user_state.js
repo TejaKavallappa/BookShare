@@ -5,7 +5,8 @@ var CurrentUserState = {
   getInitialState: function(){
     return {
       currentUser: UserStore.currentUser(),
-      userErrors: UserStore.errors()};
+      userErrors: {}
+    };
   },
   componentWillMount: function(){
     this.userListener = UserStore.addListener(this.updateUser);

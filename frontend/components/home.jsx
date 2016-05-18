@@ -8,9 +8,6 @@ var UserActions = require('../actions/user_actions');
 //stores
 var UserStore = require('../stores/user_store');
 //components
-var BookStore = require('../stores/book_store');
-var BookForm = require('./book_form');
-var UsersIndex = require('./user_index');
 var UserBooks = require('./user_book_index');
 
 var Home = React.createClass({
@@ -18,7 +15,7 @@ var Home = React.createClass({
 
       return (<div>
           <div className="books-list"><UserBooks/></div>
-          
+
           {this.props.children}
         </div>);
   }
