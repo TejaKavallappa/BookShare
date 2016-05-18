@@ -34709,35 +34709,20 @@
 	      React.createElement(
 	        'form',
 	        { onSubmit: this.handleSubmit },
-	        React.createElement(
-	          'label',
-	          null,
-	          'Title ',
-	          React.createElement('br', null)
-	        ),
 	        React.createElement('input', {
+	          placeholder: 'Title',
 	          type: 'text',
 	          value: this.state.title,
 	          onChange: this.titleChange }),
 	        React.createElement('br', null),
-	        React.createElement(
-	          'label',
-	          null,
-	          'Author ',
-	          React.createElement('br', null)
-	        ),
 	        React.createElement('input', {
+	          placeholder: 'Author',
 	          type: 'text',
 	          value: this.state.author,
 	          onChange: this.authorChange }),
 	        React.createElement('br', null),
-	        React.createElement(
-	          'label',
-	          null,
-	          'Description ',
-	          React.createElement('br', null)
-	        ),
 	        React.createElement('textarea', {
+	          placeholder: 'Description',
 	          value: this.state.description,
 	          onChange: this.descriptionChange || "" }),
 	        React.createElement('br', null),
@@ -34935,7 +34920,7 @@
 	    border: '1px solid #ccc',
 	    borderRadius: '20px',
 	    padding: '20px',
-	    height: '300px',
+	    height: '400px',
 	    width: '400px',
 	    margin: '0 auto'
 	  }
@@ -35120,7 +35105,7 @@
 	    border: '1px solid #ccc',
 	    borderRadius: '20px',
 	    padding: '20px',
-	    height: '300px',
+	    height: '400px',
 	    width: '400px',
 	    margin: '0 auto'
 	  }
@@ -35463,35 +35448,20 @@
 	      React.createElement(
 	        'form',
 	        { onSubmit: this.handleSubmit },
-	        React.createElement(
-	          'label',
-	          null,
-	          'Title',
-	          React.createElement('br', null)
-	        ),
 	        React.createElement('input', {
+	          placeholder: 'Title',
 	          type: 'text',
 	          value: this.state.title,
 	          onChange: this.titleChange }),
 	        React.createElement('br', null),
-	        React.createElement(
-	          'label',
-	          null,
-	          'Author',
-	          React.createElement('br', null)
-	        ),
 	        React.createElement('input', {
+	          placeholder: 'Author',
 	          type: 'text',
 	          value: this.state.author,
 	          onChange: this.authorChange }),
 	        React.createElement('br', null),
-	        React.createElement(
-	          'label',
-	          null,
-	          'Description',
-	          React.createElement('br', null)
-	        ),
 	        React.createElement('textarea', {
+	          placeholder: 'Description',
 	          value: this.state.description,
 	          onChange: this.descriptionChange }),
 	        React.createElement('br', null),

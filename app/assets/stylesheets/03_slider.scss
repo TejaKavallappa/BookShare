@@ -39,7 +39,6 @@ $grey: #7B868A;
 }
 
 #slideout_inner {
-
   position: fixed;
   top: 50px;
   left: -250px;
@@ -61,6 +60,7 @@ $grey: #7B868A;
   background-color: $teal;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
 
   #slideout_inner {
     left: 0;

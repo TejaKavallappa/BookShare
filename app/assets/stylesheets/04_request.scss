@@ -1,3 +1,9 @@
+$offwhite: #F8F8F8;
+$grey: #7B868A;
+$teal: #36A9AD;
+$greytext: #494E52;
+$errorRed: #D76D68;
+
 .request-page{
   margin-top: 30px;
   margin-left: 40px;
@@ -5,7 +11,8 @@
   h2{
     font-size: 24px;
     font-weight: 600;
-    margin-left: 4px;
+    color: $greytext;
+
   }
 }
 
@@ -16,7 +23,9 @@
   h2{
     font-size: 24px;
     font-weight: 600;
-    margin-left: 4px;
+    color: $greytext;
+    margin-left: -19px;
+    margin-bottom: 20px;
   }
 
   .borrow-item{

@@ -30,6 +30,14 @@ User.create!(
       username: "anne",
       password: "bookspace"
 )
+User.create!(
+      username: "kathy",
+      password: "bookspace"
+)
+User.create!(
+      username: "jane",
+      password: "bookspace"
+)
 
 
   # Book.create!(
@@ -100,16 +108,6 @@ User.create!(
 #       request_status: "pending"
 # )
 
-
-
-# bookImages.each do |book_link|
-#   Book.create!(
-#         title: Faker::Book.title,
-#         author: Faker::Book.author,
-#         owner_id: ,
-#         image_url: book_link
-#   )
-# end
 
 Book.create!(
   title: "The Dharma Bums",
@@ -193,14 +191,14 @@ Book.create!(
   author: "Haruki Murakami",
   description: "Kafka on the Shore is powered by two remarkable characters: a teenage boy, Kafka Tamura, who runs away from home either to escape a gruesome oedipal prophecy or to search for his long-missing mother and sister; and an aging simpleton called Nakata, who never recovered from a wartime affliction and now is drawn toward Kafka for reasons that, like the most basic activities of daily life, he cannot fathom. As their paths converge, and the reasons for that convergence become clear, Haruki Murakami enfolds readers in a world where cats talk, fish fall from the sky, and spirits slip out of their bodies to make love or commit murder. Kafka on the Shore displays one of the world’s great storytellers at the peak of his powers.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=ypQHO-JWFKgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://ecx.images-amazon.com/images/I/81wBg2-QXYL.jpg"
 )
 Book.create!(
   title: "Never Let Me Go",
   author: "Kazuo Ishiguro",
   description: "Hailsham seems like a pleasant English boarding school, far from the influences of the city. Its students are well tended and supported, trained in art and literature, and become just the sort of people the world wants them to be. But, curiously, they are taught nothing of the outside world and are allowed little contact with it. Within the grounds of Hailsham, Kathy grows from schoolgirl to young woman, but it’s only when she and her friends Ruth and Tommy leave the safe grounds of the school (as they always knew they would) that they realize the full truth of what Hailsham is.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=OBwDg13MGkMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "https://upload.wikimedia.org/wikipedia/en/2/25/Never_Let_Me_Go.jpg"
 )
 
 Book.create!(
@@ -257,14 +255,14 @@ Book.create!(
   author: "Daniel Kahneman",
   description: "Daniel Kahneman, the renowned psychologist and winner of the Nobel Prize in Economics, takes us on a groundbreaking tour of the mind and explains the two systems that drive the way we think. System 1 is fast, intuitive, and emotional; System 2 is slower, more deliberative, and more logical. The impact of overconfidence on corporate strategies, the difficulties of predicting what will make us happy in the future, the profound effect of cognitive biases on everything from playing the stock market to planning our next vacation—each of these can be understood only by knowing how the two systems shape our judgments and decisions.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=ZuKTvERuPG8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://ecx.images-amazon.com/images/I/51oXKWrcYYL.jpg"
 )
 Book.create!(
   title: "Midnight's Children",
   author: "Salman Rushdie",
   description: "Saleem Sinai is born at the stroke of midnight on August 15, 1947, the very moment of India’s independence. Greeted by fireworks displays, cheering crowds, and Prime Minister Nehru himself, Saleem grows up to learn the ominous consequences of this coincidence. His every act is mirrored and magnified in events that sway the course of national affairs; his health and well-being are inextricably bound to those of his nation; his life is inseparable, at times indistinguishable, from the history of his country. Perhaps most remarkable are the telepathic powers linking him with India’s 1,000 other “midnight’s children,” all born in that initial hour and endowed with magical gifts.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=IT6vfrb5fNcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://ecx.images-amazon.com/images/I/51yqNUCZu6L._SX322_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "The Design of Everyday Things",
@@ -289,25 +287,25 @@ Book.create!(
 Book.create!(
   title: "One Two Three Infinity",
   author: "George Gamow",
-  owner_id: rand(1..6),
+  owner_id: rand(3..6),
   image_url: "http://stang.sc.mahidol.ac.th/ReadforLife/images/10_.jpg"
 )
 Book.create!(
   title: "The Giving tree",
   author: "Shel Silverstein",
-  owner_id: rand(1..6),
+  owner_id: rand(3..6),
   image_url: "http://ecx.images-amazon.com/images/I/516dsrPeFDL._SX375_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "Quiet",
   author: "Susan Cain",
-  owner_id: rand(1..6),
+  owner_id: rand(3..6),
   image_url: "http://ecx.images-amazon.com/images/I/41m0N7IIcsL._SX323_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "My Uncle Oswald",
   author: "Roald Dahl",
-  owner_id: rand(1..6),
+  owner_id: rand(3..6),
   image_url: "http://ecx.images-amazon.com/images/I/41XcxYvcYiL._SX300_BO1,204,203,200_.jpg"
 )
 Book.create!(

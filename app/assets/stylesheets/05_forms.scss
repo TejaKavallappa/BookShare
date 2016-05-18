@@ -26,21 +26,19 @@ $errorRed: #D76D68;
     border-radius: 5px;
     margin: 1px;
 }
+}//#login-form
 
-}
 .error{
   font-size: 18px;
   text-align: center;
   color: $errorRed;
 }
+
 .book-form{
-  label{
-    font-weight: bold;
-  }
   position: absolute;
-  top: 45px;
-  left: 101px;
-  text-align: center;
+  top: 20px;
+  left: 50px;
+  text-align: left;
   display: flex;
   align-items: flex-start;
   margin: auto;
@@ -53,9 +51,18 @@ $errorRed: #D76D68;
 
   input[type=text], textarea {
     padding:5px;
-    border:2px solid $teal;
+    border:2px solid $grey;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    margin: 1px;
+    width: 300px;
+    margin: 10px;
+  }
+  textarea{
+    height: 200px;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  .btn{
+    margin-top: 15px;
   }
 }
