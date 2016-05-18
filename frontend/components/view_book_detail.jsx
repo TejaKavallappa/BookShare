@@ -124,9 +124,9 @@ var ViewBookDetail = React.createClass({
              <EditForm bookId={book.id} onSubmit={this.closeEditModal}/>
            </Modal>
 
-            <h3> {book.title} </h3>
-            <h4>by {book.author}</h4>
-            <p>{book.description ? book.description : ""}</p>
+            <h3> {book.title} </h3><br/>
+            <h4>by {book.author}</h4><br/>
+            <p>{book.description ? book.description : ""}</p><br/>
             {display()}
           </div>
       );

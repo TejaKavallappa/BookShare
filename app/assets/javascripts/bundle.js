@@ -34397,9 +34397,13 @@
 	    return React.createElement(
 	      "div",
 	      { className: "splash" },
-	      "Welcome to BookShare!",
-	      React.createElement("br", null),
-	      "A community for users to share books"
+	      React.createElement(
+	        "p",
+	        null,
+	        "Welcome to BookShare!",
+	        React.createElement("br", null),
+	        "A community for users to share books"
+	      )
 	    );
 	  }
 	
@@ -35166,7 +35170,7 @@
 	    if (UserStore.currentUser().id == book.owner_id) {
 	      return React.createElement(
 	        'div',
-	        null,
+	        { className: 'edit-delete' },
 	        React.createElement(
 	          Modal,
 	          {
@@ -35658,17 +35662,20 @@
 	        book.title,
 	        ' '
 	      ),
+	      React.createElement('br', null),
 	      React.createElement(
 	        'h4',
 	        null,
 	        'by ',
 	        book.author
 	      ),
+	      React.createElement('br', null),
 	      React.createElement(
 	        'p',
 	        null,
 	        book.description ? book.description : ""
 	      ),
+	      React.createElement('br', null),
 	      display()
 	    );
 	  } //render

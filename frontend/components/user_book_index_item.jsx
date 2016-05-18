@@ -78,7 +78,7 @@ var UserBook = React.createClass({
 
   displayButton: function(book){
     if (UserStore.currentUser().id == book.owner_id){
-      return (<div>
+      return (<div className="edit-delete">
 
         <Modal
           isOpen={this.state.editModalOpen}

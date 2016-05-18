@@ -15,9 +15,22 @@ User.create!(
       password: "bookspace"
 )
 User.create!(
-      username: "teja",
+      username: "arthur",
       password: "bookspace"
 )
+User.create!(
+      username: "scout",
+      password: "bookspace"
+)
+User.create!(
+      username: "arkady",
+      password: "bookspace"
+)
+User.create!(
+      username: "anne",
+      password: "bookspace"
+)
+
 
   # Book.create!(
   #       title: "Harry Potter and the cursed child",
@@ -110,14 +123,14 @@ Book.create!(
   author: "Steven D. Levitt",
   description: "Modern life can be baffling and chaotic. Is there any way of making sense of it? The answer, explains groundbreaking thinker Steven Levitt, lies in economics. Not ordinary economics, but freakonomics. It is at the heart of everything we see and do and the subjects that bedevil us daily: from parenting to crime, sport to politics, fat to cheating, fear to traffic jams. away the jargon and calculations of the experts' to explore the riddles of everyday life and examine topics such as: how chips are more likely to kill you than murder or a terrorist attack; why sportsmen cheat and how fraud can be spotted; why violent crime can be linked not to gun laws, policing or poverty, but to abortion; why a road is more efficient when everyone travels at 20mph; how the name you give your child can give them an advantage in later life; and what really causes obesity epidemics. Ultimately, he shows us that economics is all about how people get what they want, and what makes them do it. contemporary living and reaching some astonishing conclusions, Freakonomics will make you see the familiar world through a completely original lens.",
   owner_id: rand(1..3),
-  image_url: "http://books.google.com/books/content?id=p9XrAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+  image_url: "http://ecx.images-amazon.com/images/I/51mb6DELsQL._SX330_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "The Rosie Project",
   author: "Graeme Simsion",
   description: "A socially awkward genetics professor who has never been on a second date sets out to find the perfect wife, but instead finds Rosie Jarman, a fiercely independent barmaid who is on a quest to find her biological father.",
   owner_id: rand(1..3),
-  image_url: "http://books.google.com/books/content?id=An6mAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://covers.booktopia.com.au/big/9781922079770/the-rosie-project.jpg"
 )
 Book.create!(
   title: "Harry Potter and the Sorcerer's Stone",
@@ -173,7 +186,7 @@ Book.create!(
   author: "Oliver Sacks",
   description: "In The Mind's Eye, Sacks examines questions ranging from the primary experiences of how we perceive depth or color or motion to the complex matter of how different individuals have varied ways of thinking and experiencing or recreating the visual world.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=m2qnBn9A-iAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://bookcoverarchive.com/wp-content/uploads/amazon/the_minds_eye.jpg"
 )
 Book.create!(
   title: "Kafka on the Shore",
@@ -195,49 +208,49 @@ Book.create!(
   author: "Chris Hadfield",
   description: "Colonel Chris Hadfield has spent decades training as an astronaut and has logged nearly 4000 hours in space. During this time he has broken into a Space Station with a Swiss army knife, disposed of a live snake while piloting a plane, and been temporarily blinded while clinging to the exterior of an orbiting spacecraft. The secret to Col. Hadfield's success-and survival-is an unconventional philosophy he learned at NASA: prepare for the worst-and enjoy every moment of it. In An Astronaut's Guide to Life on Earth, Col. Hadfield takes readers deep into his years of training and space exploration to show how to make the impossible possible. Through eye-opening, entertaining stories filled with the adrenaline of launch, the mesmerizing wonder of spacewalks, and the measured, calm responses mandated by crises, he explains how conventional wisdom can get in the way of achievement-and happiness. His own extraordinary education in space has taught him some counterintuitive lessons: don't visualize success, do care what others think, and always sweat the small stuff. You might never be able to build a robot, pilot a spacecraft, make a music video or perform basic surgery in zero gravity like Col. Hadfield. But his vivid and refreshing insights will teach you how to think like an astronaut, and will change, completely, the way you view life on Earth-especially your own.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=fohmsLst158C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://sites.psu.edu/outofthisworld/wp-content/uploads/sites/6475/2014/02/guide.jpg"
 )
 Book.create!(
   title: "Little Brother",
   author: "Cory Doctorow",
   description: "Marcus, a.k.a 'w1n5t0n,' is only seventeen years old, but he figures he already knows how the system works–and how to work the system. Smart, fast, and wise to the ways of the networked world, he has no trouble outwitting his high school's intrusive but clumsy surveillance systems. But his whole world changes when he and his friends find themselves caught in the aftermath of a major terrorist attack on San Francisco. In the wrong place at the wrong time, Marcus and his crew are apprehended by the Department of Homeland Security and whisked away to a secret prison where they're mercilessly interrogated for days. When the DHS finally releases them, Marcus discovers that his city has become a police state where every citizen is treated like a potential terrorist. He knows that no one will believe his story, which leaves him only one option: to take down the DHS himself.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=r1zne2mZDW8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://d.gr-assets.com/books/1349673129l/954674.jpg"
 )
 Book.create!(
   title: "Flowers for Algernon",
   author: "Daniel Keyes",
   description: "The beloved, classic story of a mentally disabled man whose experimental quest for intelligence mirrors that of Algernon, an extraordinary lab mouse.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=_oG_iTxP1pIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "https://upload.wikimedia.org/wikipedia/en/e/ea/FlowersForAlgernon.jpg"
 )
 Book.create!(
   title: "Totto-Chan",
   author: "Tetsuko Kuroyanagi",
   description: "An actress, television personality, and writer recounts her experiences as a 'problem child' at school, which lead to her being sent to an independent school, where she proved the goal of the school: to develop the potential of each child",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=5AsCbZQHaDAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://ecx.images-amazon.com/images/I/41iUvdQME%2BL._SX298_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "Frederica",
   author: "Georgette Heyer",
   description: "Frederica only wants what's best for her family, even if it means sacrificing her own happiness. When she brings her younger siblings to London, she may find the chance to give them everything-and find love along the way. Determined to secure a brilliant marriage for her beautiful sister, Frederica seeks out their distant cousin the Marquis of Alverstoke. Lovely, competent, and refreshingly straightforward, Frederica makes such a strong impression that to his own amazement, the Marquis agrees to help launch them all into society.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=Y9rtFTp2r3YC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://www.sourcebooks.com/store/images/thumbnails/0/500/9781402214769.jpg"
 )
 Book.create!(
-  title: "Asterix and Obelix",
-  author: "Goscinny",
+  title: "Asterix The Legionary",
+  author: "Goscinny and Uderzo",
   description: "",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=32DQOQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+  image_url: "https://usercontent2.hubstatic.com/5043949_f520.jpg"
 )
 Book.create!(
   title: "Stuff Matters",
   author: "Mark Miodownik",
   description: "Why is glass see-through? What makes elastic stretchy? Why does any material look and behave the way it does? These are the sorts of questions that renowned materials scientist Mark Miodownik constantly asks himself. Miodownik studies objects as ordinary as an envelope and as unexpected as concrete cloth, uncovering the fascinating secrets that hold together our physical world. In Stuff Matters, Miodownik explores the materials he encounters in a typical morning, from the steel in his razor to the foam in his sneakers.",
   owner_id: rand(1..3),
-  image_url: "https://books.google.com/books/content?id=8exJAQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+  image_url: "http://ecx.images-amazon.com/images/I/51AvnJhc0GL._SX329_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "Thinking, Fast and Slow",
@@ -272,4 +285,40 @@ Book.create!(
   author: "Kurt Vonnegut",
   owner_id: rand(1..3),
   image_url: "http://bookcoverarchive.com/wp-content/uploads/amazon/breakfast_of_champions.jpg"
+)
+Book.create!(
+  title: "One Two Three Infinity",
+  author: "George Gamow",
+  owner_id: rand(1..6),
+  image_url: "http://stang.sc.mahidol.ac.th/ReadforLife/images/10_.jpg"
+)
+Book.create!(
+  title: "The Giving tree",
+  author: "Shel Silverstein",
+  owner_id: rand(1..6),
+  image_url: "http://ecx.images-amazon.com/images/I/516dsrPeFDL._SX375_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "Quiet",
+  author: "Susan Cain",
+  owner_id: rand(1..6),
+  image_url: "http://ecx.images-amazon.com/images/I/41m0N7IIcsL._SX323_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "My Uncle Oswald",
+  author: "Roald Dahl",
+  owner_id: rand(1..6),
+  image_url: "http://ecx.images-amazon.com/images/I/41XcxYvcYiL._SX300_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "Lost Horizon",
+  author: "James Hilton",
+  owner_id: rand(1..6),
+  image_url: "http://ecx.images-amazon.com/images/I/51CVBz6b8fL._SX331_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "Murder on the Orient Express",
+  author: "Agatha Christie",
+  owner_id: rand(1..6),
+  image_url: "https://images-na.ssl-images-amazon.com/images/I/51drUi8B0HL._SX330_BO1,204,203,200_.jpg"
 )

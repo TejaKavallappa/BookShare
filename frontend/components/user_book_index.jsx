@@ -112,7 +112,6 @@ var UserBooks = React.createClass({
 
       </div>;
     }//if
-
   },
 
   owner: function(){
