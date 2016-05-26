@@ -2,9 +2,9 @@
 
 BookShare is a web application inspired by GoodReads built using Ruby on Rails and React.js. Users can view other users' book collections and request to borrow other users' books or approve or reject requests to borrow books.
 
-Explore at [https://bookshares.herokuapp.com/][live]
+Explore at [http://www.bookshares.club/][live]
 
-[live]: https://bookshares.herokuapp.com/
+[live]: http://www.bookshares.club/
 
 
 ## Welcome View:

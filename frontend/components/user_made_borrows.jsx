@@ -59,7 +59,6 @@ var UserMadeBorrows = React.createClass({
       }
     };
     return (<div className="requests-made">
-
       <h2>Status of your requests</h2>
 
       {this.state.borrows.map(function(borrow){
