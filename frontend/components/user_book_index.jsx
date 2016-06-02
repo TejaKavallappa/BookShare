@@ -122,15 +122,17 @@ var UserBooks = React.createClass({
     }
     else {
       return (<div>
-        <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
-        <span class="sr-only">Loading...</span></div>);
+        <i className="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+        <span className="sr-only">Loading...</span></div>);
         }//else
       }, //owner
 
   render: function(){
 
     if(!this.state.books){
-      return (<div>Loading</div>);
+      return (<div>
+        <i className="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+        <span className="sr-only">Loading...</span></div>);
     }
     var self = this;
       return (<div className="home-page">

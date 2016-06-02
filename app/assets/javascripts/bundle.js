@@ -58,7 +58,7 @@
 	var UserActions = __webpack_require__(245);
 	//Components
 	var AuthPermit = __webpack_require__(251);
-	var UserBooks = __webpack_require__(279);
+	var UserBooks = __webpack_require__(275);
 	var UserBorrows = __webpack_require__(285);
 	var UserMadeBorrows = __webpack_require__(287);
 	var App = __webpack_require__(288);
@@ -34425,7 +34425,7 @@
 	//stores
 	var UserStore = __webpack_require__(252);
 	//components
-	var UserBooks = __webpack_require__(279);
+	var UserBooks = __webpack_require__(275);
 	
 	var Home = React.createClass({
 	  displayName: 'Home',
@@ -34584,304 +34584,6 @@
 /* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(246);
-	var Store = __webpack_require__(253).Store;
-	
-	var BookStore = new Store(AppDispatcher);
-	var _books = {};
-	
-	var receiveAllBooks = function (books) {
-	  _books = {};
-	  //Check if books is not an empty object
-	  if (Object.keys(books).length) {
-	    books.forEach(function (book) {
-	      _books[book.id] = book;
-	    });
-	  }
-	};
-	
-	BookStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case "BOOKS_RECEIVED":
-	      receiveAllBooks(payload.books);
-	      break;
-	    case "BOOK_RECEIVED":
-	      receiveSingleBook(payload.book);
-	      break;
-	    case "BOOK_REMOVED":
-	      removeBook(payload.book);
-	      break;
-	  }
-	  this.__emitChange();
-	};
-	
-	var receiveSingleBook = function (book) {
-	  _books[book.id] = book;
-	};
-	
-	var removeBook = function (book) {
-	  delete _books[book.id];
-	};
-	
-	BookStore.all = function () {
-	  var books = [];
-	  for (var id in _books) {
-	    books.push(_books[id]);
-	  }
-	  return books;
-	};
-	
-	BookStore.find = function (id) {
-	  return _books[id];
-	};
-	
-	BookStore.tempBorrow = function (id) {
-	  // When a user borrows a book from a modal-view
-	  // the database gets updated but not the bookstore.
-	  _books[id].borrow_status = "pending";
-	};
-	
-	module.exports = BookStore;
-
-/***/ },
-/* 276 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	//actions
-	var ClientActions = __webpack_require__(272);
-	//mixin
-	var CurrentUserState = __webpack_require__(277);
-	
-	var BookForm = React.createClass({
-	  displayName: 'BookForm',
-	
-	  mixins: [CurrentUserState],
-	
-	  getInitialState: function () {
-	    return {
-	      author: "",
-	      title: "",
-	      description: "",
-	      image_url: ""
-	    };
-	  },
-	
-	  authorChange: function (event) {
-	    this.setState({ author: event.target.value });
-	  },
-	
-	  titleChange: function (event) {
-	    this.setState({ title: event.target.value });
-	  },
-	
-	  descriptionChange: function (event) {
-	    this.setState({ description: event.target.value });
-	  },
-	
-	  handleSubmit: function (event) {
-	    event.preventDefault();
-	    //Remove this logic
-	    var ownerId = this.state.currentUser ? this.state.currentUser.id : 1;
-	    var postData = {
-	      author: this.state.author,
-	      title: this.state.title,
-	      description: this.state.description,
-	      owner_id: ownerId
-	    };
-	    ClientActions.addBook(postData);
-	    this.props.onSubmit();
-	    this.setState({
-	      author: "",
-	      title: "",
-	      description: "",
-	      image_url: ""
-	    });
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'book-form' },
-	      React.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
-	        React.createElement('input', {
-	          placeholder: 'Title',
-	          type: 'text',
-	          value: this.state.title,
-	          onChange: this.titleChange }),
-	        React.createElement('br', null),
-	        React.createElement('input', {
-	          placeholder: 'Author',
-	          type: 'text',
-	          value: this.state.author,
-	          onChange: this.authorChange }),
-	        React.createElement('br', null),
-	        React.createElement('textarea', {
-	          placeholder: 'Description',
-	          value: this.state.description,
-	          onChange: this.descriptionChange || "" }),
-	        React.createElement('br', null),
-	        React.createElement('input', { type: 'submit', className: 'btn', value: 'Add New Book!' }),
-	        React.createElement('br', null)
-	      )
-	    );
-	  }
-	
-	});
-	module.exports = BookForm;
-
-/***/ },
-/* 277 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var UserStore = __webpack_require__(252);
-	var UserActions = __webpack_require__(245);
-	
-	var CurrentUserState = {
-	  getInitialState: function () {
-	    return {
-	      currentUser: UserStore.currentUser(),
-	      userErrors: {}
-	    };
-	  },
-	  componentWillMount: function () {
-	    this.userListener = UserStore.addListener(this.updateUser);
-	    if (!this.state.currentUser) {
-	      UserActions.fetchCurrentUser();
-	    }
-	  },
-	  componentWillUnmount: function () {
-	    this.userListener.remove();
-	  },
-	  updateUser: function () {
-	    this.setState({
-	      currentUser: UserStore.currentUser(),
-	      userErrors: UserStore.errors()
-	    });
-	  }
-	};
-	
-	module.exports = CurrentUserState;
-
-/***/ },
-/* 278 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	//react router
-	var ReactRouter = __webpack_require__(186);
-	var hashHistory = ReactRouter.hashHistory;
-	var Link = ReactRouter.Link;
-	//actions
-	var ClientActions = __webpack_require__(272);
-	var UserActions = __webpack_require__(245);
-	//stores
-	var UserStore = __webpack_require__(252);
-	//components
-	
-	var UsersIndex = React.createClass({
-	  displayName: 'UsersIndex',
-	
-	
-	  getInitialState: function () {
-	    return { users: [] };
-	  },
-	
-	  componentWillMount: function () {
-	    this.usersListener = UserStore.addListener(this._onChange);
-	    UserActions.fetchAllUsers();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.usersListener.remove();
-	  },
-	
-	  _onChange: function () {
-	    this.setState({ users: UserStore.allUsers() });
-	  },
-	
-	  displayUsers: function (user) {
-	    var link = user.id === UserStore.currentUser().id ? "/" : "users/" + user.id;
-	
-	    if (user.id === UserStore.currentUser().id) {
-	      return React.createElement(
-	        'li',
-	        { key: user.id, className: 'user-item' },
-	        React.createElement(
-	          Link,
-	          { to: "/" },
-	          React.createElement(
-	            'h4',
-	            null,
-	            user.username.charAt(0).toUpperCase() + user.username.slice(1)
-	          )
-	        )
-	      );
-	    } else {
-	      return React.createElement(
-	        'li',
-	        { key: user.id, className: 'user-item' },
-	        React.createElement(
-	          Link,
-	          { to: "users/" + user.id },
-	          React.createElement(
-	            'h4',
-	            null,
-	            user.username.charAt(0).toUpperCase() + user.username.slice(1)
-	          )
-	        )
-	      );
-	    }
-	  },
-	
-	  render: function () {
-	
-	    if (!this.state.users) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
-	        React.createElement(
-	          'span',
-	          { 'class': 'sr-only' },
-	          'Loading...'
-	        )
-	      );
-	    }
-	
-	    var self = this;
-	
-	    return React.createElement(
-	      'div',
-	      { id: 'slideout-users' },
-	      React.createElement('i', { className: 'hamburger' }),
-	      React.createElement(
-	        'p',
-	        null,
-	        'Friends'
-	      ),
-	      React.createElement(
-	        'div',
-	        { id: 'slideout-inner' },
-	        React.createElement(
-	          'ul',
-	          { className: 'users-index' },
-	          self.state.users.map(function (user) {
-	            return self.displayUsers(user);
-	          })
-	        )
-	      )
-	    );
-	  }
-	}); //UsersIndex
-	module.exports = UsersIndex;
-
-/***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var React = __webpack_require__(1);
 	var Modal = __webpack_require__(166);
 	//react router
@@ -34893,12 +34595,12 @@
 	//stores
 	var UserStore = __webpack_require__(252);
 	//components
-	var UserBookIndexItem = __webpack_require__(280);
-	var BookStore = __webpack_require__(275);
-	var BookForm = __webpack_require__(276);
-	var UsersIndex = __webpack_require__(278);
+	var UserBookIndexItem = __webpack_require__(276);
+	var BookStore = __webpack_require__(281);
+	var BookForm = __webpack_require__(283);
+	var UsersIndex = __webpack_require__(284);
 	//mixins
-	var CurrentUserMixin = __webpack_require__(277);
+	var CurrentUserMixin = __webpack_require__(280);
 	
 	var modalStyle = {
 	  overlay: {
@@ -35016,10 +34718,10 @@
 	      return React.createElement(
 	        'div',
 	        null,
-	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement('i', { className: 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
 	        React.createElement(
 	          'span',
-	          { 'class': 'sr-only' },
+	          { className: 'sr-only' },
 	          'Loading...'
 	        )
 	      );
@@ -35032,7 +34734,12 @@
 	      return React.createElement(
 	        'div',
 	        null,
-	        'Loading'
+	        React.createElement('i', { className: 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { className: 'sr-only' },
+	          'Loading...'
+	        )
 	      );
 	    }
 	    var self = this;
@@ -35067,7 +34774,7 @@
 	module.exports = UserBooks;
 
 /***/ },
-/* 280 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//react
@@ -35077,12 +34784,12 @@
 	var Modal = __webpack_require__(166);
 	//actions
 	var ClientActions = __webpack_require__(272);
-	var BorrowActions = __webpack_require__(281);
+	var BorrowActions = __webpack_require__(277);
 	//components
-	var EditForm = __webpack_require__(283);
-	var ViewBookDetail = __webpack_require__(284);
+	var EditForm = __webpack_require__(279);
+	var ViewBookDetail = __webpack_require__(282);
 	//stores
-	var BookStore = __webpack_require__(275);
+	var BookStore = __webpack_require__(281);
 	var UserStore = __webpack_require__(252);
 	
 	var modalStyle = {
@@ -35168,14 +34875,14 @@
 	            onClick: this.openEditModal,
 	            className: 'bk-button',
 	            bookId: book.id },
-	          'Edit'
+	          React.createElement('i', { className: 'fa fa-pencil-square-o', 'aria-hidden': 'true' })
 	        ),
 	        React.createElement(
 	          'button',
 	          {
 	            onClick: this.deleteBook,
 	            className: 'bk-button' },
-	          'Delete'
+	          React.createElement('i', { className: 'fa fa-trash-o', 'aria-hidden': 'true' })
 	        )
 	      );
 	    } else {
@@ -35183,17 +34890,13 @@
 	        this.state.disabled = true;
 	      }
 	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'button',
-	          {
-	            disabled: this.state.disabled,
-	            onClick: this.requestBook,
-	            className: 'bk-button',
-	            bookId: book.id },
-	          'Borrow'
-	        )
+	        'button',
+	        {
+	          disabled: this.state.disabled,
+	          onClick: this.requestBook,
+	          className: 'borrow',
+	          bookId: book.id },
+	        'Borrow'
 	      );
 	    }
 	  },
@@ -35235,11 +34938,11 @@
 	module.exports = UserBook;
 
 /***/ },
-/* 281 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(246);
-	var BorrowApiUtil = __webpack_require__(282);
+	var BorrowApiUtil = __webpack_require__(278);
 	var hashHistory = __webpack_require__(186).hashHistory;
 	
 	var BorrowActions = {
@@ -35308,7 +35011,7 @@
 	module.exports = BorrowActions;
 
 /***/ },
-/* 282 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(246);
@@ -35368,7 +35071,7 @@
 	module.exports = BorrowApiUtil;
 
 /***/ },
-/* 283 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35376,9 +35079,9 @@
 	//actions
 	var ClientActions = __webpack_require__(272);
 	//mixin
-	var CurrentUserState = __webpack_require__(277);
+	var CurrentUserState = __webpack_require__(280);
 	//stores
-	var BookStore = __webpack_require__(275);
+	var BookStore = __webpack_require__(281);
 	var BookForm = React.createClass({
 	  displayName: 'BookForm',
 	
@@ -35472,7 +35175,103 @@
 	module.exports = BookForm;
 
 /***/ },
-/* 284 */
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var UserStore = __webpack_require__(252);
+	var UserActions = __webpack_require__(245);
+	
+	var CurrentUserState = {
+	  getInitialState: function () {
+	    return {
+	      currentUser: UserStore.currentUser(),
+	      userErrors: {}
+	    };
+	  },
+	  componentWillMount: function () {
+	    this.userListener = UserStore.addListener(this.updateUser);
+	    if (!this.state.currentUser) {
+	      UserActions.fetchCurrentUser();
+	    }
+	  },
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
+	  },
+	  updateUser: function () {
+	    this.setState({
+	      currentUser: UserStore.currentUser(),
+	      userErrors: UserStore.errors()
+	    });
+	  }
+	};
+	
+	module.exports = CurrentUserState;
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(246);
+	var Store = __webpack_require__(253).Store;
+	
+	var BookStore = new Store(AppDispatcher);
+	var _books = {};
+	
+	var receiveAllBooks = function (books) {
+	  _books = {};
+	  //Check if books is not an empty object
+	  if (Object.keys(books).length) {
+	    books.forEach(function (book) {
+	      _books[book.id] = book;
+	    });
+	  }
+	};
+	
+	BookStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case "BOOKS_RECEIVED":
+	      receiveAllBooks(payload.books);
+	      break;
+	    case "BOOK_RECEIVED":
+	      receiveSingleBook(payload.book);
+	      break;
+	    case "BOOK_REMOVED":
+	      removeBook(payload.book);
+	      break;
+	  }
+	  this.__emitChange();
+	};
+	
+	var receiveSingleBook = function (book) {
+	  _books[book.id] = book;
+	};
+	
+	var removeBook = function (book) {
+	  delete _books[book.id];
+	};
+	
+	BookStore.all = function () {
+	  var books = [];
+	  for (var id in _books) {
+	    books.push(_books[id]);
+	  }
+	  return books;
+	};
+	
+	BookStore.find = function (id) {
+	  return _books[id];
+	};
+	
+	BookStore.tempBorrow = function (id) {
+	  // When a user borrows a book from a modal-view
+	  // the database gets updated but not the bookstore.
+	  _books[id].borrow_status = "pending";
+	};
+	
+	module.exports = BookStore;
+
+/***/ },
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35480,14 +35279,14 @@
 	var Modal = __webpack_require__(166);
 	//actions
 	var ClientActions = __webpack_require__(272);
-	var BorrowActions = __webpack_require__(281);
+	var BorrowActions = __webpack_require__(277);
 	//component
-	var EditForm = __webpack_require__(283);
+	var EditForm = __webpack_require__(279);
 	//stores
-	var BookStore = __webpack_require__(275);
+	var BookStore = __webpack_require__(281);
 	var UserStore = __webpack_require__(252);
 	//mixin
-	var CurrentUserState = __webpack_require__(277);
+	var CurrentUserState = __webpack_require__(280);
 	
 	var modalStyle = {
 	  overlay: {
@@ -35652,6 +35451,208 @@
 	module.exports = ViewBookDetail;
 
 /***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	//actions
+	var ClientActions = __webpack_require__(272);
+	//mixin
+	var CurrentUserState = __webpack_require__(280);
+	
+	var BookForm = React.createClass({
+	  displayName: 'BookForm',
+	
+	  mixins: [CurrentUserState],
+	
+	  getInitialState: function () {
+	    return {
+	      author: "",
+	      title: "",
+	      description: "",
+	      image_url: ""
+	    };
+	  },
+	
+	  authorChange: function (event) {
+	    this.setState({ author: event.target.value });
+	  },
+	
+	  titleChange: function (event) {
+	    this.setState({ title: event.target.value });
+	  },
+	
+	  descriptionChange: function (event) {
+	    this.setState({ description: event.target.value });
+	  },
+	
+	  handleSubmit: function (event) {
+	    event.preventDefault();
+	    //Remove this logic
+	    var ownerId = this.state.currentUser ? this.state.currentUser.id : 1;
+	    var postData = {
+	      author: this.state.author,
+	      title: this.state.title,
+	      description: this.state.description,
+	      owner_id: ownerId
+	    };
+	    ClientActions.addBook(postData);
+	    this.props.onSubmit();
+	    this.setState({
+	      author: "",
+	      title: "",
+	      description: "",
+	      image_url: ""
+	    });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'book-form' },
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement('input', {
+	          placeholder: 'Title',
+	          type: 'text',
+	          value: this.state.title,
+	          onChange: this.titleChange }),
+	        React.createElement('br', null),
+	        React.createElement('input', {
+	          placeholder: 'Author',
+	          type: 'text',
+	          value: this.state.author,
+	          onChange: this.authorChange }),
+	        React.createElement('br', null),
+	        React.createElement('textarea', {
+	          placeholder: 'Description',
+	          value: this.state.description,
+	          onChange: this.descriptionChange || "" }),
+	        React.createElement('br', null),
+	        React.createElement('input', { type: 'submit', className: 'btn', value: 'Add New Book!' }),
+	        React.createElement('br', null)
+	      )
+	    );
+	  }
+	
+	});
+	module.exports = BookForm;
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	//react router
+	var ReactRouter = __webpack_require__(186);
+	var hashHistory = ReactRouter.hashHistory;
+	var Link = ReactRouter.Link;
+	//actions
+	var ClientActions = __webpack_require__(272);
+	var UserActions = __webpack_require__(245);
+	//stores
+	var UserStore = __webpack_require__(252);
+	//components
+	
+	var UsersIndex = React.createClass({
+	  displayName: 'UsersIndex',
+	
+	
+	  getInitialState: function () {
+	    return { users: [] };
+	  },
+	
+	  componentWillMount: function () {
+	    this.usersListener = UserStore.addListener(this._onChange);
+	    UserActions.fetchAllUsers();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.usersListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ users: UserStore.allUsers() });
+	  },
+	
+	  displayUsers: function (user) {
+	    var link = user.id === UserStore.currentUser().id ? "/" : "users/" + user.id;
+	
+	    if (user.id === UserStore.currentUser().id) {
+	      return React.createElement(
+	        'li',
+	        { key: user.id, className: 'user-item' },
+	        React.createElement(
+	          Link,
+	          { to: "/" },
+	          React.createElement(
+	            'h4',
+	            null,
+	            user.username.charAt(0).toUpperCase() + user.username.slice(1)
+	          )
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        'li',
+	        { key: user.id, className: 'user-item' },
+	        React.createElement(
+	          Link,
+	          { to: "users/" + user.id },
+	          React.createElement(
+	            'h4',
+	            null,
+	            user.username.charAt(0).toUpperCase() + user.username.slice(1)
+	          )
+	        )
+	      );
+	    }
+	  },
+	
+	  render: function () {
+	
+	    if (!this.state.users) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement('i', { 'class': 'fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom' }),
+	        React.createElement(
+	          'span',
+	          { 'class': 'sr-only' },
+	          'Loading...'
+	        )
+	      );
+	    }
+	
+	    var self = this;
+	
+	    return React.createElement(
+	      'div',
+	      { id: 'slideout-users' },
+	      React.createElement('i', { className: 'hamburger' }),
+	      React.createElement(
+	        'p',
+	        null,
+	        'Friends'
+	      ),
+	      React.createElement(
+	        'div',
+	        { id: 'slideout-inner' },
+	        React.createElement(
+	          'ul',
+	          { className: 'users-index' },
+	          self.state.users.map(function (user) {
+	            return self.displayUsers(user);
+	          })
+	        )
+	      )
+	    );
+	  }
+	}); //UsersIndex
+	module.exports = UsersIndex;
+
+/***/ },
 /* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -35662,12 +35663,12 @@
 	//actions
 	var ClientActions = __webpack_require__(272);
 	var UserActions = __webpack_require__(245);
-	var BorrowActions = __webpack_require__(281);
+	var BorrowActions = __webpack_require__(277);
 	//stores
 	var BorrowStore = __webpack_require__(286);
 	var UserStore = __webpack_require__(252);
 	//mixins
-	var CurrentUserMixin = __webpack_require__(277);
+	var CurrentUserMixin = __webpack_require__(280);
 	
 	var UserBorrows = React.createClass({
 	  displayName: 'UserBorrows',
@@ -35881,12 +35882,12 @@
 	//actions
 	var ClientActions = __webpack_require__(272);
 	var UserActions = __webpack_require__(245);
-	var BorrowActions = __webpack_require__(281);
+	var BorrowActions = __webpack_require__(277);
 	//stores
 	var BorrowStore = __webpack_require__(286);
 	var UserStore = __webpack_require__(252);
 	//mixins
-	var CurrentUserMixin = __webpack_require__(277);
+	var CurrentUserMixin = __webpack_require__(280);
 	
 	var UserMadeBorrows = React.createClass({
 	  displayName: 'UserMadeBorrows',
@@ -36012,7 +36013,7 @@
 	
 	//Components
 	var LoginForm = __webpack_require__(289);
-	var CurrentUserState = __webpack_require__(277);
+	var CurrentUserState = __webpack_require__(280);
 	var NavBar = __webpack_require__(290);
 	var Footer = __webpack_require__(291);
 	//actions
@@ -36047,7 +36048,7 @@
 	//actions
 	var UserActions = __webpack_require__(245);
 	//mixin
-	var CurrentUserState = __webpack_require__(277);
+	var CurrentUserState = __webpack_require__(280);
 	//stores
 	var UserStore = __webpack_require__(252);
 	
@@ -36178,7 +36179,7 @@
 	var Modal = __webpack_require__(166);
 	//Components
 	var LoginForm = __webpack_require__(289);
-	var CurrentUserState = __webpack_require__(277);
+	var CurrentUserState = __webpack_require__(280);
 	//actions
 	var UserActions = __webpack_require__(245);
 	

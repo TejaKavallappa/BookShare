@@ -90,22 +90,26 @@ var UserBook = React.createClass({
         <button
         onClick={this.openEditModal}
         className="bk-button"
-        bookId={book.id}>Edit</button>
+        bookId={book.id}>
+        <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </button>
+
         <button
         onClick={this.deleteBook}
-        className="bk-button">Delete
+        className="bk-button">
+        <i className="fa fa-trash-o" aria-hidden="true"></i>
         </button></div>);
     }
     else{
       if (book.borrow_status === "pending"){
         this.state.disabled = true;
       }
-      return(<div><button
+      return(<button
         disabled={this.state.disabled}
         onClick={this.requestBook}
-        className="bk-button"
+        className="borrow"
         bookId={book.id}>Borrow
-      </button></div>);
+      </button>);
     }
   },
 

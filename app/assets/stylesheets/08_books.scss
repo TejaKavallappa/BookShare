@@ -65,7 +65,7 @@ $greytext: #494E52;
 }
 
 .caption{
-  top: 190px;
+  top: 170px;
   left: 0px;
   position: absolute;
   background: rgba(0,0,0, 0.5);
@@ -76,10 +76,20 @@ $greytext: #494E52;
   visibility: hidden;
   opacity: 0;
   transition: all .3s ease;
+  .edit-delete .fa{
+    padding: 5px;
+    font-size: 1.5em;
+  }
 }
 .book-detail-item:hover .caption{
   opacity: 1;
   visibility: visible;
   transition: all .3s ease;
-
+}
+.fa-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+          animation: fa-spin 1s infinite steps(8);
+}
+.book-index .borrow{
+  padding: 6px;
 }
