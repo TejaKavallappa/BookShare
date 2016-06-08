@@ -121,8 +121,7 @@ var NavBar = React.createClass({
       }
     };
     return (
-      <div>
-        <header className="header">
+        <header>
           <div className="header-logo">
             <Link to={ "/" } alt="Back to Home Page">
              <h1>BookShare</h1>
@@ -132,7 +131,6 @@ var NavBar = React.createClass({
             {display()}
           </nav>
         </header>
-      </div>
     );
   }
 });

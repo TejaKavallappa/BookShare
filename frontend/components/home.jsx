@@ -15,7 +15,6 @@ var Home = React.createClass({
 
       return (<div>
           <div className="books-list"><UserBooks/></div>
-
           {this.props.children}
         </div>);
   }

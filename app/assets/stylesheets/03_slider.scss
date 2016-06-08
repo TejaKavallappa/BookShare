@@ -73,14 +73,6 @@ $grey: #7B868A;
   display: none;
 }
 
-// .users-index li{
-//   text-decoration: underline;
-// }
-
-// .users-index li:nth-child(odd){
-//   text-decoration: underline;
-// }
-
 .hamburger{
     background: image-url("hamburger.svg");
     width: 34px;
@@ -106,11 +98,14 @@ $grey: #7B868A;
   float:right;
   margin-right: 20px;
   border: 1px solid $grey;
-
-  padding: 10px;
-  border-radius: 3px;
+  padding: 10px 10px 5px 10px;
+  border-radius: 25px;
   background-color: $teal;
   color: #020202;
+}
+.new-book .fa{
+  font-size: 1.2em;
+  color: white;
 }
 .new-book:hover{
   background-color: $teal;

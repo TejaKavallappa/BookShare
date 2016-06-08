@@ -2,19 +2,17 @@ $offwhite: #F8F8F8;
 $grey: #7B868A;
 $teal: #36A9AD;
 
-.header{
+header{
   display: flex;
   justify-content: space-between;
   background-color: white;
   height: 50px;
   color: $teal;
 }
-
 .header-nav{
   padding: 5px 0 0 0;
-
 }
-.header ul {
+header ul {
   display: flex;
   justify-content: space-around;
 }
@@ -38,7 +36,7 @@ $teal: #36A9AD;
   background: $offwhite;
   cursor: pointer;
 }
-.header ul li{
+header ul li{
   padding:10px 20px;
   list-style: none;
   height: 100%;
@@ -54,7 +52,6 @@ $teal: #36A9AD;
   background-color: $offwhite;
   color: $grey;
   border-radius: 3px;
-  // text-decoration: underline;
 }
 .bk-button:hover:disabled{
   cursor: auto;
@@ -63,7 +60,6 @@ $teal: #36A9AD;
 .books-index{
   display: flex;
   flex-flow: wrap row;
-  margin-top: 30px;
 }
 .dropdown {
     position: relative;
@@ -78,20 +74,28 @@ $teal: #36A9AD;
     padding: 0;
     width: 100%;
 }
+.dropdown:hover {
+  cursor: pointer;
+  background: $offwhite;
+}
 .dropdown:hover .dropdown-content {
     display: block;
     text-align: center;
     background: $offwhite;
     border-radius: 3px;
+    li:hover{
+      cursor: pointer;
+      background: white;
+    }
 }
+
 .splash{
   background: image-url('splash-bg.jpg');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-position: center;
-  background-size: 100% auto;
   background-repeat: no-repeat;
-  height: 640px;
+  min-height: 95vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,16 +106,16 @@ $teal: #36A9AD;
 }
 .app{
   background: $offwhite;
-  min-height: 95vh;
+  // height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0 0 40px;
   position: relative;
 }
 footer {
     bottom: 0;
-    height: 40px;
+    height: 50px;
     left: 0;
     position: absolute;
     width: 100%;
@@ -122,10 +126,11 @@ footer address{
   height: 28px;
   z-index: 100;
   right: 5px;
-  top: 6px;
+  top: 12px;
   margin-right: 65px;
   font-style: normal;
 }
+
 .github-icon{
   background: image-url("GitHub-Mark-32px.png");
   background-repeat: no-repeat;
@@ -134,6 +139,6 @@ footer address{
   height: 28px;
   z-index: 100;
   right: 5px;
-  top: 2px;
+  top: 8px;
   margin-right: 20px;
 }

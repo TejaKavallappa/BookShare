@@ -107,13 +107,14 @@ var UserBooks = React.createClass({
         </Modal>
         <button
           onClick={this.openCreateModal} className="new-book">
-          New Book
+          <i className="fa fa-plus" aria-hidden="true"></i>
         </button>
 
       </div>;
     }//if
   },
 
+  // New Book
   owner: function(){
     if (UserStore.findUser(this.state.displayUser)){
       var name = UserStore.findUser(this.state.displayUser).username;

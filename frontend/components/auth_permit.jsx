@@ -25,7 +25,7 @@ var AuthPermit = React.createClass({
       return <Home/>;
     }
     else{
-      return<Splash/>;
+      return <Splash/>;
     }
   }
 });

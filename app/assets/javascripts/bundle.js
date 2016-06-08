@@ -34699,12 +34699,13 @@
 	          'button',
 	          {
 	            onClick: this.openCreateModal, className: 'new-book' },
-	          'New Book'
+	          React.createElement('i', { className: 'fa fa-plus', 'aria-hidden': 'true' })
 	        )
 	      );
 	    } //if
 	  },
 	
+	  // New Book
 	  owner: function () {
 	    if (UserStore.findUser(this.state.displayUser)) {
 	      var name = UserStore.findUser(this.state.displayUser).username;
@@ -36353,29 +36354,25 @@
 	      }
 	    };
 	    return React.createElement(
-	      'div',
+	      'header',
 	      null,
 	      React.createElement(
-	        'header',
-	        { className: 'header' },
+	        'div',
+	        { className: 'header-logo' },
 	        React.createElement(
-	          'div',
-	          { className: 'header-logo' },
+	          Link,
+	          { to: "/", alt: 'Back to Home Page' },
 	          React.createElement(
-	            Link,
-	            { to: "/", alt: 'Back to Home Page' },
-	            React.createElement(
-	              'h1',
-	              null,
-	              'BookShare'
-	            )
+	            'h1',
+	            null,
+	            'BookShare'
 	          )
-	        ),
-	        React.createElement(
-	          'nav',
-	          { className: 'header-nav' },
-	          display()
 	        )
+	      ),
+	      React.createElement(
+	        'nav',
+	        { className: 'header-nav' },
+	        display()
 	      )
 	    );
 	  }

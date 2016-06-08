@@ -71,8 +71,7 @@ var BookForm = React.createClass({
           value={this.state.description}
           onChange={this.descriptionChange || ""}/>
         <br/>
-
-
+        
         <input type="submit" className="btn" value="Add New Book!"/>
         <br/>
       </form>

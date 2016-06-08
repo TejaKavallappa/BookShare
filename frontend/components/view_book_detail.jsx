@@ -116,7 +116,6 @@ var ViewBookDetail = React.createClass({
     //In the edit form add facility to let user upload an images
     return (
          <div className="book">
-
            <Modal
              isOpen={this.state.editModalOpen}
              onRequestClose={this.closeEditModal}

@@ -18,6 +18,9 @@ ul, li, label, input, textarea, button {
   color: inherit;
   background: transparent;
 }
+html, body, #root{
+  height: 100%;
+}
 ul{
   list-style: none;
 }
