@@ -1,10 +1,5 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.create!(
       username: "alice",
@@ -217,48 +212,267 @@ Book.create!(
 Book.create!(
   title: "One Two Three Infinity",
   author: "George Gamow",
-  owner_id: rand(3..6),
+  owner_id: rand(4..8),
   image_url: "http://stang.sc.mahidol.ac.th/ReadforLife/images/10_.jpg"
 )
 Book.create!(
   title: "The Giving tree",
   author: "Shel Silverstein",
-  owner_id: rand(3..6),
+  owner_id: rand(4..8),
   image_url: "http://ecx.images-amazon.com/images/I/516dsrPeFDL._SX375_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "Quiet",
   author: "Susan Cain",
-  owner_id: rand(3..6),
+  owner_id: rand(4..8),
   image_url: "http://ecx.images-amazon.com/images/I/41m0N7IIcsL._SX323_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "My Uncle Oswald",
   author: "Roald Dahl",
-  owner_id: rand(3..6),
+  owner_id: rand(4..8),
   image_url: "http://ecx.images-amazon.com/images/I/41XcxYvcYiL._SX300_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "Lost Horizon",
   author: "James Hilton",
-  owner_id: rand(1..6),
+  owner_id: rand(4..8),
   image_url: "http://ecx.images-amazon.com/images/I/51CVBz6b8fL._SX331_BO1,204,203,200_.jpg"
 )
 Book.create!(
   title: "Murder on the Orient Express",
   author: "Agatha Christie",
-  owner_id: rand(1..6),
+  owner_id: rand(4..8),
   image_url: "https://images-na.ssl-images-amazon.com/images/I/51drUi8B0HL._SX330_BO1,204,203,200_.jpg"
 )
-Borrowing.create!(
-  owner_id: 1,
-  borrower_id: 2,
-  book_id: 1,
-  request_status: "pending"
+#
+Book.create!(
+  title: "The Hobbit",
+  author: "J. R. R. Tolkien",
+  owner_id: rand(4..8),
+  image_url: "http://ecx.images-amazon.com/images/I/41aQPTCmeVL._SX331_BO1,204,203,200_.jpg"
 )
-Borrowing.create!(
-  owner_id: 2,
-  borrower_id: 1,
-  book_id: 2,
-  request_status: "pending"
+Book.create!(
+  title: "The Fellowship of the Ring",
+  author: "J. R. R. Tolkien",
+  owner_id: rand(4..8),
+  description: "The first volume in J.R.R. Tolkien's epic adventure THE LORD OF THE RINGS One Ring to rule them all, One Ring to find them, One Ring to bring them all and in the darkness bind them In ancient times the Rings of Power were crafted by the Elven-smiths, and Sauron, the Dark Lord, forged the One Ring, filling it with his own power so that he could rule all others. But the One Ring was taken from him, and though he sought it throughout Middle-earth, it remained lost to him. After many ages it fell into the hands of Bilbo Baggins, as told in The Hobbit. In a sleepy village in the Shire, young Frodo Baggins finds himself faced with an immense task, as his elderly cousin Bilbo entrusts the Ring to his care. Frodo must leave his home and make a perilous journey across Middle-earth to the Cracks of Doom, there to destroy the Ring and foil the Dark Lord in his evil purpose.",
+  image_url: "http://ecx.images-amazon.com/images/I/41i-SJkyCQL._SX331_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "The Silmarillion",
+  author: "J. R. R. Tolkien",
+  owner_id: rand(4..8),
+  description: "THE SILMARILLION is the core of J.R.R. Tolkien's imaginative writing, a work whose origins stretch back to a time long before THE HOBBIT. Tolkien considered THE SILMARILLION his most important work, and, though it was published last and posthumously, this great collection of tales and legends clearly sets the stage for all his other writing. The story of the creation of the world and of the the First Age, this is the ancient drama to which the characters in THE LORD OF THE RINGS look back and in whose events some of them, such as Elrond and Galadriel, took part. The three Silmarils were jewels created by Feanor, most gifted of the Elves. Within them was imprisoned the Light of the Two Trees of Valinor before the Trees themselves were destroyed by Morgoth, the first Dark Lord. Thereafter, the unsullied Light of Valinor lived on only in the Silmarils, but they were seized by Morgoth and set in his crown, which was guarded in the impenetrable fortress of Angband in the north of Middle-earth.",
+  image_url: "https://images-na.ssl-images-amazon.com/images/I/51tDzXVWy4L._SX296_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "The Lady Tasting Tea",
+  author: "David Salsburg",
+  owner_id: rand(4..8),
+  description: "Examines the works of statistics pioneer Ronald Fisher as well as other revolutionary thinkers in the field, covering the rise and fall of Karl Pearson's theories, the methods that contributed to Japan's post-war rebuilding, a pivotal early study on a Guinness beer cask, and more.",
+  image_url: "http://ecx.images-amazon.com/images/I/51TruAK%2BQ-L._SX311_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "The Stranger",
+  author: "Albert Camus",
+  owner_id: rand(4..8),
+  description: "Through the story of an ordinary man unwittingly drawn into a senseless murder on an Algerian beach, Camus explored what he termed 'the nakedness of man faced with the absurd.' First published in 1946",
+  image_url: "https://s-media-cache-ak0.pinimg.com/736x/f7/1c/95/f71c9503747dc53c40e487d0dc8033d2.jpg"
+)
+Book.create!(
+  title: "The Amulet Of Samarkand",
+  author: "Jonathan Stroud",
+  owner_id: rand(4..8),
+  description: "Nathaniel, a magician's apprentice, summons up the djinni Bartimaeus and instructs him to steal the Amulet of Samarkand from the powerful magician Simon Lovelace.",
+  image_url: "https://upload.wikimedia.org/wikipedia/en/1/1c/The_Amulet_of_Samarkand.png"
+)
+Book.create!(
+  title: "Gödel, Escher, Bach",
+  author: "Douglas R. Hofstadter",
+  owner_id: rand(4..8),
+  description: "'What is a self and how can a self come out of inanimate matter?' This is the riddle that drove Douglas Hofstadter to write this extraordinary book. In order to impart his original and personal view on the core mystery of human existence - our intangible sensation of 'I'-ness - Hofstadter defines the playful yet seemingly paradoxical notion of 'strange loop', and explicates this idea using analogies from many disciplines.",
+  image_url: "http://d.gr-assets.com/books/1331382003l/24115.jpg"
+)
+Book.create!(
+  title: "Where Eagles Dare",
+  author: "Alistair MacLean",
+  owner_id: rand(4..8),
+  description: "The classic World War II thriller from the acclaimed master of action and suspense. Now reissued in a new cover style.",
+  image_url: "http://d.gr-assets.com/books/1345031718l/1164086.jpg"
+)
+Book.create!(
+  title: "Gorky Park",
+  author: "Martin Cruz Smith",
+  owner_id: rand(4..8),
+  description: "In Soviet Russia, a triple murder in Moscow amusement centre, Gorky Park, leaves three corpses frozen in the snow. But when Senior Investigator in the Moscow Prosecutor's Office Arkady Renko arrives, he finds that the brutal murder leaves the victims unidentifiable with faces and fingers missing. Renko must battle political and corporate corruption internationally, from the USSR to the USA, to uncover the truth - and he must fight for his own life in doing so. Meanwhile, he is falling in love with a beautiful, headstrong dissident for whom he may risk everything... ",
+  image_url: "http://ecx.images-amazon.com/images/I/51rPUEvKF%2BL._SX324_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "Memoirs of a Geisha",
+  author: "Arthur Golden",
+  owner_id: rand(4..8),
+  description: "Speaking to us with the wisdom of age and in a voice at once haunting and startlingly immediate, Nitta Sayuri tells the story of her life as a geisha. It begins in a poor fishing village in 1929, when, as a nine-year-old girl with unusual blue-gray eyes, she is taken from her home and sold into slavery to a renowned geisha house. We witness her transformation as she learns the rigorous arts of the geisha: dance and music; wearing kimono, elaborate makeup, and hair; pouring sake to reveal just a touch of inner wrist; competing with a jealous rival for men's solicitude and the money that goes with it. ",
+  image_url: "https://upload.wikimedia.org/wikipedia/en/0/09/Memoirs_of_a_Geisha_Poster.jpg"
+)
+Book.create!(
+  title: "The Good Earth",
+  author: "Pearl S. Buck",
+  owner_id: rand(4..8),
+  description: "A Chinese peasant overcomes the forces of nature and the frailties of human nature to become a wealthy landowner.",
+  image_url: "http://ecx.images-amazon.com/images/I/51zRzieodBL._SX320_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "My Family and Other Animals",
+  author: "Gerald Durrell",
+  owner_id: rand(4..8),
+  description: "This very funny story is about an English family who go to live on the Greek island of Corfu. Gerald, the youngest boy, loves animals and insects. He brings scorpions, spiders, birds, snakes and other animals to the house, and they get him into lots of trouble.",
+  image_url: "http://ecx.images-amazon.com/images/I/41rC5qKvgaL.jpg"
+)
+Book.create!(
+  title: "The Eighth Commandment",
+  author: "Lawrence Sanders",
+  owner_id: rand(4..8),
+  description: "When a rare coin vanishes, an appraiser tries to clear her name—and exposes one family’s lethal secrets Appraising rare coins for Grandby & Sons, a venerable Madison Avenue auction house, is a dream come true for Mary Lou Bateson. She even gets a chance to inspect the Havistock Collection of priceless coins, which includes the Demaretion, a rare, ancient Greek silver piece. But when the Demaretion disappears just after her assessment, the young numismatist becomes the number-one suspect. Placed on indefinite leave, Bateson enlists the help of a New York Police Department cop and an insurance detective to go behind the closed doors of one of New York’s most powerful and untouchable families. The Havistocks are keeping some dangerous secrets, including a kleptomaniac daughter, a sex-addicted daughter-in-law, and a sleazy nest of adultery, pornography, and damning secrets someone is willing to kill to keep.",
+  image_url: "http://d.gr-assets.com/books/1386005584l/19101046.jpg"
+)
+Book.create!(
+  title: "A Strangeness in My Mind",
+  author: "Orhan Pamuk",
+  owner_id: rand(4..8),
+  description: "Since his boyhood in a poor village in Central Anatolia, Mevlut Karatas has fantasized about what his life would become. Not getting as far in school as he'd hoped, at the age of twelve, he comes to Istanbul-'the center of the world'-and is immediately enthralled both by the city being demolished and the new one that is fast being built. ",
+  image_url: "http://ecx.images-amazon.com/images/I/51-Lr1056oL._SX336_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "One Hundred Years of Solitude",
+  author: "Gabriel García Márquez",
+  owner_id: rand(4..8),
+  description: "As Melquiades excites Buendia's father with new inventions and tales of adventure, neither can know the significance of the indecipherable manuscript that the gypsy passes into their hands. The tribulations of the Buendia household push memories of the manuscript aside. Few remember its existence and one will discover the message that it holds.",
+  image_url: "http://ecx.images-amazon.com/images/I/61O-ltKJb9L._SX330_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "Antifragile",
+  author: "Nassim Nicholas Taleb",
+  owner_id: rand(4..8),
+  description: "The best-selling author of The Black Swan shares philosophical insights into how adversity and chaos can bring out the best in individuals and communities, drawing on multiple disciplines to consider such topics as the superiority of city states over nation states, the drawbacks of debt and why modern developments usually fail.",
+  image_url: "http://ecx.images-amazon.com/images/I/41y%2B-2A1XZL.jpg"
+)
+Book.create!(
+  title: "The Inimitable Jeeves",
+  author: "P. G. Wodehouse",
+  owner_id: rand(4..8),
+  description: "This classic collection of linked stories feature some of the funniest episodes in the life of Bertie Wooster, gentleman, and Jeeves, his gentleman’s gentleman—in which Bertie's terrifying Aunt Agatha stalks the pages, seeking whom she may devour, while Bertie’s friend Bingo Little falls in love with seven different girls in succession (he marries the last, bestselling romantic novelist Rosie M. Banks). And Bertie, with Jeeves’s help, just evades the clutches of the terrifying Honoria Glossop. ",
+  image_url: "http://ecx.images-amazon.com/images/I/517JNzaZJmL.jpg"
+)
+Book.create!(
+  title: "The Jungle Book",
+  author: "Rudyard Kipling",
+  owner_id: rand(4..8),
+  image_url: "https://s-media-cache-ak0.pinimg.com/736x/a5/3c/a3/a53ca3df032315e52558294be2f30d4c.jpg"
+)
+Book.create!(
+  title: "Outlander",
+  author: "Diana Gabaldon",
+  owner_id: rand(4..8),
+  description: "Twenty years ago, Gabaldon swept readers into her mesmerizing world brimming with history, romance, and adventure. ",
+  image_url: "http://d.gr-assets.com/books/1402600310l/10964.jpg"
+)
+Book.create!(
+  title: "The Power of Habit",
+  author: "Charles Duhigg",
+  owner_id: rand(4..8),
+  description: "In The Power of Habit, Pulitzer Prize–winning business reporter Charles Duhigg takes us to the thrilling edge of scientific discoveries that explain why habits exist and how they can be changed. Distilling vast amounts of information into engrossing narratives that take us from the boardrooms of Procter & Gamble to sidelines of the NFL to the front lines of the civil rights movement, Duhigg presents a whole new understanding of human nature and its potential. At its core, The Power of Habit contains an exhilarating argument: The key to exercising regularly, losing weight, being more productive, and achieving success is understanding how habits work. As Duhigg shows, by harnessing this new science, we can transform our businesses, our communities, and our lives.",
+  image_url: "http://d.gr-assets.com/books/1366758683l/12609433.jpg"
+)
+Book.create!(
+  title: "Norwegian Wood",
+  author: "Haruki Murakami",
+  owner_id: rand(4..8),
+  description: "Toru, a quiet and preternaturally serious young college student in Tokyo, is devoted to Naoko, a beautiful and introspective young woman, but their mutual passion is marked by the tragic death of their best friend years before. Toru begins to adapt to campus life and the loneliness and isolation he faces there, but Naoko finds the pressures and responsibilities of life unbearable. As she retreats further into her own world, Toru finds himself reaching out to others and drawn to a fiercely independent and sexually liberated young woman. A poignant story of one college student's romantic coming-of-age, Norwegian Wood takes us to that distant place of a young man's first, hopeless, and heroic love.",
+  image_url: "http://d.gr-assets.com/books/1386924361l/11297.jpg"
+)
+Book.create!(
+  title: "Americanah",
+  author: "Chimamanda Ngozi Adichie",
+  owner_id: rand(4..8),
+  description: "A powerful, tender story of race and identity by Chimamanda Ngozi Adichie, the award-winning author of Half of a Yellow Sun. Ifemelu and Obinze are young and in love when they depart military-ruled Nigeria for the West. Beautiful, self-assured Ifemelu heads for America, where despite her academic success, she is forced to grapple with what it means to be black for the first time. Quiet, thoughtful Obinze had hoped to join her, but with post-9/11 America closed to him, he instead plunges into a dangerous, undocumented life in London. Fifteen years later, they reunite in a newly democratic Nigeria, and reignite their passion—for each other and for their homeland.",
+  image_url: "http://ecx.images-amazon.com/images/I/51mSJNECGyL.jpg"
+)
+Book.create!(
+  title: "The White Lioness",
+  author: "Henning Mankell",
+  owner_id: rand(4..8),
+  description: "In peaceful southern Sweden, Louise Akerblom, an estate agent, pillar of the Methodist church, wife and mother, disappears. There is no explanation and no motive. Inspector Kurt Wallander and his team are called in to investigate. As Inspector Wallander is introduced to this missing persons case, he has a gut feeling that the victim will never be found alive, but he has no idea how far he will have to go in search of the killer. In South Africa, meanwhile Nelson Mandela has made his long walk to freedom. Wallander find himself caught up in a conspiracy involving renegade members of the South African secret service and a former KGB agent, all of them set upon halting Mandela's rise to power. Faced with a world in which terrorism knows no frontiers Wallander must prevent a hideous crime that means to dam the tide of history.",
+  image_url: "http://ecx.images-amazon.com/images/I/41nuFF8u18L._SX322_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "Fun Home",
+  author: "Alison Bechdel",
+  owner_id: rand(4..8),
+  description: "A memoir done in the form of a graphic novel by a cult favorite comic artist offers a darkly funny family portrait that details her relationship with her father--a funeral home director, high school English teacher, and closeted homosexual.",
+  image_url: "https://upload.wikimedia.org/wikipedia/en/3/31/Fun_Home_French_cover.jpg"
+)
+Book.create!(
+  title: "Persepolis",
+  author: "Marjane Satrapi",
+  owner_id: rand(4..8),
+  description: "The great-granddaughter of Iran's last emperor and the daughter of ardent Marxists continues her description of growing up in Tehran, a country plagued by political upheaval and vast contradictions between public and private life, in a memoir told in the form of a graphic novel.",
+  image_url: "http://ecx.images-amazon.com/images/I/51mASzxex8L._SX317_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "In Patagonia",
+  author: "Bruce Chatwin",
+  owner_id: rand(4..8),
+  description: "The masterpiece of travel writing that revolutionized the genre and made its author famous overnight An exhilarating look at a place that still retains the exotic mystery of a far-off, unseen land, Bruce Chatwin’s exquisite account of his journey through Patagonia teems with evocative descriptions, remarkable bits of history, and unforgettable anecdotes. Fueled by an unmistakable lust for life and adventure and a singular gift for storytelling, Chatwin treks through 'the uttermost part of the earth'—that stretch of land at the southern tip of South America, where bandits were once made welcome—in search of almost-forgotten legends, the descendants of Welsh immigrants, and the log cabin built by Butch Cassidy. ",
+  image_url: "http://d.gr-assets.com/books/1386924798l/79909.jpg"
+)
+Book.create!(
+  title: "The Kite Runner",
+  author: "Khaled Hosseini",
+  owner_id: rand(4..8),
+  image_url: "http://d.gr-assets.com/books/1311705989l/11296523.jpg"
+)
+Book.create!(
+  title: "The Brief Wondrous Life of Oscar Wao",
+  author: "Junot Diaz",
+  owner_id: rand(4..8),
+  description: "Things have never been easy for Oscar. A ghetto nerd living with his Dominican family in New Jersey, he's sweet but disastrously overweight. He dreams of becoming the next J.R.R. Tolkien and he keeps falling hopelessly in love. Poor Oscar may never get what he wants, thanks to the Fuk - the curse that has haunted his family for generations. With dazzling energy and insight Daz immerses us in the tumultuous lives of Oscar; his runaway sister Lola; their beautiful mother Belicia; and in the family's uproarious journey from the Dominican Republic to the US and back. Rendered with uncommon warmth and humour, The Brief Wondrous Life of Oscar Wao is a literary triumph, that confirms Junot Daz as one of the most exciting writers of our time.",
+  image_url: "https://upload.wikimedia.org/wikipedia/en/5/5f/Junot_wao_cover.jpg"
+)
+Book.create!(
+  title: "Maximum City",
+  author: "Suketu Mehta",
+  owner_id: rand(4..8),
+  description: "A native of Bombay, Suketu Mehta gives us an insider’s view of this stunning metropolis. He approaches the city from unexpected angles, taking us into the criminal underworld of rival Muslim and Hindu gangs; following the life of a bar dancer raised amid poverty and abuse; opening the door into the inner sanctums of Bollywood; and delving into the stories of the countless villagers who come in search of a better life and end up living on the sidewalks. ",
+  image_url: "http://ecx.images-amazon.com/images/I/51KSGC7PNKL.jpg"
+)
+Book.create!(
+  title: "The Reluctant Fundamentalist",
+  author: "Mohsin Hamid",
+  owner_id: rand(4..8),
+  description: "At a café table in Lahore, a bearded Pakistani man converses with an uneasy American stranger. As dusk deepens to night, he begins the tale that has brought them to this fateful encounter . . . Changez is living an immigrant’s dream of America. At the top of his class at Princeton, he is snapped up by an elite valuation firm. He thrives on the energy of New York, and his budding romance with elegant, beautiful Erica promises entry into Manhattan society at the same exalted level once occupied by his own family back in Lahore. But in the wake of September 11, Changez finds his position in his adopted city suddenly overturned, and his relationship with Erica shifting. And Changez’s own identity is in seismic shift as well, unearthing allegiances more fundamental than money, power, and maybe even love.",
+  image_url: "http://ecx.images-amazon.com/images/I/51CmX2J1qzL._SX331_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "Foundation",
+  author: "Isaac Asimov",
+  owner_id: rand(4..8),
+  description: "For twelve thousand years the Galactic Empire has ruled supreme. Now it is dying. But only Hari Sheldon, creator of the revolutionary science of psychohistory, can see into the future--to a dark age of ignorance, barbarism, and warfare that will last thirty thousand years. To preserve knowledge and save mankind, Seldon gathers the best minds in the Empire--both scientists and scholars--and brings them to a bleak planet at the edge of the Galaxy to serve as a beacon of hope for a fututre generations. He calls his sanctuary the Foundation. But soon the fledgling Foundation finds itself at the mercy of corrupt warlords rising in the wake of the receding Empire. Mankind's last best hope is faced with an agonizing choice: submit to the barbarians and be overrun--or fight them and be destroyed.",
+  image_url: "http://ecx.images-amazon.com/images/I/51aKk%2BWF2XL._SX298_BO1,204,203,200_.jpg"
+)
+
+Book.create!(
+  title: "Stories of Your Life and Others",
+  author: "Ted Chiang",
+  owner_id: rand(4..8),
+  description: "Stories of Your Life and Others presents characters who must confront sudden change—the inevitable rise of automatons or the appearance of aliens—while striving to maintain some sense of normalcy. In the amazing and much-lauded title story, a grieving mother copes with divorce and the death of her daughter by drawing on her knowledge of alien languages and non-linear memory recollection. ",
+  image_url: "http://ecx.images-amazon.com/images/I/51Hg%2B6Y8eiL.jpg"
+)
+
+Book.create!(
+  title: "Lucky Jim",
+  author: "Kingsley Amis",
+  owner_id: rand(4..8),
+  description: "Amis’s scabrous debut leads the reader through a gallery of emphatically English bores, cranks, frauds, and neurotics, with each of whom Dixon must contend in one way or another in order to hold on to his cushy academic perch and win the girl of his fancy. More than just a merciless satire of cloistered college life and stuffy post-war manners, Lucky Jim is an attack on the forces of boredom, whatever form they may take, and a work of art that at once distills and extends an entire tradition of English comic writing, from Fielding and Dickens through Wodehouse and Waugh.",
+  image_url: "http://ecx.images-amazon.com/images/I/51jP2wfmAjL._SX311_BO1,204,203,200_.jpg"
 )
