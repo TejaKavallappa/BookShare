@@ -34398,11 +34398,22 @@
 	      "div",
 	      { className: "splash" },
 	      React.createElement(
-	        "p",
-	        null,
-	        "Welcome to BookShare!",
-	        React.createElement("br", null),
-	        "A community for users to share books"
+	        "div",
+	        { className: "about" },
+	        React.createElement(
+	          "p",
+	          null,
+	          "Welcome to BookShare!",
+	          React.createElement("br", null),
+	          "A community for users to share books.",
+	          React.createElement("br", null)
+	        ),
+	        React.createElement(
+	          "p",
+	          { className: "sub-title" },
+	          "Showcase your personal book collection and borrow your friends books.",
+	          React.createElement("br", null)
+	        )
 	      )
 	    );
 	  }

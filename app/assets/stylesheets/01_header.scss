@@ -96,14 +96,24 @@ header ul li{
   background-position: center;
   background-repeat: no-repeat;
   min-height: 95vh;
+
+}
+.splash .about{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-weight: bold;
   font-size: 68px;
   color: seashell;
   text-align: center;
+  margin: 63px;
 }
+
+.splash .sub-title{
+    font-size: 50px;
+}
+
 .app{
   background: $offwhite;
   // height: 100%;
