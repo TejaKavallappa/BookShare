@@ -8,9 +8,8 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = current_user;
+    @user = current_user
     token = session[:session_token]
-    # @user = User.find_by(session_token: token);
     if @user
       render :show
     else

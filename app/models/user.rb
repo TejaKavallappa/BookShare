@@ -11,6 +11,8 @@
 #
 
 class User < ActiveRecord::Base
+  attr_reader :password
+  
   validates :username, :password_digest, :session_token, presence: true
   validates :password, length: {minimum: 6, allow_nil: true}
   validates :username, :session_token, uniqueness: true
@@ -26,7 +28,6 @@ class User < ActiveRecord::Base
     through: :borrowings,
     source: :books
 
-  attr_reader :password
 
   def self.generate_session_token
     SecureRandom.base64

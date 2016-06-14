@@ -476,3 +476,24 @@ Book.create!(
   description: "Amis’s scabrous debut leads the reader through a gallery of emphatically English bores, cranks, frauds, and neurotics, with each of whom Dixon must contend in one way or another in order to hold on to his cushy academic perch and win the girl of his fancy. More than just a merciless satire of cloistered college life and stuffy post-war manners, Lucky Jim is an attack on the forces of boredom, whatever form they may take, and a work of art that at once distills and extends an entire tradition of English comic writing, from Fielding and Dickens through Wodehouse and Waugh.",
   image_url: "http://ecx.images-amazon.com/images/I/51jP2wfmAjL._SX311_BO1,204,203,200_.jpg"
 )
+Book.create!(
+  title: "My Brilliant Friend",
+  author: "Elena Ferrante",
+  owner_id: rand(4..8),
+  description: "Beginning in the 1950s Elena and Lila grow up in Naples, Italy, mirroring two different aspects of their nation.",
+  image_url: "https://images-na.ssl-images-amazon.com/images/I/51GyvNf5HNL._SX317_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "Hacker's Delight",
+  author: "Henry S. Warren",
+  owner_id: rand(4..8),
+  description: "Compiles programming hacks intended to help computer programmers build more efficient software, in an updated edition that covers cyclic redundancy checking and new algorithms and that includes exercises with answers.",
+  image_url: "http://ecx.images-amazon.com/images/I/41KHlIadcWL._SX306_BO1,204,203,200_.jpg"
+)
+Book.create!(
+  title: "Sophie's World",
+  author: "Jostein Gaarder",
+  owner_id: rand(4..8),
+  description: "One day Sophie comes home from school to find two questions in her mail: "Who are you?" and "Where does the world come from?" Before she knows it she is enrolled in a correspondence course with a mysterious philosopher. Thus begins Jostein Gaarder's unique novel, which is not only a mystery, but also a complete and entertaining history of philosophy.",
+  image_url: "http://ecx.images-amazon.com/images/I/51ir--RM2hL._SX331_BO1,204,203,200_.jpg"
+)
