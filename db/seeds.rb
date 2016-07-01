@@ -494,6 +494,6 @@ Book.create!(
   title: "Sophie's World",
   author: "Jostein Gaarder",
   owner_id: rand(4..8),
-  description: "One day Sophie comes home from school to find two questions in her mail: "Who are you?" and "Where does the world come from?" Before she knows it she is enrolled in a correspondence course with a mysterious philosopher. Thus begins Jostein Gaarder's unique novel, which is not only a mystery, but also a complete and entertaining history of philosophy.",
+  description: "One day Sophie comes home from school to find two questions in her mail: 'Who are you?' and 'Where does the world come from?' Before she knows it she is enrolled in a correspondence course with a mysterious philosopher. Thus begins Jostein Gaarder's unique novel, which is not only a mystery, but also a complete and entertaining history of philosophy.",
   image_url: "http://ecx.images-amazon.com/images/I/51ir--RM2hL._SX331_BO1,204,203,200_.jpg"
 )
