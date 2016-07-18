@@ -85,7 +85,7 @@ var NavBar = React.createClass({
           <li> <a href="#/requests" alt="View requests for my books">
             Requests</a></li>
           <li><a href="#/request-status" alt="View requests I have made">
-            Requests Made</a></li>
+            Status</a></li>
           <li onClick={self.logout}>Sign Out</li>
           </ul>);
       }

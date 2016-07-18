@@ -53,9 +53,10 @@ var UsersIndex = React.createClass({
   render: function(){
 
     if (!this.state.users){
-      return (<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
-    <span class="sr-only">Loading...</span></div>);
-
+      return (<div>
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+        <span class="sr-only">Loading...</span>
+        </div>);
     }
 
     var self = this;

@@ -28,6 +28,10 @@ var BookForm = React.createClass({
     this.setState({description: event.target.value});
   },
 
+  imageChange: function(event){
+    this.setState({image_url: event.target.value});
+  },
+
   handleSubmit: function(event){
     event.preventDefault();
     //Remove this logic
@@ -66,12 +70,19 @@ var BookForm = React.createClass({
           onChange={this.authorChange}/>
         <br/>
 
+          <input
+            placeholder="Image URL"
+            type="text"
+            value={this.state.image_url}
+            onChange={this.imageChange}/>
+          <br/>
+
         <textarea
           placeholder="Description"
           value={this.state.description}
           onChange={this.descriptionChange || ""}/>
         <br/>
-        
+
         <input type="submit" className="btn" value="Add New Book!"/>
         <br/>
       </form>
